@@ -136,6 +136,7 @@ function normalizeMode(raw){
   if(['main','ms','mainspec','need','1','primary'].includes(t)) return 'Main Spec';
   if(['off','os','offspec','greed','2','secondary'].includes(t)) return 'Off Spec';
   if(['tmog','transmog','mog','appearance','3'].includes(t)) return 'Transmog';
+  if(['softres','softreserve','sr','reserved','5'].includes(t))return 'Soft Res';
   if(['pass','passed','declined','0','4'].includes(t))return 'Pass';
   return str(raw).trim() || 'Unspecified';
 }
@@ -190,6 +191,85 @@ function softReservations(session, root) {
   }
   return out;
 }
+// Numeric roll events are independent from awards. No numbers or winners are inferred
+// when absent; a Pass or automatic reserve eligibility is not a numeric roll.
+const rollEventKeys=['rollEvents','rollRounds','rollHistory'];
+const participantKeys=['rolls','rollResults','participants','bids','votes'];
+function participantRows(obj){
+  const raw=pick(obj,participantKeys);
+  if(Array.isArray(raw))return raw;
+  if(isObj(raw))return Object.entries(raw).map(([name,value])=>isObj(value)?{player:name,...value}:{player:name,roll:value});
+  return [];
+}
+function numericRoll(raw,maximum){
+  if(raw===null || raw===undefined || raw==='' || typeof raw==='boolean')return null;
+  const n=Number(raw);
+  return Number.isInteger(n)&&n>=1&&n<=maximum?n:null;
+}
+function rollEvent(event,i,start,award=null){
+  const participants=participantRows(event);
+  if(!participants.length)return null;
+  const item=parseItem(event.item!==undefined||event.itemId!==undefined||event.itemID!==undefined||event.itemLink!==undefined?event:(award||event));
+  const winner=extractName(event,['winner','winnerName','awardedTo','recipient'])||award?.winner||'';
+  const eventId=str(pick(event,['roundId','rollId','eventId','awardId','entryId','id']))||award?.id||`round-${i+1}`;
+  const timestamp=findDate(event,['timestamp','resolvedAt','awardedAt','time','date','createdAt'])||award?.timestamp||start;
+  const rows=participants.map((row,j)=>{
+    const o=isObj(row)?row:{player:String(row)};
+    const player=extractName(o,['player','playerName','raider','name','character','unit'])||'';
+    if(!player)return null;
+    const mode=normalizeMode(pick(o,['category','rollType','choice','vote','spec','mode','type']));
+    const maxRaw=pick(o,['max','rollMax','sides','rollRange'])??pick(event,['max','rollMax','sides']);
+    const max=Math.max(1,Math.min(100000,Number(maxRaw)||100));
+    const value=numericRoll(pick(o,['value','rollValue','rollNumber','rollResult','roll']),max);
+    const rawOutcome=str(pick(o,['outcome','result','status'])).toLowerCase().trim();
+    const passed=mode==='Pass'||rawOutcome==='pass'||rawOutcome==='passed';
+    const explicitWon=pick(o,['won','isWinner']);
+    const laterWinnerAttempt=participants.slice(j+1).some(next=>isObj(next)&&extractName(next,['player','playerName','raider','name','character','unit']).toLowerCase()===player.toLowerCase());
+    const won=typeof explicitWon==='boolean'?explicitWon:(!!winner && winner.toLowerCase()===player.toLowerCase()&&!passed&&!laterWinnerAttempt);
+    const resolved=pick(event,['resolved','finalized'])===true||!!winner||rawOutcome==='lost'||rawOutcome==='won';
+    return {id:`${eventId}:${j}`,eventId,player,mode,value,max,
+      status:passed?'passed':value!==null?'rolled':'choice-only',
+      won:resolved?won:null,timestamp,item,boss:extractName(event,['boss','bossName','encounter','encounterName'])||award?.boss||'',winner,
+      raw:o};
+  }).filter(Boolean);
+  if(!rows.length)return null;
+  return {id:eventId,item,winner,timestamp,boss:rows[0].boss,rolls:rows,raw:event};
+}
+function collectRollEvents(session,root,entries,start){
+  const out=[],ids=new Set();
+  const record=(event,i,award=null)=>{
+    const r=rollEvent(event,i,start,award);
+    if(!r)return;
+    // Identical round identifiers within a session are one contest, even if
+    // represented in both the session's rollEvents and an award's rolls.
+    if(ids.has(r.id))return;ids.add(r.id);out.push(r);
+  };
+  let index=0;
+  for(const key of rollEventKeys){
+    const candidate=session[key]??(session===root?null:root[key]);
+    if(Array.isArray(candidate))for(const event of candidate)if(isObj(event))record(event,index++);
+  }
+  for(const entry of entries){
+    if(participantRows(entry.raw).length){
+      const withId={...entry.raw,roundId:pick(entry.raw,['roundId','rollId','eventId','awardId','entryId'])||entry.id};
+      record(withId,index++,entry);
+    }
+  }
+  return out;
+}
+function rollSummary(rows){
+  const numeric=rows.filter(r=>r.value!==null && Number.isInteger(r.value));
+  const resolved=rows.filter(r=>r.won!==null && r.value!==null && r.mode!=='Pass');
+  const wins=resolved.filter(r=>r.won===true).length;
+  const values=numeric.map(r=>r.value).sort((a,b)=>a-b);
+  return {participations:rows.length,choices:rows.filter(r=>r.mode!=='Pass').length,
+    numericRolls:numeric.length,passes:rows.filter(r=>r.mode==='Pass').length,
+    avg:values.length?values.reduce((a,b)=>a+b,0)/values.length:null,
+    median:values.length?(values[Math.floor((values.length-1)/2)]+values[Math.floor(values.length/2)])/2:null,
+    best:values.length?values[values.length-1]:null,worst:values.length?values[0]:null,
+    wins,resolved:resolved.length,winRate:resolved.length?wins/resolved.length:null};
+}
+
 function normalizeSource(source) {
   const root=source.payload;
   const candidates=sessionCandidates(root);
@@ -205,15 +285,16 @@ function normalizeSource(source) {
     const rawId=str(pick(session,['sessionId','sessionID','raidId','raidID','guid','id']))||String(i+1);
     const entries=entryCandidates(session).map((r,j)=>extractEntry(r,j,start)).filter(e=>e.winner && !['none','nobody','unassigned'].includes(e.winner.toLowerCase()));
     const softRes=softReservations(session,root);
+    const rollEvents=collectRollEvents(session,root,entries,start);
     let roster=pick(session,['roster','raiders','players','participants','members'])??pick(root,['roster','raiders','players','participants','members']);
     if(isObj(roster))roster=Object.keys(roster);
     if(!Array.isArray(roster))roster=[];
     roster=roster.map(x=>isObj(x)?extractName(x,['name','player','character','fullName']):str(x)).filter(Boolean);
-    const players=[...new Set([...roster,...entries.map(e=>e.winner).filter(Boolean),...softRes.map(e=>e.raider).filter(Boolean)])];
+    const players=[...new Set([...roster,...entries.map(e=>e.winner).filter(Boolean),...softRes.map(e=>e.raider).filter(Boolean),...rollEvents.flatMap(e=>e.rolls.map(r=>r.player))])];
     return {id:`${source.id}:${rawId}:${i}`,sourceId:source.id,sourceName:source.name,rawId,name,start,end,
       guild:extractName(session,['guild','guildName'])||extractName(root,['guild','guildName']),
       difficulty:extractName(session,['difficulty','raidDifficulty']),
-      entries,softRes,players,raw:session,schema:extractName(root,['schema','format','schemaVersion','version'])||'Unknown',
+      entries,softRes,rollEvents,players,raw:session,schema:extractName(root,['schema','format','schemaVersion','version'])||'Unknown',
     };
   });
 }
@@ -221,26 +302,32 @@ function assemble(sources) {
   const unique=[...new Map(sources.filter(s=>isObj(s)&&isObj(s.payload)).map(s=>[s.id,s])).values()];
   const sessions=unique.flatMap(normalizeSource).sort((a,b)=>((b.start||'').localeCompare(a.start||''))||a.name.localeCompare(b.name));
   const allEntries=sessions.flatMap(session=>session.entries.map(entry=>({...entry,sessionId:session.id,sessionName:session.name,sessionStart:session.start})));
+  const allRolls=sessions.flatMap(session=>session.rollEvents.flatMap(round=>round.rolls.map(r=>({...r,roundId:round.id,sessionId:session.id,sessionName:session.name,sessionStart:session.start}))));
   const playerMap=new Map();
   for (const session of sessions){
     for (const name of session.players) {
       const key=name.toLowerCase();let p=playerMap.get(key);
-      if(!p){p={name,sessionIds:new Set(),awards:[],reserves:[]};playerMap.set(key,p);}
+      if(!p){p={name,sessionIds:new Set(),awards:[],reserves:[],rolls:[]};playerMap.set(key,p);}
       p.sessionIds.add(session.id);
     }
     for(const entry of session.entries){
       if(!entry.winner)continue;const key=entry.winner.toLowerCase();let p=playerMap.get(key);
-      if(!p){p={name:entry.winner,sessionIds:new Set(),awards:[],reserves:[]};playerMap.set(key,p);}
+      if(!p){p={name:entry.winner,sessionIds:new Set(),awards:[],reserves:[],rolls:[]};playerMap.set(key,p);}
       p.sessionIds.add(session.id);p.awards.push({...entry,sessionId:session.id,sessionName:session.name});
     }
     for(const entry of session.softRes){const key=entry.raider.toLowerCase();let p=playerMap.get(key);
-      if(!p){p={name:entry.raider,sessionIds:new Set(),awards:[],reserves:[]};playerMap.set(key,p);}
+      if(!p){p={name:entry.raider,sessionIds:new Set(),awards:[],reserves:[],rolls:[]};playerMap.set(key,p);}
       p.sessionIds.add(session.id);p.reserves.push({...entry,sessionId:session.id});
     }
   }
-  return {sources:unique,sessions,entries:allEntries,players:[...playerMap.values()].sort((a,b)=>b.awards.length-a.awards.length||a.name.localeCompare(b.name))};
+  for(const roll of allRolls){
+    const key=roll.player.toLowerCase();let p=playerMap.get(key);
+    if(!p){p={name:roll.player,sessionIds:new Set(),awards:[],reserves:[],rolls:[]};playerMap.set(key,p);}
+    p.sessionIds.add(roll.sessionId);p.rolls.push(roll);
+  }
+  return {sources:unique,sessions,entries:allEntries,rolls:allRolls,players:[...playerMap.values()].sort((a,b)=>b.awards.length-a.awards.length||a.name.localeCompare(b.name))};
 }
 function publishedArchive(sources){return {format:ARCHIVE_FORMAT,generatedAt:new Date().toISOString(),sources:sources.map(s=>({id:s.id,name:s.name,importedAt:s.importedAt,payload:s.payload}))};}
 
-window.PlusOneParser={ARCHIVE_FORMAT,hashText,makeSource,isArchive,unwrapImports,normalizeMode,normalizeSource,assemble,publishedArchive};
+window.PlusOneParser={ARCHIVE_FORMAT,hashText,makeSource,isArchive,unwrapImports,normalizeMode,normalizeSource,assemble,publishedArchive,rollSummary};
 })();

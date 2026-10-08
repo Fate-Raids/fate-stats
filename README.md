@@ -1,32 +1,55 @@
-# PlusOne Raid Archive — GitHub Pages Edition (v0.3.0 Alpha)
+# PlusOne Raid Archive v0.4.0 — GitHub Pages
 
-A free static website for WoW Forever raid history, based on the existing PlusOne v0.1.2/v0.2.0 UI. No PHP, separate server, database, admin login, or secret API token required.
+Public, read-only website for browsing PlusOne raid sessions, loot awards, SoftRes, and **individual rolls**.
 
-**What it does:** Repository owners upload `.json` exports into `raid-exports/` through GitHub's UI. On each commit to `main`, GitHub Actions validates the JSON, runs parser regression tests, builds a combined archive, and publishes the read-only public website on GitHub Pages. Visitors can browse sessions, loot, raiders, SoftRes, and statistics.
+## Update existing website
 
-## Quick setup
+Copy these updated files to the root of your existing GitHub Pages repository, preserving paths, and commit:
 
-1. Create a public repository on GitHub. For the shortest site URL, call it **`YOUR-USERNAME.github.io`**; replace `YOUR-USERNAME` with your exact GitHub username. Alternatively use any repository name to get `https://YOUR-USERNAME.github.io/REPOSITORY/`.
-2. Extract the **GitHubReady ZIP**, preserving the `.github/workflows/deploy.yml` folder. Upload **the contents**, not the ZIP itself, to the repository root and commit. If you started with a temporary `index.html`, overwrite that one with this version.
-3. In **Settings → Pages → Build and deployment → Source**, select **GitHub Actions**, not **Deploy from a branch**.
-4. Check the **Actions** tab for a green **Publish PlusOne Raid Archive** workflow. Open the Pages URL shown in Settings → Pages.
-5. To add raids, open `raid-exports/` in GitHub, select **Add file → Upload files**, drag your `.json` files into the uploader, and **Commit changes** to `main`. After the workflow finishes, reload the live website.
-6. To remove a test raid, delete its `.json` file in GitHub and commit. The next build removes that session from the public archive.
+- `index.html`
+- `assets/app.js`
+- `assets/styles.css`
+- `assets/parser.js` (source used by GitHub Actions)
+- `assets/parser-browser.js` (prebuilt browser equivalent)
+- `package.json`
+- `tests/` (optional for publication, included for verification)
+- `samples/` (optional demonstration)
 
-Your public URL needs no custom DNS. If you want to test with the included synthetic Molten Core raid, move or upload `samples/PlusOne_Synthetic_FATE_MoltenCore_20Raiders_60Items.json` to `raid-exports/`. Do not do this unless you want the synthetic results publicly visible.
+The existing `.github/workflows/deploy.yml` does **not** need changing. Nothing needs PHP. The GitHub Action automatically processes all JSON files in `raid-exports/` and republishes after commit.
 
-**Detailed setup and troubleshooting:** [GITHUB_SETUP.md](GITHUB_SETUP.md)
+If you already uploaded the synthetic 0.3.0 JSON under `raid-exports`, your archive should already have rollResults on many awards. The new site will display those figures. Existing real exports that lack rollResults still work, but roll analytics will be unknown for them.
 
-## Structure
+### First roll analytics demo
 
-- `index.html`, `assets/`: the public read-only site and its parser.
-- `raid-exports/`: upload JSON files here (source of truth).
-- `.github/workflows/deploy.yml`: automated build, tests, and Pages publication.
-- `scripts/build-archive.mjs`: validates, deduplicates, and assembles original JSON exports into `dist/data/archive.json`.
-- `samples/`: optional 20-raider/60-award synthetic test data, not live by default.
-- `tests/`: parser and publisher unit tests.
-- `dist/`: generated public website, deliberately not committed. GitHub Pages deploys only this folder.
+The new `samples/PlusOne_Synthetic_FATE_MoltenCore_20Raiders_60Items.json` contains a 20-person, 60-award test raid with 158 participant roll/choice records, including Passes and unrolled SoftRes entries. To see the expanded test cases, **replace** the earlier synthetic file under `raid-exports/`, rather than adding a second overlapping history export. Data in `samples/` never publishes automatically.
 
-To test locally with Node.js 22+: `npm test && npm run build`, then `python -m http.server 8000 --directory dist` and browse `http://localhost:8000/`.
+## Output semantics
 
-This website is public. Only people with write permissions on the repository can change its files, but anyone can read committed raw exports and published history. Review guild/player privacy before uploading.
+Every actual round has a unique `roundId` and `rolls` participants:
+
+```json
+{
+  "rollEvents": [{
+    "roundId": "raid42-drop9",
+    "itemId": 17063,
+    "itemName": "Example",
+    "winner": "Player A",
+    "resolved": true,
+    "rolls": [
+      {"player": "Player A", "category": "Main Spec", "value": 79, "max": 100, "won": true},
+      {"player": "Player B", "category": "Off Spec", "value": 30, "max": 100, "won": false},
+      {"player": "Player C", "category": "Pass", "value": null, "max": 100, "won": false}
+    ]
+  }]
+}
+```
+
+The website also recognizes legacy `award.rollResults` arrays. A missing numeric result is **not zero**. The average and distribution exclude passes and choice-only entries; win rate counts resolved numeric attempts only. A single loot round may include multiple attempts by one player (e.g. tie re-roll).
+
+## Local verification
+
+Run `npm test`, `npm run build`, and optionally `python tests/browser_smoke.py` with Playwright and Chromium installed. Source files require Node.js 22 in the GitHub Actions workflow.
+
+## Privacy and limitations
+
+GitHub repositories are public if you use public GitHub Pages on GitHub Free. Exported player names, items, numbers, and raw session fields will be publicly readable. Historic real roll values cannot be recovered from award-only exports. The new Lua recorder needs wiring into the master addon before future official exports can contain the full data.

@@ -48,3 +48,9 @@ The original JSON payloads are preserved inside the public archive for future st
 ## Hosting requirements
 
 GitHub Pages with public repositories is supported on the free plan. Static HTML, CSS, JavaScript, and JSON are supported; PHP is not supported. The standard GitHub Pages workflow requires `pages: write` and `id-token: write` permissions; these are scoped to the deployment job. No personal access token is stored in the website.
+
+## Roll Analytics update (v0.4.0)
+
+Existing websites already using GitHub Actions need only replace `index.html`, `assets/app.js`, `assets/styles.css`, `assets/parser.js`, `assets/parser-browser.js` and other updated source files, then commit. **Do not delete your `raid-exports` folder.** The existing deploy workflow remains valid. Open **Roll analytics** from the left navigation, or open Loot History and click an item's roll count.
+
+If you upload the new synthetic file, remove or replace the old synthetic export instead of publishing two different snapshots of the same imaginary raid.

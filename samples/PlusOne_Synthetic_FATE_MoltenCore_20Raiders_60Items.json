@@ -3,7 +3,7 @@
   "guild": "FATE",
   "synthetic": true,
   "syntheticDisclaimer": "SIMULATED TEST DATA ONLY. Not actual raid loot, drop rates, or Forever-specific item metadata. Classic Era item identifiers are for website-link testing.",
-  "generatedFor": "PlusOne Raid Archive v0.1.0",
+  "generatedFor": "PlusOne Raid Archive v0.4.0 Roll Analytics",
   "sessions": [
     {
       "sessionId": "FATE-SYNTHETIC-MC-FULLCLEAR-20261007",
@@ -158,6 +158,18 @@
               "raider": "Liora Starfall",
               "rollType": "Soft Res",
               "roll": 100
+            },
+            {
+              "raider": "Helos Animosity",
+              "rollType": "Pass",
+              "roll": null,
+              "status": "passed"
+            },
+            {
+              "raider": "Ronan Ironvale",
+              "rollType": "Soft Res",
+              "roll": null,
+              "status": "eligible-no-roll"
             }
           ],
           "isSynthetic": true,
@@ -361,6 +373,12 @@
               "raider": "Helos Animosity",
               "rollType": "Main Spec",
               "roll": 100
+            },
+            {
+              "raider": "Maibe Later",
+              "rollType": "Pass",
+              "roll": null,
+              "status": "passed"
             }
           ],
           "isSynthetic": true,
@@ -559,6 +577,12 @@
               "raider": "Elowen Dawnwhisper",
               "rollType": "Off Spec",
               "roll": 100
+            },
+            {
+              "raider": "Helos Animosity",
+              "rollType": "Pass",
+              "roll": null,
+              "status": "passed"
             }
           ],
           "isSynthetic": true,
@@ -588,6 +612,12 @@
               "raider": "Helos Animosity",
               "rollType": "Main Spec",
               "roll": 100
+            },
+            {
+              "raider": "Ronan Ironvale",
+              "rollType": "Soft Res",
+              "roll": null,
+              "status": "eligible-no-roll"
             }
           ],
           "isSynthetic": true,
@@ -767,6 +797,12 @@
               "raider": "Maibe Later",
               "rollType": "Main Spec",
               "roll": 100
+            },
+            {
+              "raider": "Helos Animosity",
+              "rollType": "Pass",
+              "roll": null,
+              "status": "passed"
             }
           ],
           "isSynthetic": true,
@@ -961,6 +997,12 @@
               "raider": "Maibe Later",
               "rollType": "Soft Res",
               "roll": 100
+            },
+            {
+              "raider": "Helos Animosity",
+              "rollType": "Pass",
+              "roll": null,
+              "status": "passed"
             }
           ],
           "isSynthetic": true,
@@ -1033,6 +1075,12 @@
               "raider": "Talia Stormrune",
               "rollType": "Main Spec",
               "roll": 100
+            },
+            {
+              "raider": "Ronan Ironvale",
+              "rollType": "Soft Res",
+              "roll": null,
+              "status": "eligible-no-roll"
             }
           ],
           "isSynthetic": true,
@@ -1154,6 +1202,12 @@
               "raider": "Liora Starfall",
               "rollType": "Transmog",
               "roll": 100
+            },
+            {
+              "raider": "Helos Animosity",
+              "rollType": "Pass",
+              "roll": null,
+              "status": "passed"
             }
           ],
           "isSynthetic": true,
@@ -1352,6 +1406,12 @@
               "raider": "Talia Stormrune",
               "rollType": "Transmog",
               "roll": 100
+            },
+            {
+              "raider": "Helos Animosity",
+              "rollType": "Pass",
+              "roll": null,
+              "status": "passed"
             }
           ],
           "isSynthetic": true,
@@ -1453,6 +1513,12 @@
               "raider": "Brannor Stonefist",
               "rollType": "Main Spec",
               "roll": 100
+            },
+            {
+              "raider": "Ronan Ironvale",
+              "rollType": "Soft Res",
+              "roll": null,
+              "status": "eligible-no-roll"
             }
           ],
           "isSynthetic": true,
@@ -1540,6 +1606,12 @@
               "raider": "Maibe Later",
               "rollType": "Soft Res",
               "roll": 100
+            },
+            {
+              "raider": "Maibe Soon",
+              "rollType": "Pass",
+              "roll": null,
+              "status": "passed"
             }
           ],
           "isSynthetic": true,
@@ -1748,6 +1820,12 @@
               "raider": "Brannor Stonefist",
               "rollType": "Main Spec",
               "roll": 100
+            },
+            {
+              "raider": "Helos Animosity",
+              "rollType": "Pass",
+              "roll": null,
+              "status": "passed"
             }
           ],
           "isSynthetic": true,
@@ -1893,6 +1971,12 @@
               "raider": "Ronan Ironvale",
               "rollType": "Off Spec",
               "roll": 100
+            },
+            {
+              "raider": "Isolde Frostmere",
+              "rollType": "Soft Res",
+              "roll": null,
+              "status": "eligible-no-roll"
             }
           ],
           "isSynthetic": true,
@@ -1961,6 +2045,12 @@
               "raider": "Corvin Greywatch",
               "rollType": "Transmog",
               "roll": 100
+            },
+            {
+              "raider": "Helos Animosity",
+              "rollType": "Pass",
+              "roll": null,
+              "status": "passed"
             }
           ],
           "isSynthetic": true,
@@ -2425,7 +2515,8 @@
         "initialReserveSnapshotIncludesConsumedReserves": true,
         "softResWinsRemoveWinnerFromLaterEligibility": true,
         "duplicateReserveSlotsIncluded": true,
-        "itemLookupsUseClassicWowheadForTesting": true
+        "itemLookupsUseClassicWowheadForTesting": true,
+        "rollAnalytics": "Synthetic numeric rolls, passes, and SoftRes selections without a numeric roll. No missing dice values are inferred."
       }
     }
   ]

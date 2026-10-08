@@ -29,19 +29,32 @@ with sync_playwright() as p:
  assert page.locator('.metric-number').all_inner_texts()==['1','60','20','26']
  assert page.locator('#admin-button').count()==0
  print('PASS browser: no PHP admin button; published 1 session, 60 awards, 20 raiders, 26 SoftRes')
- for v,h in [('loot','Loot History'),('players','Raiders'),('statistics','Archive Statistics'),('sessions','Raid Sessions'),('overview','Raid Overview')]:
+ for v,h in [('loot','Loot History'),('players','Raiders'),('statistics','Archive Statistics'),('rolls','Roll Analytics'),('sessions','Raid Sessions'),('overview','Raid Overview')]:
   page.locator(f'#nav button[data-view="{v}"]').click()
   assert page.locator('h1').inner_text()==h,(v,page.locator('h1').inner_text())
- print('PASS browser: all five navigation views interactive')
+ print('PASS browser: all six navigation views interactive')
  page.locator('#nav [data-view="loot"]').click()
- assert page.locator('tbody tr').count()==60
+ assert page.locator('#main tbody tr').count()==60
+ page.locator('button[data-action="round"]').first.click()
+ assert page.locator('#drawer').evaluate('(e)=>e.open')
+ assert page.locator('#drawer-eyebrow').inner_text()=='ITEM ROLL DETAILS'
+ page.locator('#drawer-close').click()
  assert page.locator('.tag.main').first.bounding_box()['height']<35
  page.locator('#mode-filter').select_option('Soft Res')
- assert page.locator('tbody tr').count()==13
+ assert page.locator('#main tbody tr').count()==13
  page.locator('#mode-filter').select_option('all')
  page.locator('#archive-search').fill('Cauterizing Band')
- assert page.locator('tbody tr').count()>=2
+ assert page.locator('#main tbody tr').count()>=2
  print('PASS browser: compact Main Spec badge; 60 rows; SoftRes filter; item search')
+ page.locator('#nav [data-view="rolls"]').click()
+ assert page.locator('.roll-metric strong').first.inner_text().replace(',','').isdigit()
+ assert page.locator('#main .roll-table tbody tr').count()>0
+ page.locator('#roll-raider').select_option('Maibe Later')
+ assert page.locator('#main .roll-table tbody tr').count()>0
+ assert all('Maibe Later' in x for x in page.locator('#main .roll-table tbody tr td:first-child').all_inner_texts())
+ page.locator('#mode-filter').select_option('Main Spec')
+ assert all('Main Spec' in x for x in page.locator('#main .roll-table tbody tr td:nth-child(3)').all_inner_texts())
+ print('PASS browser: per-raider analytics, roll history, filters and graphs')
  page.locator('#nav [data-view="players"]').click()
  page.locator('[data-action="player"]').first.click()
  assert page.locator('#drawer').evaluate('(e)=>e.open')
