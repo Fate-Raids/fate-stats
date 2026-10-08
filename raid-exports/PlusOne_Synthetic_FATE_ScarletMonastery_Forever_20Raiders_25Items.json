@@ -1,0 +1,1418 @@
+{
+  "schema": "PlusOneRaidHistory-4",
+  "guild": "FATE",
+  "synthetic": true,
+  "syntheticDisclaimer": "TEST FIXTURE ONLY: fictional 20-player dungeon roster and 25 awards; dungeon item IDs/name are linked to existing Wowhead Forever item pages. Repeated drops, categories, rolls, and winners are simulated, not drop rates or real runs.",
+  "generatedFor": "PlusOne Raid Archive v0.4.1 Forever item tooltip + Roll Analytics testing",
+  "sessions": [
+    {
+      "sessionId": "FATE-SYN-SM-20261006",
+      "sessionName": "Scarlet Monastery — Library, Armory & Cathedral (SYNTHETIC)",
+      "guild": "FATE",
+      "instance": "Scarlet Monastery",
+      "difficulty": "Synthetic test — not a real 20-player dungeon",
+      "startedAt": "2026-10-06T19:15:00-07:00",
+      "endedAt": "2026-10-06T21:09:00-07:00",
+      "roster": [
+        {
+          "name": "Helos Animosity",
+          "class": "Paladin",
+          "role": "Healer",
+          "attendance": "Synthetic Test"
+        },
+        {
+          "name": "Maibe Later",
+          "class": "Mage",
+          "role": "Damage",
+          "attendance": "Synthetic Test"
+        },
+        {
+          "name": "Maibe Soon",
+          "class": "Priest",
+          "role": "Healer",
+          "attendance": "Synthetic Test"
+        },
+        {
+          "name": "Aldric Vayne",
+          "class": "Warrior",
+          "role": "Tank",
+          "attendance": "Synthetic Test"
+        },
+        {
+          "name": "Brannor Stonefist",
+          "class": "Warrior",
+          "role": "Damage",
+          "attendance": "Synthetic Test"
+        },
+        {
+          "name": "Sylra Moonveil",
+          "class": "Druid",
+          "role": "Healer",
+          "attendance": "Synthetic Test"
+        },
+        {
+          "name": "Kestrel Ashwood",
+          "class": "Hunter",
+          "role": "Damage",
+          "attendance": "Synthetic Test"
+        },
+        {
+          "name": "Darian Blackthorn",
+          "class": "Rogue",
+          "role": "Damage",
+          "attendance": "Synthetic Test"
+        },
+        {
+          "name": "Elowen Dawnwhisper",
+          "class": "Priest",
+          "role": "Healer",
+          "attendance": "Synthetic Test"
+        },
+        {
+          "name": "Thorin Emberforge",
+          "class": "Paladin",
+          "role": "Damage",
+          "attendance": "Synthetic Test"
+        },
+        {
+          "name": "Vesper Nightbloom",
+          "class": "Warlock",
+          "role": "Damage",
+          "attendance": "Synthetic Test"
+        },
+        {
+          "name": "Corvin Greywatch",
+          "class": "Rogue",
+          "role": "Damage",
+          "attendance": "Synthetic Test"
+        },
+        {
+          "name": "Nessa Valehart",
+          "class": "Priest",
+          "role": "Healer",
+          "attendance": "Synthetic Test"
+        },
+        {
+          "name": "Eamon Silverleaf",
+          "class": "Druid",
+          "role": "Damage",
+          "attendance": "Synthetic Test"
+        },
+        {
+          "name": "Bastian Stormward",
+          "class": "Warrior",
+          "role": "Tank",
+          "attendance": "Synthetic Test"
+        },
+        {
+          "name": "Fiora Quickstep",
+          "class": "Rogue",
+          "role": "Damage",
+          "attendance": "Synthetic Test"
+        },
+        {
+          "name": "Rowan Brightshield",
+          "class": "Paladin",
+          "role": "Healer",
+          "attendance": "Synthetic Test"
+        },
+        {
+          "name": "Seren Starweaver",
+          "class": "Mage",
+          "role": "Damage",
+          "attendance": "Synthetic Test"
+        },
+        {
+          "name": "Harlan Mistbrook",
+          "class": "Hunter",
+          "role": "Damage",
+          "attendance": "Synthetic Test"
+        },
+        {
+          "name": "Astrid Spellbound",
+          "class": "Warlock",
+          "role": "Damage",
+          "attendance": "Synthetic Test"
+        }
+      ],
+      "lootHistory": [
+        {
+          "entryId": "SYN-SM-001",
+          "itemId": 7756,
+          "itemName": "Dog Training Gloves",
+          "quality": 3,
+          "itemLink": "|cff0070dd|Hitem:7756:0:0:0|h[Dog Training Gloves]|h|r",
+          "itemUrl": "https://www.wowhead.com/forever/item=7756",
+          "winner": "Helos Animosity",
+          "rollType": "Off Spec",
+          "awardMethod": "PlusOneRoll",
+          "boss": "Houndmaster Loksey (Library)",
+          "timestamp": "2026-10-06T19:24:00-07:00",
+          "rollResults": [
+            {
+              "raider": "Helos Animosity",
+              "rollType": "Off Spec",
+              "roll": 99,
+              "max": 100,
+              "status": "won",
+              "won": true
+            },
+            {
+              "raider": "Harlan Mistbrook",
+              "rollType": "Off Spec",
+              "roll": 53,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            },
+            {
+              "raider": "Astrid Spellbound",
+              "rollType": "Pass",
+              "roll": null,
+              "status": "passed",
+              "won": false
+            },
+            {
+              "raider": "Corvin Greywatch",
+              "rollType": "Off Spec",
+              "roll": 5,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            }
+          ],
+          "isSynthetic": true,
+          "softResWon": false,
+          "reserveConsumed": false
+        },
+        {
+          "entryId": "SYN-SM-002",
+          "itemId": 7710,
+          "itemName": "Loksey's Training Stick",
+          "quality": 3,
+          "itemLink": "|cff0070dd|Hitem:7710:0:0:0|h[Loksey's Training Stick]|h|r",
+          "itemUrl": "https://www.wowhead.com/forever/item=7710",
+          "winner": "Maibe Later",
+          "rollType": "Transmog",
+          "awardMethod": "PlusOneRoll",
+          "boss": "Houndmaster Loksey (Library)",
+          "timestamp": "2026-10-06T19:28:00-07:00",
+          "rollResults": [
+            {
+              "raider": "Corvin Greywatch",
+              "rollType": "Transmog",
+              "roll": 53,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            },
+            {
+              "raider": "Maibe Later",
+              "rollType": "Transmog",
+              "roll": 81,
+              "max": 100,
+              "status": "won",
+              "won": true
+            }
+          ],
+          "isSynthetic": true,
+          "softResWon": false,
+          "reserveConsumed": false
+        },
+        {
+          "entryId": "SYN-SM-003",
+          "itemId": 7712,
+          "itemName": "Mantle of Doan",
+          "quality": 3,
+          "itemLink": "|cff0070dd|Hitem:7712:0:0:0|h[Mantle of Doan]|h|r",
+          "itemUrl": "https://www.wowhead.com/forever/item=7712",
+          "winner": "Maibe Soon",
+          "rollType": "Main Spec",
+          "awardMethod": "PlusOneRoll",
+          "boss": "Arcanist Doan (Library)",
+          "timestamp": "2026-10-06T19:32:00-07:00",
+          "rollResults": [
+            {
+              "raider": "Maibe Soon",
+              "rollType": "Main Spec",
+              "roll": 72,
+              "max": 100,
+              "status": "won",
+              "won": true
+            },
+            {
+              "raider": "Kestrel Ashwood",
+              "rollType": "Main Spec",
+              "roll": 37,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            },
+            {
+              "raider": "Aldric Vayne",
+              "rollType": "Main Spec",
+              "roll": 19,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            }
+          ],
+          "isSynthetic": true,
+          "softResWon": false,
+          "reserveConsumed": false
+        },
+        {
+          "entryId": "SYN-SM-004",
+          "itemId": 7711,
+          "itemName": "Robe of Doan",
+          "quality": 3,
+          "itemLink": "|cff0070dd|Hitem:7711:0:0:0|h[Robe of Doan]|h|r",
+          "itemUrl": "https://www.wowhead.com/forever/item=7711",
+          "winner": "Aldric Vayne",
+          "rollType": "Soft Res",
+          "awardMethod": "SoftRes",
+          "boss": "Arcanist Doan (Library)",
+          "timestamp": "2026-10-06T19:36:00-07:00",
+          "rollResults": [
+            {
+              "raider": "Aldric Vayne",
+              "rollType": "Soft Res",
+              "roll": 73,
+              "max": 100,
+              "status": "won",
+              "won": true
+            },
+            {
+              "raider": "Bastian Stormward",
+              "rollType": "Soft Res",
+              "roll": 44,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            },
+            {
+              "raider": "Corvin Greywatch",
+              "rollType": "Soft Res",
+              "roll": 51,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            },
+            {
+              "raider": "Maibe Soon",
+              "rollType": "Soft Res",
+              "roll": 64,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            },
+            {
+              "raider": "Harlan Mistbrook",
+              "rollType": "Soft Res",
+              "roll": 62,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            }
+          ],
+          "isSynthetic": true,
+          "softResWon": true,
+          "reserveConsumed": true,
+          "softResEligibility": {
+            "beforeAward": [
+              "Aldric Vayne",
+              "Harlan Mistbrook",
+              "Bastian Stormward",
+              "Corvin Greywatch",
+              "Maibe Soon"
+            ],
+            "afterAward": [
+              "Harlan Mistbrook",
+              "Bastian Stormward",
+              "Corvin Greywatch",
+              "Maibe Soon"
+            ],
+            "winnerRemovedFromFutureRolls": true
+          }
+        },
+        {
+          "entryId": "SYN-SM-005",
+          "itemId": 7713,
+          "itemName": "Illusionary Rod",
+          "quality": 3,
+          "itemLink": "|cff0070dd|Hitem:7713:0:0:0|h[Illusionary Rod]|h|r",
+          "itemUrl": "https://www.wowhead.com/forever/item=7713",
+          "winner": "Brannor Stonefist",
+          "rollType": "Main Spec",
+          "awardMethod": "PlusOneRoll",
+          "boss": "Arcanist Doan (Library)",
+          "timestamp": "2026-10-06T19:40:00-07:00",
+          "rollResults": [
+            {
+              "raider": "Brannor Stonefist",
+              "rollType": "Main Spec",
+              "roll": 86,
+              "max": 100,
+              "status": "won",
+              "won": true
+            },
+            {
+              "raider": "Kestrel Ashwood",
+              "rollType": "Main Spec",
+              "roll": 10,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            },
+            {
+              "raider": "Helos Animosity",
+              "rollType": "Main Spec",
+              "roll": 24,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            }
+          ],
+          "isSynthetic": true,
+          "softResWon": false,
+          "reserveConsumed": false
+        },
+        {
+          "entryId": "SYN-SM-006",
+          "itemId": 7714,
+          "itemName": "Hypnotic Blade",
+          "quality": 3,
+          "itemLink": "|cff0070dd|Hitem:7714:0:0:0|h[Hypnotic Blade]|h|r",
+          "itemUrl": "https://www.wowhead.com/forever/item=7714",
+          "winner": "Sylra Moonveil",
+          "rollType": "Off Spec",
+          "awardMethod": "PlusOneRoll",
+          "boss": "Arcanist Doan (Library)",
+          "timestamp": "2026-10-06T19:44:00-07:00",
+          "rollResults": [
+            {
+              "raider": "Astrid Spellbound",
+              "rollType": "Off Spec",
+              "roll": 62,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            },
+            {
+              "raider": "Darian Blackthorn",
+              "rollType": "Off Spec",
+              "roll": 32,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            },
+            {
+              "raider": "Vesper Nightbloom",
+              "rollType": "Pass",
+              "roll": null,
+              "status": "passed",
+              "won": false
+            },
+            {
+              "raider": "Sylra Moonveil",
+              "rollType": "Off Spec",
+              "roll": 75,
+              "max": 100,
+              "status": "won",
+              "won": true
+            },
+            {
+              "raider": "Maibe Soon",
+              "rollType": "Off Spec",
+              "roll": 64,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            },
+            {
+              "raider": "Brannor Stonefist",
+              "rollType": "Off Spec",
+              "roll": 10,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            }
+          ],
+          "isSynthetic": true,
+          "softResWon": false,
+          "reserveConsumed": false
+        },
+        {
+          "entryId": "SYN-SM-007",
+          "itemId": 7719,
+          "itemName": "Raging Berserker's Helm",
+          "quality": 3,
+          "itemLink": "|cff0070dd|Hitem:7719:0:0:0|h[Raging Berserker's Helm]|h|r",
+          "itemUrl": "https://www.wowhead.com/forever/item=7719",
+          "winner": "Kestrel Ashwood",
+          "rollType": "Main Spec",
+          "awardMethod": "PlusOneRoll",
+          "boss": "Herod (Armory)",
+          "timestamp": "2026-10-06T19:48:00-07:00",
+          "rollResults": [
+            {
+              "raider": "Maibe Soon",
+              "rollType": "Main Spec",
+              "roll": 48,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            },
+            {
+              "raider": "Kestrel Ashwood",
+              "rollType": "Main Spec",
+              "roll": 85,
+              "max": 100,
+              "status": "won",
+              "won": true
+            }
+          ],
+          "isSynthetic": true,
+          "softResWon": false,
+          "reserveConsumed": false
+        },
+        {
+          "entryId": "SYN-SM-008",
+          "itemId": 7717,
+          "itemName": "Ravager",
+          "quality": 3,
+          "itemLink": "|cff0070dd|Hitem:7717:0:0:0|h[Ravager]|h|r",
+          "itemUrl": "https://www.wowhead.com/forever/item=7717",
+          "winner": "Darian Blackthorn",
+          "rollType": "Main Spec",
+          "awardMethod": "PlusOneRoll",
+          "boss": "Herod (Armory)",
+          "timestamp": "2026-10-06T19:52:00-07:00",
+          "rollResults": [
+            {
+              "raider": "Darian Blackthorn",
+              "rollType": "Main Spec",
+              "roll": 85,
+              "max": 100,
+              "status": "won",
+              "won": true
+            },
+            {
+              "raider": "Kestrel Ashwood",
+              "rollType": "Main Spec",
+              "roll": 79,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            }
+          ],
+          "isSynthetic": true,
+          "softResWon": false,
+          "reserveConsumed": false
+        },
+        {
+          "entryId": "SYN-SM-009",
+          "itemId": 23192,
+          "itemName": "Tabard of the Scarlet Crusade",
+          "quality": 2,
+          "itemLink": "|cff1eff00|Hitem:23192:0:0:0|h[Tabard of the Scarlet Crusade]|h|r",
+          "itemUrl": "https://www.wowhead.com/forever/item=23192",
+          "winner": "Elowen Dawnwhisper",
+          "rollType": "Soft Res",
+          "awardMethod": "SoftRes",
+          "boss": "Scarlet Trainee (Armory)",
+          "timestamp": "2026-10-06T19:56:00-07:00",
+          "rollResults": [
+            {
+              "raider": "Corvin Greywatch",
+              "rollType": "Soft Res",
+              "roll": 35,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            },
+            {
+              "raider": "Vesper Nightbloom",
+              "rollType": "Soft Res",
+              "roll": null,
+              "status": "eligible-no-roll",
+              "won": false
+            },
+            {
+              "raider": "Elowen Dawnwhisper",
+              "rollType": "Soft Res",
+              "roll": 99,
+              "max": 100,
+              "status": "won",
+              "won": true
+            },
+            {
+              "raider": "Aldric Vayne",
+              "rollType": "Soft Res",
+              "roll": 76,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            }
+          ],
+          "isSynthetic": true,
+          "softResWon": true,
+          "reserveConsumed": true,
+          "softResEligibility": {
+            "beforeAward": [
+              "Elowen Dawnwhisper",
+              "Corvin Greywatch",
+              "Aldric Vayne"
+            ],
+            "afterAward": [
+              "Corvin Greywatch",
+              "Aldric Vayne"
+            ],
+            "winnerRemovedFromFutureRolls": true
+          }
+        },
+        {
+          "entryId": "SYN-SM-010",
+          "itemId": 7726,
+          "itemName": "Aegis of the Scarlet Commander",
+          "quality": 3,
+          "itemLink": "|cff0070dd|Hitem:7726:0:0:0|h[Aegis of the Scarlet Commander]|h|r",
+          "itemUrl": "https://www.wowhead.com/forever/item=7726",
+          "winner": "Thorin Emberforge",
+          "rollType": "Transmog",
+          "awardMethod": "PlusOneRoll",
+          "boss": "Scarlet Commander Mograine (Cathedral)",
+          "timestamp": "2026-10-06T20:00:00-07:00",
+          "rollResults": [
+            {
+              "raider": "Brannor Stonefist",
+              "rollType": "Transmog",
+              "roll": 61,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            },
+            {
+              "raider": "Thorin Emberforge",
+              "rollType": "Transmog",
+              "roll": 73,
+              "max": 100,
+              "status": "won",
+              "won": true
+            },
+            {
+              "raider": "Maibe Soon",
+              "rollType": "Transmog",
+              "roll": 59,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            },
+            {
+              "raider": "Nessa Valehart",
+              "rollType": "Transmog",
+              "roll": 48,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            }
+          ],
+          "isSynthetic": true,
+          "softResWon": false,
+          "reserveConsumed": false
+        },
+        {
+          "entryId": "SYN-SM-011",
+          "itemId": 7723,
+          "itemName": "Mograine's Might",
+          "quality": 3,
+          "itemLink": "|cff0070dd|Hitem:7723:0:0:0|h[Mograine's Might]|h|r",
+          "itemUrl": "https://www.wowhead.com/forever/item=7723",
+          "winner": "Vesper Nightbloom",
+          "rollType": "Off Spec",
+          "awardMethod": "PlusOneRoll",
+          "boss": "Scarlet Commander Mograine (Cathedral)",
+          "timestamp": "2026-10-06T20:04:00-07:00",
+          "rollResults": [
+            {
+              "raider": "Vesper Nightbloom",
+              "rollType": "Off Spec",
+              "roll": 98,
+              "max": 100,
+              "status": "won",
+              "won": true
+            },
+            {
+              "raider": "Eamon Silverleaf",
+              "rollType": "Off Spec",
+              "roll": 38,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            },
+            {
+              "raider": "Nessa Valehart",
+              "rollType": "Pass",
+              "roll": null,
+              "status": "passed",
+              "won": false
+            }
+          ],
+          "isSynthetic": true,
+          "softResWon": false,
+          "reserveConsumed": false
+        },
+        {
+          "entryId": "SYN-SM-012",
+          "itemId": 7724,
+          "itemName": "Gauntlets of Divinity",
+          "quality": 3,
+          "itemLink": "|cff0070dd|Hitem:7724:0:0:0|h[Gauntlets of Divinity]|h|r",
+          "itemUrl": "https://www.wowhead.com/forever/item=7724",
+          "winner": "Corvin Greywatch",
+          "rollType": "Main Spec",
+          "awardMethod": "PlusOneRoll",
+          "boss": "Scarlet Commander Mograine (Cathedral)",
+          "timestamp": "2026-10-06T20:08:00-07:00",
+          "rollResults": [
+            {
+              "raider": "Nessa Valehart",
+              "rollType": "Main Spec",
+              "roll": 41,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            },
+            {
+              "raider": "Corvin Greywatch",
+              "rollType": "Main Spec",
+              "roll": 96,
+              "max": 100,
+              "status": "won",
+              "won": true
+            }
+          ],
+          "isSynthetic": true,
+          "softResWon": false,
+          "reserveConsumed": false
+        },
+        {
+          "entryId": "SYN-SM-013",
+          "itemId": 10330,
+          "itemName": "Scarlet Leggings",
+          "quality": 3,
+          "itemLink": "|cff0070dd|Hitem:10330:0:0:0|h[Scarlet Leggings]|h|r",
+          "itemUrl": "https://www.wowhead.com/forever/item=10330",
+          "winner": "Nessa Valehart",
+          "rollType": "Main Spec",
+          "awardMethod": "PlusOneRoll",
+          "boss": "Scarlet Commander Mograine (Cathedral)",
+          "timestamp": "2026-10-06T20:12:00-07:00",
+          "rollResults": [
+            {
+              "raider": "Sylra Moonveil",
+              "rollType": "Main Spec",
+              "roll": 26,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            },
+            {
+              "raider": "Eamon Silverleaf",
+              "rollType": "Main Spec",
+              "roll": 9,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            },
+            {
+              "raider": "Nessa Valehart",
+              "rollType": "Main Spec",
+              "roll": 92,
+              "max": 100,
+              "status": "won",
+              "won": true
+            }
+          ],
+          "isSynthetic": true,
+          "softResWon": false,
+          "reserveConsumed": false
+        },
+        {
+          "entryId": "SYN-SM-014",
+          "itemId": 7721,
+          "itemName": "Hand of Righteousness",
+          "quality": 3,
+          "itemLink": "|cff0070dd|Hitem:7721:0:0:0|h[Hand of Righteousness]|h|r",
+          "itemUrl": "https://www.wowhead.com/forever/item=7721",
+          "winner": "Eamon Silverleaf",
+          "rollType": "Off Spec",
+          "awardMethod": "PlusOneRoll",
+          "boss": "High Inquisitor Whitemane (Cathedral)",
+          "timestamp": "2026-10-06T20:16:00-07:00",
+          "rollResults": [
+            {
+              "raider": "Thorin Emberforge",
+              "rollType": "Off Spec",
+              "roll": 37,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            },
+            {
+              "raider": "Eamon Silverleaf",
+              "rollType": "Off Spec",
+              "roll": 83,
+              "max": 100,
+              "status": "won",
+              "won": true
+            },
+            {
+              "raider": "Bastian Stormward",
+              "rollType": "Off Spec",
+              "roll": 31,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            },
+            {
+              "raider": "Sylra Moonveil",
+              "rollType": "Off Spec",
+              "roll": 64,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            }
+          ],
+          "isSynthetic": true,
+          "softResWon": false,
+          "reserveConsumed": false
+        },
+        {
+          "entryId": "SYN-SM-015",
+          "itemId": 19508,
+          "itemName": "Branded Leather Bracers",
+          "quality": 3,
+          "itemLink": "|cff0070dd|Hitem:19508:0:0:0|h[Branded Leather Bracers]|h|r",
+          "itemUrl": "https://www.wowhead.com/forever/item=19508",
+          "winner": "Bastian Stormward",
+          "rollType": "Main Spec",
+          "awardMethod": "PlusOneRoll",
+          "boss": "High Inquisitor Whitemane (Cathedral)",
+          "timestamp": "2026-10-06T20:20:00-07:00",
+          "rollResults": [
+            {
+              "raider": "Bastian Stormward",
+              "rollType": "Main Spec",
+              "roll": 98,
+              "max": 100,
+              "status": "won",
+              "won": true
+            },
+            {
+              "raider": "Vesper Nightbloom",
+              "rollType": "Main Spec",
+              "roll": 66,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            },
+            {
+              "raider": "Darian Blackthorn",
+              "rollType": "Main Spec",
+              "roll": 5,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            }
+          ],
+          "isSynthetic": true,
+          "softResWon": false,
+          "reserveConsumed": false
+        },
+        {
+          "entryId": "SYN-SM-016",
+          "itemId": 19509,
+          "itemName": "Dusty Mail Boots",
+          "quality": 3,
+          "itemLink": "|cff0070dd|Hitem:19509:0:0:0|h[Dusty Mail Boots]|h|r",
+          "itemUrl": "https://www.wowhead.com/forever/item=19509",
+          "winner": "Fiora Quickstep",
+          "rollType": "Off Spec",
+          "awardMethod": "PlusOneRoll",
+          "boss": "High Inquisitor Whitemane (Cathedral)",
+          "timestamp": "2026-10-06T20:24:00-07:00",
+          "rollResults": [
+            {
+              "raider": "Brannor Stonefist",
+              "rollType": "Off Spec",
+              "roll": 33,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            },
+            {
+              "raider": "Bastian Stormward",
+              "rollType": "Off Spec",
+              "roll": 20,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            },
+            {
+              "raider": "Kestrel Ashwood",
+              "rollType": "Pass",
+              "roll": null,
+              "status": "passed",
+              "won": false
+            },
+            {
+              "raider": "Fiora Quickstep",
+              "rollType": "Off Spec",
+              "roll": 82,
+              "max": 100,
+              "status": "won",
+              "won": true
+            }
+          ],
+          "isSynthetic": true,
+          "softResWon": false,
+          "reserveConsumed": false
+        },
+        {
+          "entryId": "SYN-SM-017",
+          "itemId": 19507,
+          "itemName": "Inquisitor's Shawl",
+          "quality": 3,
+          "itemLink": "|cff0070dd|Hitem:19507:0:0:0|h[Inquisitor's Shawl]|h|r",
+          "itemUrl": "https://www.wowhead.com/forever/item=19507",
+          "winner": "Rowan Brightshield",
+          "rollType": "Soft Res",
+          "awardMethod": "SoftRes",
+          "boss": "High Inquisitor Whitemane (Cathedral)",
+          "timestamp": "2026-10-06T20:28:00-07:00",
+          "rollResults": [
+            {
+              "raider": "Maibe Later",
+              "rollType": "Soft Res",
+              "roll": 48,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            },
+            {
+              "raider": "Vesper Nightbloom",
+              "rollType": "Soft Res",
+              "roll": null,
+              "status": "eligible-no-roll",
+              "won": false
+            },
+            {
+              "raider": "Rowan Brightshield",
+              "rollType": "Soft Res",
+              "roll": 89,
+              "max": 100,
+              "status": "won",
+              "won": true
+            }
+          ],
+          "isSynthetic": true,
+          "softResWon": true,
+          "reserveConsumed": true,
+          "softResEligibility": {
+            "beforeAward": [
+              "Rowan Brightshield",
+              "Maibe Later"
+            ],
+            "afterAward": [
+              "Maibe Later"
+            ],
+            "winnerRemovedFromFutureRolls": true
+          }
+        },
+        {
+          "entryId": "SYN-SM-018",
+          "itemId": 10328,
+          "itemName": "Scarlet Chestpiece",
+          "quality": 3,
+          "itemLink": "|cff0070dd|Hitem:10328:0:0:0|h[Scarlet Chestpiece]|h|r",
+          "itemUrl": "https://www.wowhead.com/forever/item=10328",
+          "winner": "Seren Starweaver",
+          "rollType": "Transmog",
+          "awardMethod": "PlusOneRoll",
+          "boss": "Scarlet Monastery trash (BoE)",
+          "timestamp": "2026-10-06T20:32:00-07:00",
+          "rollResults": [
+            {
+              "raider": "Brannor Stonefist",
+              "rollType": "Transmog",
+              "roll": 15,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            },
+            {
+              "raider": "Seren Starweaver",
+              "rollType": "Transmog",
+              "roll": 74,
+              "max": 100,
+              "status": "won",
+              "won": true
+            },
+            {
+              "raider": "Aldric Vayne",
+              "rollType": "Transmog",
+              "roll": 22,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            }
+          ],
+          "isSynthetic": true,
+          "softResWon": false,
+          "reserveConsumed": false
+        },
+        {
+          "entryId": "SYN-SM-019",
+          "itemId": 10333,
+          "itemName": "Scarlet Wristguards",
+          "quality": 2,
+          "itemLink": "|cff1eff00|Hitem:10333:0:0:0|h[Scarlet Wristguards]|h|r",
+          "itemUrl": "https://www.wowhead.com/forever/item=10333",
+          "winner": "Harlan Mistbrook",
+          "rollType": "Off Spec",
+          "awardMethod": "PlusOneRoll",
+          "boss": "Scarlet Monastery trash (BoE)",
+          "timestamp": "2026-10-06T20:36:00-07:00",
+          "rollResults": [
+            {
+              "raider": "Harlan Mistbrook",
+              "rollType": "Off Spec",
+              "roll": 95,
+              "max": 100,
+              "status": "won",
+              "won": true
+            },
+            {
+              "raider": "Nessa Valehart",
+              "rollType": "Off Spec",
+              "roll": 79,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            },
+            {
+              "raider": "Darian Blackthorn",
+              "rollType": "Off Spec",
+              "roll": 26,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            },
+            {
+              "raider": "Seren Starweaver",
+              "rollType": "Off Spec",
+              "roll": 39,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            },
+            {
+              "raider": "Bastian Stormward",
+              "rollType": "Off Spec",
+              "roll": 74,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            }
+          ],
+          "isSynthetic": true,
+          "softResWon": false,
+          "reserveConsumed": false
+        },
+        {
+          "entryId": "SYN-SM-020",
+          "itemId": 10331,
+          "itemName": "Scarlet Gauntlets",
+          "quality": 3,
+          "itemLink": "|cff0070dd|Hitem:10331:0:0:0|h[Scarlet Gauntlets]|h|r",
+          "itemUrl": "https://www.wowhead.com/forever/item=10331",
+          "winner": "Astrid Spellbound",
+          "rollType": "Main Spec",
+          "awardMethod": "PlusOneRoll",
+          "boss": "Scarlet Monastery trash (BoE)",
+          "timestamp": "2026-10-06T20:40:00-07:00",
+          "rollResults": [
+            {
+              "raider": "Helos Animosity",
+              "rollType": "Main Spec",
+              "roll": 7,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            },
+            {
+              "raider": "Astrid Spellbound",
+              "rollType": "Main Spec",
+              "roll": 92,
+              "max": 100,
+              "status": "won",
+              "won": true
+            }
+          ],
+          "isSynthetic": true,
+          "softResWon": false,
+          "reserveConsumed": false
+        },
+        {
+          "entryId": "SYN-SM-021",
+          "itemId": 10329,
+          "itemName": "Scarlet Belt",
+          "quality": 2,
+          "itemLink": "|cff1eff00|Hitem:10329:0:0:0|h[Scarlet Belt]|h|r",
+          "itemUrl": "https://www.wowhead.com/forever/item=10329",
+          "winner": "Helos Animosity",
+          "rollType": "Off Spec",
+          "awardMethod": "PlusOneRoll",
+          "boss": "Scarlet Monastery trash (BoE)",
+          "timestamp": "2026-10-06T20:44:00-07:00",
+          "rollResults": [
+            {
+              "raider": "Brannor Stonefist",
+              "rollType": "Pass",
+              "roll": null,
+              "status": "passed",
+              "won": false
+            },
+            {
+              "raider": "Helos Animosity",
+              "rollType": "Off Spec",
+              "roll": 96,
+              "max": 100,
+              "status": "won",
+              "won": true
+            },
+            {
+              "raider": "Sylra Moonveil",
+              "rollType": "Off Spec",
+              "roll": 84,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            },
+            {
+              "raider": "Aldric Vayne",
+              "rollType": "Off Spec",
+              "roll": 88,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            }
+          ],
+          "isSynthetic": true,
+          "softResWon": false,
+          "reserveConsumed": false
+        },
+        {
+          "entryId": "SYN-SM-022",
+          "itemId": 10332,
+          "itemName": "Scarlet Boots",
+          "quality": 3,
+          "itemLink": "|cff0070dd|Hitem:10332:0:0:0|h[Scarlet Boots]|h|r",
+          "itemUrl": "https://www.wowhead.com/forever/item=10332",
+          "winner": "Maibe Later",
+          "rollType": "Main Spec",
+          "awardMethod": "PlusOneRoll",
+          "boss": "Scarlet Monastery trash (BoE)",
+          "timestamp": "2026-10-06T20:48:00-07:00",
+          "rollResults": [
+            {
+              "raider": "Elowen Dawnwhisper",
+              "rollType": "Main Spec",
+              "roll": 60,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            },
+            {
+              "raider": "Maibe Later",
+              "rollType": "Main Spec",
+              "roll": 91,
+              "max": 100,
+              "status": "won",
+              "won": true
+            },
+            {
+              "raider": "Rowan Brightshield",
+              "rollType": "Main Spec",
+              "roll": 47,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            },
+            {
+              "raider": "Maibe Soon",
+              "rollType": "Main Spec",
+              "roll": 72,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            }
+          ],
+          "isSynthetic": true,
+          "softResWon": false,
+          "reserveConsumed": false
+        },
+        {
+          "entryId": "SYN-SM-023",
+          "itemId": 7711,
+          "itemName": "Robe of Doan",
+          "quality": 3,
+          "itemLink": "|cff0070dd|Hitem:7711:0:0:0|h[Robe of Doan]|h|r",
+          "itemUrl": "https://www.wowhead.com/forever/item=7711",
+          "winner": "Maibe Soon",
+          "rollType": "Soft Res",
+          "awardMethod": "SoftRes",
+          "boss": "Arcanist Doan (Library)",
+          "timestamp": "2026-10-06T20:52:00-07:00",
+          "rollResults": [
+            {
+              "raider": "Fiora Quickstep",
+              "rollType": "Soft Res",
+              "roll": 21,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            },
+            {
+              "raider": "Harlan Mistbrook",
+              "rollType": "Soft Res",
+              "roll": null,
+              "status": "eligible-no-roll",
+              "won": false
+            },
+            {
+              "raider": "Maibe Soon",
+              "rollType": "Soft Res",
+              "roll": 98,
+              "max": 100,
+              "status": "won",
+              "won": true
+            },
+            {
+              "raider": "Nessa Valehart",
+              "rollType": "Soft Res",
+              "roll": 54,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            }
+          ],
+          "isSynthetic": true,
+          "softResWon": true,
+          "reserveConsumed": true,
+          "softResEligibility": {
+            "beforeAward": [
+              "Maibe Soon",
+              "Fiora Quickstep",
+              "Nessa Valehart"
+            ],
+            "afterAward": [
+              "Fiora Quickstep",
+              "Nessa Valehart"
+            ],
+            "winnerRemovedFromFutureRolls": true
+          }
+        },
+        {
+          "entryId": "SYN-SM-024",
+          "itemId": 7723,
+          "itemName": "Mograine's Might",
+          "quality": 3,
+          "itemLink": "|cff0070dd|Hitem:7723:0:0:0|h[Mograine's Might]|h|r",
+          "itemUrl": "https://www.wowhead.com/forever/item=7723",
+          "winner": "Aldric Vayne",
+          "rollType": "Off Spec",
+          "awardMethod": "PlusOneRoll",
+          "boss": "Scarlet Commander Mograine (Cathedral)",
+          "timestamp": "2026-10-06T20:56:00-07:00",
+          "rollResults": [
+            {
+              "raider": "Helos Animosity",
+              "rollType": "Off Spec",
+              "roll": 35,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            },
+            {
+              "raider": "Darian Blackthorn",
+              "rollType": "Off Spec",
+              "roll": 6,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            },
+            {
+              "raider": "Aldric Vayne",
+              "rollType": "Off Spec",
+              "roll": 73,
+              "max": 100,
+              "status": "won",
+              "won": true
+            }
+          ],
+          "isSynthetic": true,
+          "softResWon": false,
+          "reserveConsumed": false
+        },
+        {
+          "entryId": "SYN-SM-025",
+          "itemId": 10333,
+          "itemName": "Scarlet Wristguards",
+          "quality": 2,
+          "itemLink": "|cff1eff00|Hitem:10333:0:0:0|h[Scarlet Wristguards]|h|r",
+          "itemUrl": "https://www.wowhead.com/forever/item=10333",
+          "winner": "Brannor Stonefist",
+          "rollType": "Main Spec",
+          "awardMethod": "PlusOneRoll",
+          "boss": "Scarlet Monastery trash (BoE)",
+          "timestamp": "2026-10-06T21:00:00-07:00",
+          "rollResults": [
+            {
+              "raider": "Brannor Stonefist",
+              "rollType": "Main Spec",
+              "roll": 84,
+              "max": 100,
+              "status": "won",
+              "won": true
+            },
+            {
+              "raider": "Thorin Emberforge",
+              "rollType": "Main Spec",
+              "roll": 19,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            },
+            {
+              "raider": "Maibe Soon",
+              "rollType": "Main Spec",
+              "roll": 47,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            },
+            {
+              "raider": "Seren Starweaver",
+              "rollType": "Main Spec",
+              "roll": 7,
+              "max": 100,
+              "status": "lost",
+              "won": false
+            }
+          ],
+          "isSynthetic": true,
+          "softResWon": false,
+          "reserveConsumed": false
+        }
+      ],
+      "softResSnapshot": {
+        "Aldric Vayne": [
+          {
+            "itemId": 7711,
+            "itemName": "Robe of Doan",
+            "quality": 3
+          },
+          {
+            "itemId": 23192,
+            "itemName": "Tabard of the Scarlet Crusade",
+            "quality": 2
+          },
+          {
+            "itemId": 7711,
+            "itemName": "Robe of Doan",
+            "quality": 3
+          }
+        ],
+        "Harlan Mistbrook": [
+          {
+            "itemId": 7711,
+            "itemName": "Robe of Doan",
+            "quality": 3
+          }
+        ],
+        "Bastian Stormward": [
+          {
+            "itemId": 7711,
+            "itemName": "Robe of Doan",
+            "quality": 3
+          }
+        ],
+        "Corvin Greywatch": [
+          {
+            "itemId": 7711,
+            "itemName": "Robe of Doan",
+            "quality": 3
+          },
+          {
+            "itemId": 23192,
+            "itemName": "Tabard of the Scarlet Crusade",
+            "quality": 2
+          }
+        ],
+        "Maibe Soon": [
+          {
+            "itemId": 7711,
+            "itemName": "Robe of Doan",
+            "quality": 3
+          }
+        ],
+        "Elowen Dawnwhisper": [
+          {
+            "itemId": 23192,
+            "itemName": "Tabard of the Scarlet Crusade",
+            "quality": 2
+          }
+        ],
+        "Rowan Brightshield": [
+          {
+            "itemId": 19507,
+            "itemName": "Inquisitor's Shawl",
+            "quality": 3
+          }
+        ],
+        "Maibe Later": [
+          {
+            "itemId": 19507,
+            "itemName": "Inquisitor's Shawl",
+            "quality": 3
+          }
+        ],
+        "Fiora Quickstep": [
+          {
+            "itemId": 7711,
+            "itemName": "Robe of Doan",
+            "quality": 3
+          }
+        ],
+        "Nessa Valehart": [
+          {
+            "itemId": 7711,
+            "itemName": "Robe of Doan",
+            "quality": 3
+          }
+        ]
+      },
+      "extraTestScenarios": [
+        "25 item award rounds",
+        "20 fictional raiders",
+        "individual numeric rolls",
+        "passes",
+        "non-numeric Soft Res choice",
+        "repeat item drops",
+        "SoftRes winner removed from later eligibility"
+      ]
+    }
+  ]
+}
