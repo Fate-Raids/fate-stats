@@ -1,0 +1,133 @@
+'use strict';
+const { assemble, unwrapImports } = window.PlusOneParser;
+
+const $=selector=>document.querySelector(selector);
+const main=$('#main');
+const escapeHTML=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const safe=s=>escapeHTML(s);
+const num=n=>Number(n||0).toLocaleString();
+const dateFmt=new Intl.DateTimeFormat('en-US',{month:'short',day:'numeric',year:'numeric'});
+const timeFmt=new Intl.DateTimeFormat('en-US',{hour:'numeric',minute:'2-digit'});
+const fmtDate=v=>v?dateFmt.format(new Date(v)):'Unknown date';
+const fmtTime=v=>v?timeFmt.format(new Date(v)):'';
+const state={view:'overview',search:'',session:'all',mode:'all',published:[],data:assemble([]),ready:false};
+const viewNames={overview:'Overview',sessions:'Raid sessions',loot:'Loot history',players:'Raiders',statistics:'Statistics'};
+const qualityClass=q=>Number.isInteger(q)&&q>=0&&q<=7?`quality-${q}`:'';
+const qFrame=q=>Number.isInteger(q)&&q>=0&&q<=7?`q${q}`:'';
+const classMode=m=>m==='Main Spec'?'main':m==='Off Spec'?'off':m==='Transmog'?'transmog':'';
+const safeSlug=v=>{const n=String(v||'').replace(/\\/g,'/').split('/').pop().replace(/\.(?:jpg|png|webp)$/i,'').toLowerCase();return /[a-z]/.test(n)&&/^[a-z0-9_]+$/.test(n)?n:'';};
+function icon(item,small=false){
+  const slug=safeSlug(item?.icon);const link=slug?`<img loading="lazy" src="https://wow.zamimg.com/images/wow/icons/${small?'medium':'large'}/${slug}.jpg" alt="" onerror="this.replaceWith(document.createTextNode('◇'))">`:'<span class="fallback">✦</span>';
+  return `<span class="item-frame ${qFrame(item?.quality)}">${link}</span>`;
+}
+function itemName(item){
+  const name=safe(item?.name||'Unknown item'),q=qualityClass(item?.quality);
+  if(item?.id && Number.isSafeInteger(item.id) && item.id>0){
+    const url=`https://www.wowhead.com/classic/item=${item.id}`;
+    // Wowhead's public Classic database may lack Forever-specific items. Item text always remains usable.
+    return `<a class="item-link ${q}" href="${url}" target="_blank" rel="noopener noreferrer" data-wowhead="item=${item.id}&amp;domain=classic" ${!safeSlug(item.icon)?'data-wh-icon-size="tiny"':''} title="${safe(item.name)} — view on Wowhead Classic">${name}</a>`;
+  }
+  return `<span class="${q}">${name}</span>`;
+}
+function modeTag(m){return `<span class="tag ${classMode(m)}">${safe(m)}</span>`;}
+const jsonURL='data/archive.json';
+function allSources(){return state.published;}
+function refreshData(){state.data=assemble(allSources());render();}
+function setStatus(){ $('#data-flag').textContent=state.published.length?'PUBLISHED ARCHIVE':'NO PUBLISHED DATA'; }
+function toast(message,error=false){
+  const el=document.createElement('div');el.className=`toast${error?' error':''}`;el.textContent=message;$('#toast-area').append(el);
+  setTimeout(()=>el.remove(),6500);
+}
+async function fetchJson(path){const r=await fetch(path,{cache:'no-store'});if(!r.ok)throw Error(`HTTP ${r.status}: ${path}`);return r.json();}
+async function init(){
+  state.ready=true;refreshData();
+  const startup=$('#startup-status');if(startup)startup.hidden=true;
+  if(location.protocol==='file:') toast('Open the website through GitHub Pages or another local web server to load published sessions.',true);
+  try{const raw=await fetchJson(jsonURL);state.published=unwrapImports(raw,'archive.json');}
+  catch(e){console.warn('Archive not available:',e.message);toast('Could not load published raid history. Please check the latest GitHub Actions deployment.',true);}
+  refreshData();processHash();
+}
+const metric=(label,value,foot,art)=>`<section class="metric"><div class="metric-label">${safe(label)}</div><div class="metric-art">${art}</div><div class="metric-number">${num(value)}</div><div class="metric-foot">${safe(foot)}</div></section>`;
+function stats(){
+  const {sessions,entries,players}=state.data;
+  return `<div class="metrics">${metric('RAID SESSIONS',sessions.length,'Archived raid nights','▤')}${metric('ITEMS AWARDED',entries.length,'Logged loot distributions','◆')}${metric('UNIQUE RAIDERS',players.length,'Players across all sessions','♙')}${metric('SOFT RESERVES',sessions.reduce((n,s)=>n+s.softRes.length,0),'Historical snapshots','✧')}</div>`;
+}
+function header(title,subtitle){
+  return `<div class="hero"><div><div class="eyebrow">RAID INTELLIGENCE / ${safe(viewNames[state.view]).toUpperCase()}</div><h1>${safe(title)}</h1><p>${safe(subtitle)}</p></div><div class="hero-aside"><b>${safe(state.data.sources.length)} loaded export${state.data.sources.length===1?'':'s'}</b>${safe(new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'}))}</div></div>`;
+}
+function notice(){return state.data.sources.length && !state.data.entries.length?'<div class="notice warning">The published archive has no recognized loot awards yet.</div>':'';}
+function empty(text='No matching records',detail='There are no published raid records to display yet.'){
+  return `<div class="empty"><div class="empty-icon">⬡</div><h3>${safe(text)}</h3><p>${safe(detail)}</p></div>`;
+}
+function listSession(s){
+  return `<div class="list-row action" data-action="session" data-id="${safe(s.id)}" role="button" tabindex="0"><div class="raid-glyph">⚔</div><div class="row-primary"><div class="row-title">${safe(s.name)}</div><div class="row-sub">${fmtDate(s.start)} · ${s.players.length} raiders</div></div><div class="row-right"><b>${s.entries.length} awards</b>${s.softRes.length} reserves</div><span class="muted">›</span></div>`;
+}
+function listLoot(e){return `<div class="list-row">${icon(e.item)}<div class="row-primary"><div class="row-title">${itemName(e.item)}</div><div class="row-sub">${safe(e.winner||'Unassigned')} · ${safe(e.sessionName)}</div></div>${modeTag(e.mode)}</div>`;}
+function listPlayer(p){return `<div class="list-row action" data-action="player" data-id="${safe(p.name)}" role="button" tabindex="0"><span class="avatar">${safe(p.name.slice(0,1).toUpperCase())}</span><div class="row-primary"><div class="row-title">${safe(p.name)}</div><div class="row-sub">${p.sessionIds.size} raid sessions</div></div><div class="row-right"><b>${p.awards.length} items</b>${p.reserves.length} reserves</div><span class="muted">›</span></div>`;}
+function overview(){const {sessions,entries,players}=state.data;
+  return `${header('Raid Overview','One place for every session, every award, and every raider.')}${notice()}${stats()}<div class="overview-layout">
+  <div class="panel"><div class="panel-head"><div><h2>Recent raid sessions</h2><p>Latest published raid sessions</p></div><button class="panel-link" data-view="sessions">VIEW ALL →</button></div>${sessions.length?sessions.slice(0,6).map(listSession).join(''):empty('Your raid history starts here')}</div>
+  <div class="panel"><div class="panel-head"><div><h2>Latest loot awards</h2><p>Most recent recorded item distributions</p></div><button class="panel-link" data-view="loot">VIEW ALL →</button></div>${entries.length?[...entries].sort((a,b)=>((b.timestamp||'').localeCompare(a.timestamp||''))).slice(0,6).map(listLoot).join(''):empty('No loot awards yet')}</div>
+  </div><div style="height:17px"></div><div class="two-panels"><div class="panel"><div class="panel-head"><div><h2>Leading raiders</h2><p>Based strictly on recorded awards</p></div><button class="panel-link" data-view="players">VIEW RAIDERS →</button></div>${players.filter(p=>p.awards.length).slice(0,5).map(listPlayer).join('')||empty('No player awards')}</div>
+  <div class="panel"><div class="panel-head"><div><h2>About this archive</h2><p>Guild loot transparency</p></div></div><div class="insight"><div class="insight-kicker">HISTORY</div><div class="insight-value">Every recorded award</div><div class="insight-sub">Browse completed sessions and see who received each item.</div></div><div class="insight"><div class="insight-kicker">RAIDERS</div><div class="insight-value">Player histories</div><div class="insight-sub">Explore awards and historical SoftRes snapshots.</div></div><div class="insight"><div class="insight-kicker">READ-ONLY</div><div class="insight-value">GitHub-managed data</div><div class="insight-sub">Guild officers publish exports through the GitHub repository.</div></div></div></div>`;
+}
+function toolbar({searchLabel='Search loot, names, raids…',session=false,mode=false}={}){
+  const sessOptions=state.data.sessions.map(s=>`<option value="${safe(s.id)}" ${state.session===s.id?'selected':''}>${safe(s.name)} · ${fmtDate(s.start)}</option>`).join('');
+  return `<div class="toolbar"><label class="searchbox"><span>⌕</span><input id="archive-search" type="search" value="${safe(state.search)}" placeholder="${safe(searchLabel)}" autocomplete="off" aria-label="Search archive"></label>${session?`<select id="session-filter" aria-label="Filter by raid"><option value="all">All sessions</option>${sessOptions}</select>`:''}${mode?`<select id="mode-filter" aria-label="Filter by roll type">${['all','Main Spec','Off Spec','Transmog','Soft Res','Pass','Unspecified'].map(v=>`<option ${state.mode===v?'selected':''} value="${v}">${v==='all'?'All award types':v}</option>`).join('')}</select>`:''}</div>`;
+}
+function qMatch(...parts){const q=state.search.toLowerCase().trim();return !q||parts.some(p=>String(p??'').toLowerCase().includes(q));}
+function renderSessions(){const data=state.data.sessions.filter(s=>qMatch(s.name,s.guild,s.start,s.sourceName,...s.players,...s.entries.map(e=>e.item.name)));
+return `${header('Raid Sessions','Browse complete raid histories and examine every drop.')}${notice()}<div class="panel">${toolbar({searchLabel:'Search sessions, raiders, dates…'})}${data.length?data.map(listSession).join(''):empty('No matching raid sessions','Try changing your search.')}<div class="row-count">${data.length} of ${state.data.sessions.length} sessions</div></div>`;}
+function renderLoot(){const entries=state.data.entries.filter(e=>(state.session==='all'||e.sessionId===state.session)&&(state.mode==='all'||e.mode===state.mode)&&qMatch(e.item.name,e.item.id,e.winner,e.mode,e.sessionName,e.boss));
+return `${header('Loot History','Search every recorded award across the complete archive.')}${notice()}<div class="panel">${toolbar({session:true,mode:true})}<div class="table-wrap"><table><thead><tr><th>ITEM</th><th>AWARDED TO</th><th>ROLL TYPE</th><th>RAID SESSION</th><th>BOSS</th><th>DATE</th></tr></thead><tbody>${entries.map(e=>`<tr><td><div class="item-cell">${icon(e.item,true)}<span><b>${itemName(e.item)}</b>${e.item.id?`<div class="row-sub">Item #${e.item.id}</div>`:''}</span></div></td><td><button class="panel-link" data-action="player" data-id="${safe(e.winner)}">${safe(e.winner||'Unassigned')}</button></td><td>${modeTag(e.mode)}</td><td><button class="panel-link" data-action="session" data-id="${safe(e.sessionId)}">${safe(e.sessionName)}</button></td><td>${safe(e.boss||'—')}</td><td>${fmtDate(e.timestamp)}</td></tr>`).join('')}</tbody></table>${!entries.length?empty('No matching loot awards'):''}</div><div class="row-count">Showing ${entries.length} of ${state.data.entries.length} awards</div></div>`;}
+function renderPlayers(){const players=state.data.players.filter(p=>qMatch(p.name,...p.awards.map(a=>a.item.name)));
+return `${header('Raiders','See every participant and what they have won.')}${notice()}<div class="panel">${toolbar({searchLabel:'Find a raider or awarded item…'})}<div class="table-wrap"><table><thead><tr><th>RAIDER</th><th>RAIDS</th><th>TOTAL AWARDS</th><th>MAIN SPEC</th><th>OFF SPEC</th><th>SOFT RES SNAPSHOTS</th><th></th></tr></thead><tbody>${players.map(p=>`<tr><td><div style="display:flex;align-items:center;gap:11px"><span class="avatar">${safe(p.name.slice(0,1).toUpperCase())}</span><b>${safe(p.name)}</b></div></td><td>${p.sessionIds.size}</td><td>${p.awards.length}</td><td>${p.awards.filter(a=>a.mode==='Main Spec').length}</td><td>${p.awards.filter(a=>a.mode==='Off Spec').length}</td><td>${p.reserves.length}</td><td><button class="view-button" data-action="player" data-id="${safe(p.name)}">View ↗</button></td></tr>`).join('')}</tbody></table>${!players.length?empty('No matching raiders'):''}</div><div class="row-count">${players.length} of ${state.data.players.length} raiders</div></div>`;}
+function barRows(data){const max=Math.max(1,...data.map(r=>r[1]));return `<div class="stat-bars">${data.map(([name,count])=>`<div class="stat-bar"><span title="${safe(name)}">${safe(name)}</span><div class="bar-track"><div class="bar-fill" style="width:${Math.round(count/max*100)}%"></div></div><b>${num(count)}</b></div>`).join('')||'<div class="muted small">No awards to chart.</div>'}</div>`;}
+function renderStatistics(){const {players,entries,sessions}=state.data;const m=new Map();for(const e of entries)m.set(e.mode,(m.get(e.mode)||0)+1);const total=entries.length,sorted=[...m].sort((a,b)=>b[1]-a[1]);
+return `${header('Archive Statistics','Distribution trends across your recorded raid nights.')}${notice()}${stats()}<div class="two-panels"><div class="panel"><div class="panel-head"><div><h2>Awards by roll category</h2><p>Results already confirmed in the loot history</p></div></div>${barRows(sorted)}</div><div class="panel"><div class="panel-head"><div><h2>Top loot recipients</h2><p>Item awards recorded per player</p></div></div>${barRows(players.filter(p=>p.awards.length).slice(0,8).map(p=>[p.name,p.awards.length]))}</div></div><div style="height:17px"></div><div class="two-panels"><div class="panel"><div class="panel-head"><div><h2>Sessions by instance</h2><p>Where your group has been raiding</p></div></div>${barRows([...sessions.reduce((map,s)=>(map.set(s.name,(map.get(s.name)||0)+1),map),new Map())].sort((a,b)=>b[1]-a[1]).slice(0,8))}</div><div class="panel"><div class="panel-head"><div><h2>Understanding the numbers</h2></div></div><div class="insight"><div class="insight-kicker">CONFIRMED AWARDS</div><div class="insight-value">${num(total)}</div><div class="insight-sub">Counts are taken from recorded loot history, not rolls or reservations.</div></div><div class="insight"><div class="insight-kicker">SOFT RESERVE SNAPSHOTS</div><div class="insight-value">Historical records</div><div class="insight-sub">Snapshots can include already-consumed reserves and duplicate reserves. They are not current eligibility lists.</div></div><div class="insight"><div class="insight-kicker">DATA QUALITY</div><div class="insight-value">Only what was exported</div><div class="insight-sub">Missing raid members, timestamps, or roll categories are not inferred.</div></div></div></div>`;
+}
+function render(){if(!state.ready){main.innerHTML='<div class="loader">Loading raid archive…</div>';return;}
+  setStatus();document.querySelectorAll('[data-view].nav-button').forEach(el=>el.classList.toggle('active',el.dataset.view===state.view));
+  $('#breadcrumb').textContent=(viewNames[state.view]||'Overview').toUpperCase();
+  let active=document.activeElement,focusId=active?.id,selection=active?.selectionStart;
+  main.innerHTML=({overview, sessions:renderSessions,loot:renderLoot,players:renderPlayers,statistics:renderStatistics}[state.view]||overview)();
+  if(focusId==='archive-search'){const input=$('#archive-search');if(input){input.focus();if(typeof selection==='number')input.setSelectionRange(selection,selection);}}
+  try{if(window.WH?.Tooltips?.refreshLinks)window.WH.Tooltips.refreshLinks();else if(window.$WowheadPower?.refreshLinks)window.$WowheadPower.refreshLinks();}catch(e){console.warn('Wowhead tooltip refresh failed:',e)}
+}
+function showDrawer(eyebrow,title,html){$('#drawer-eyebrow').textContent=eyebrow;$('#drawer-title').textContent=title;$('#drawer-body').innerHTML=html;const d=$('#drawer');if(!d.open)d.showModal();try{window.WH?.Tooltips?.refreshLinks?.();window.$WowheadPower?.refreshLinks?.();}catch{}}
+function openSession(id,updateHash=true){const s=state.data.sessions.find(s=>s.id===id);if(!s){toast('Session not found in the loaded archive.',true);return;}
+ const content=`<div class="drawer-section"><div class="drawer-kv"><div class="kv"><small>DATE</small><b>${fmtDate(s.start)}</b></div><div class="kv"><small>START TIME</small><b>${fmtTime(s.start)||'Unknown'}</b></div><div class="kv"><small>AWARDS</small><b>${s.entries.length}</b></div><div class="kv"><small>PARTICIPANTS</small><b>${s.players.length}</b></div></div><p class="small muted">${safe(s.guild||s.sourceName)} · Export schema: ${safe(s.schema)}</p><button class="subtle-button" data-action="share" data-id="${safe(s.id)}">Copy session link</button></div>
+ <div class="drawer-section"><h3>Loot distributed</h3>${s.entries.length?s.entries.map(e=>`<div class="list-row" style="padding-left:0;padding-right:0">${icon(e.item)}<div class="row-primary"><div class="row-title">${itemName(e.item)}</div><div class="row-sub">${safe(e.winner||'Unassigned')}${e.boss?' · '+safe(e.boss):''}</div></div>${modeTag(e.mode)}</div>`).join(''):'<div class="muted small">No awarded items recorded.</div>'}</div>
+ <div class="drawer-section"><h3>Soft reserve snapshot <span class="pill">${s.softRes.length} ENTRIES</span></h3><p class="small muted">This is a historical snapshot and can include consumed or duplicate reserves.</p>${s.softRes.length?s.softRes.map(r=>`<div class="list-row" style="padding-left:0;padding-right:0">${icon(r.item,true)}<div class="row-primary"><div class="row-title">${itemName(r.item)}</div><div class="row-sub">${safe(r.raider||'Unknown raider')}</div></div></div>`).join(''):'<div class="muted small">No reserves found in this export.</div>'}</div>
+ <div class="drawer-section"><h3>Raiders</h3><div class="chip-list">${s.players.map(p=>`<button class="chip" data-action="player" data-id="${safe(p)}">${safe(p)}</button>`).join('')||'<span class="muted">No roster data</span>'}</div></div>`;
+ showDrawer('RAID SESSION',s.name,content);
+ if(updateHash)safeHistoryReplace(`#session=${encodeURIComponent(s.id)}`);
+}
+function openPlayer(name){const p=state.data.players.find(p=>p.name.toLowerCase()===String(name).toLowerCase());if(!p){toast('Raider not found.',true);return;}
+ const content=`<div class="drawer-section"><div class="drawer-kv"><div class="kv"><small>RAID SESSIONS</small><b>${p.sessionIds.size}</b></div><div class="kv"><small>LOOT AWARDS</small><b>${p.awards.length}</b></div><div class="kv"><small>MAIN SPEC</small><b>${p.awards.filter(a=>a.mode==='Main Spec').length}</b></div><div class="kv"><small>SOFT RES SNAPSHOTS</small><b>${p.reserves.length}</b></div></div></div><div class="drawer-section"><h3>Items received</h3>${p.awards.length?p.awards.map(e=>`<div class="list-row" style="padding-left:0;padding-right:0">${icon(e.item)}<div class="row-primary"><div class="row-title">${itemName(e.item)}</div><div class="row-sub">${safe(e.sessionName)}</div></div>${modeTag(e.mode)}</div>`).join(''):'<div class="muted small">No confirmed awards found.</div>'}</div><div class="drawer-section"><h3>Soft reserves in archived snapshots</h3>${p.reserves.length?p.reserves.map(r=>`<div class="list-row" style="padding-left:0;padding-right:0">${icon(r.item,true)}<div class="row-primary"><div class="row-title">${itemName(r.item)}</div><div class="row-sub">${safe(state.data.sessions.find(s=>s.id===r.sessionId)?.name||'Raid')}</div></div></div>`).join(''):'<div class="muted small">No historical reserves found.</div>'}</div>`;
+ showDrawer('RAIDER PROFILE',p.name,content);safeHistoryReplace(`#player=${encodeURIComponent(p.name)}`);
+}
+function safeHistoryReplace(path){try{history.replaceState(null,'',path);}catch(e){console.warn('History unavailable:',e.message);}}
+function closeDrawer(){const drawer=$('#drawer');if(drawer.open)drawer.close();if(location.hash)safeHistoryReplace(location.pathname+location.search);}
+function processHash(){const m=location.hash.match(/^#(session|player)=(.+)$/);if(!m)return;let id;try{id=decodeURIComponent(m[2]);}catch{return;}if(m[1]==='session')openSession(id,false);else openPlayer(id);}
+function route(view){if(!(view in viewNames))return;state.view=view;state.search='';state.mode='all';state.session='all';document.body.classList.remove('nav-open');if($('#drawer').open)closeDrawer();render();}
+document.addEventListener('click',async e=>{
+ const view=e.target.closest('[data-view]');if(view){route(view.dataset.view);return;}
+ const action=e.target.closest('[data-action]');if(!action)return;
+ const id=action.dataset.id;switch(action.dataset.action){
+  case 'session':openSession(id);break;case 'player':openPlayer(id);break;
+  case 'share':{
+   const url=new URL(location.href);url.hash=`session=${encodeURIComponent(id)}`;
+   try{await navigator.clipboard.writeText(url.href);toast('Session link copied. It works on the published site after this source is deployed.');}catch{toast('Could not copy automatically; use your address bar.',true);}
+  }break;
+ }
+});
+main.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target?.dataset?.action==='session'){e.preventDefault();openSession(e.target.dataset.id);}});
+main.addEventListener('input',e=>{if(e.target.id==='archive-search'){state.search=e.target.value;render();}});
+main.addEventListener('change',e=>{if(e.target.id==='session-filter')state.session=e.target.value;if(e.target.id==='mode-filter')state.mode=e.target.value;render();});
+$('#mobile-nav').addEventListener('click',()=>document.body.classList.toggle('nav-open'));
+$('#drawer-close').addEventListener('click',closeDrawer);
+$('#drawer').addEventListener('click',e=>{if(e.target===$('#drawer'))closeDrawer();});
+$('#drawer').addEventListener('close',()=>{if(location.hash)safeHistoryReplace(location.pathname+location.search);});
+window.addEventListener('hashchange',processHash);
+init();

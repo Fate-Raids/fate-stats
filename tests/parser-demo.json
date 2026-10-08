@@ -1,0 +1,31 @@
+{
+  "schema": "PlusOneRaidHistory-4",
+  "guild": "FATE (DEMO)",
+  "sessions": [
+    {
+      "sessionId": "DEMO-001", "sessionName": "Molten Core", "startedAt": "2026-10-06T20:00:00-07:00", "endedAt": "2026-10-06T22:45:00-07:00",
+      "roster": ["Helos Animosity", "Maibe Later", "Maibe Soon", "Velora", "Briar", "Corvin"],
+      "lootHistory": [
+        {"itemId":18803,"itemName":"Finkle's Lava Dredger","quality":4,"iconName":"inv_hammer_06","winner":"Helos Animosity","rollType":"Main Spec","boss":"Magmadar","timestamp":"2026-10-06T20:30:00-07:00"},
+        {"itemId":17063,"itemName":"Band of Accuria","quality":4,"iconName":"inv_jewelry_ring_15","winner":"Maibe Later","rollType":"Main Spec","boss":"Ragnaros","timestamp":"2026-10-06T22:23:00-07:00"},
+        {"itemId":18814,"itemName":"Choker of the Fire Lord","quality":4,"iconName":"inv_jewelry_necklace_05","winner":"Velora","rollType":"Main Spec","boss":"Ragnaros","timestamp":"2026-10-06T22:25:00-07:00"},
+        {"itemId":16797,"itemName":"Arcanist Mantle","quality":4,"iconName":"inv_shoulder_02","winner":"Maibe Soon","rollType":"Off Spec","boss":"Gehennas","timestamp":"2026-10-06T20:52:00-07:00"}
+      ],
+      "softResSnapshot": {
+        "Helos Animosity":[{"itemId":18803,"itemName":"Finkle's Lava Dredger"}],
+        "Maibe Later":[{"itemId":17063,"itemName":"Band of Accuria"},{"itemId":17063,"itemName":"Band of Accuria"}],
+        "Velora":[{"itemId":18814,"itemName":"Choker of the Fire Lord"}]
+      }
+    },
+    {
+      "sessionId":"DEMO-002","sessionName":"Onyxia's Lair","startedAt":"2026-10-02T19:30:00-07:00",
+      "roster":["Helos Animosity","Maibe Later","Maibe Soon","Briar","Corvin"],
+      "lootHistory": [
+        {"itemId":17064,"itemName":"Shard of the Scale","quality":4,"iconName":"inv_misc_gem_pearl_05","winner":"Briar","rollType":"Main Spec","boss":"Onyxia"},
+        {"itemId":16908,"itemName":"Bloodfang Hood","quality":4,"iconName":"inv_helmet_08","winner":"Corvin","rollType":"Main Spec","boss":"Onyxia"},
+        {"itemId":18423,"itemName":"Head of Onyxia","quality":4,"iconName":"inv_misc_head_dragon_01","winner":"Helos Animosity","rollType":"Off Spec","boss":"Onyxia"}
+      ],
+      "softResSnapshot":{"Briar":[{"itemId":17064,"itemName":"Shard of the Scale"}]}
+    }
+  ]
+}

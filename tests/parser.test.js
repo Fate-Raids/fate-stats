@@ -1,0 +1,16 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {assemble,makeSource,unwrapImports,publishedArchive,normalizeMode,normalizeSource} from '../assets/parser.js';
+const demo=JSON.parse(fs.readFileSync(new URL('./parser-demo.json',import.meta.url),'utf-8'));
+const source=makeSource(demo,'demo.json');
+const db=assemble([source]);
+test('recognizes PlusOneRaidHistory-4 and separates raid nights',()=>{assert.equal(db.sessions.length,2);assert.equal(db.entries.length,7);assert.equal(db.players.length,6);assert.equal(db.sessions[0].schema,'PlusOneRaidHistory-4');});
+test('preserves duplicate soft reservations without treating them as awards',()=>{const mc=db.sessions.find(x=>x.name==='Molten Core');assert.equal(mc.softRes.filter(x=>x.raider==='Maibe Later').length,2);assert.equal(mc.entries.length,4);});
+test('item IDs, qualities, icon names and winner data are captured',()=>{const e=db.entries.find(x=>x.item.id===17063);assert.equal(e.winner,'Maibe Later');assert.equal(e.item.quality,4);assert.equal(e.item.icon,'inv_jewelry_ring_15');assert.equal(e.mode,'Main Spec');});
+test('published archive round trip preserves entire original export',()=>{const pack=publishedArchive([source]);assert.deepEqual(unwrapImports(pack,'archive.json')[0].payload,demo);});
+test('identical exports deduplicate by content',()=>{const sources=[source,makeSource(structuredClone(demo),'same-content.json')];assert.equal(assemble(sources).sessions.length,2);});
+test('supports standalone exports and WoW item hyperlink parsing',()=>{const sample={schema:'PlusOneRaidHistory-4',sessionId:'solo',raidName:'BWL',startTime:1791345600,loot:[{itemLink:'|cffa335ee|Hitem:18832:0:0:0|h[Brutality Blade]|h|r',awardedTo:'Maibe Soon',choice:'offspec',icon:'inv_sword_48'}]};const s=normalizeSource(makeSource(sample))[0];assert.equal(s.entries[0].item.id,18832);assert.equal(s.entries[0].item.name,'Brutality Blade');assert.equal(s.entries[0].winner,'Maibe Soon');assert.equal(s.entries[0].mode,'Off Spec');assert.ok(s.start.startsWith('2026-'));});
+test('retains raw details for future statistics and safely accepts unknown fields',()=>{const s=normalizeSource(makeSource({sessions:[{sessionID:'x1',sessionName:'Onyxia',history:[{itemID:123,itemName:'Test',winnerName:'A',arbitraryFutureField:{something:true}}]}]}))[0];assert.equal(s.entries[0].raw.arbitraryFutureField.something,true);});
+test('filters out reserved names from confirmed award counts',()=>{const s=normalizeSource(makeSource({sessions:[{sessionId:1,sessionName:'Test',softRes:{Bob:[{itemId:100,itemName:'Stuff'}]}}]}))[0];assert.equal(s.entries.length,0);assert.equal(s.softRes.length,1);});
+test('normalizes roll categories',()=>{assert.equal(normalizeMode('MS'),'Main Spec');assert.equal(normalizeMode('os'),'Off Spec');assert.equal(normalizeMode('mog'),'Transmog');assert.equal(normalizeMode('pass'),'Pass');});

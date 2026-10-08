@@ -1,16 +1,47 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>FATE - PlusOne Raid Archive</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0b1019">
+  <meta name="description" content="PlusOne Raid Archive — search raid loot, historical sessions, raiders, and soft reserves.">
+  <title>PlusOne | Raid Archive</title>
+  <link rel="stylesheet" href="assets/styles.css">
+  <script>const whTooltips={colorLinks:false,renameLinks:false,iconizeLinks:false,iconSize:true};</script>
+  <script src="assets/parser-browser.js" defer></script>
+  <script src="assets/app.js" defer></script>
+  <!-- External tooltip enhancement is optional and never gates site controls. -->
+  <script src="https://wow.zamimg.com/js/tooltips.js" async onload="try{window.WH?.Tooltips?.refreshLinks?.();window.$WowheadPower?.refreshLinks?.()}catch(_){}"></script>
 </head>
-<body style="background:#0b1420;color:white;
-             font-family:Arial;text-align:center;
-             padding:80px 20px;">
-  <h1>FATE Guild</h1>
-  <h2>PlusOne Raid Archive</h2>
-  <p>Our raid history website is coming soon.</p>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Main navigation">
+      <div class="brand"><div class="brand-mark">+1</div><div><b>PLUSONE</b><small>RAID ARCHIVE</small></div></div>
+      <div class="side-group-title">ARCHIVE</div>
+      <nav class="nav" id="nav">
+        <button class="nav-button active" data-view="overview"><span class="nav-icon">◈</span> Overview</button>
+        <button class="nav-button" data-view="sessions"><span class="nav-icon">▤</span> Raid sessions</button>
+        <button class="nav-button" data-view="loot"><span class="nav-icon">⬡</span> Loot history</button>
+        <button class="nav-button" data-view="players"><span class="nav-icon">♙</span> Raiders</button>
+        <button class="nav-button" data-view="statistics"><span class="nav-icon">▥</span> Statistics</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="connection"><i></i> PUBLIC RAID ARCHIVE</div>
+        <div class="sidebar-note">Read-only raid history. Guild officers publish session exports using GitHub.</div>
+        <div class="version">WEB ARCHIVE <span>v0.3.0 GITHUB</span></div>
+      </div>
+    </aside>
+    <div class="workspace">
+      <header class="topbar"><button id="mobile-nav" aria-label="Toggle menu" class="menu-button">☰</button><div class="crumb">PLUSONE <span>/</span> <strong id="breadcrumb">OVERVIEW</strong></div>
+        <div class="top-actions"><span class="mode-flag" id="data-flag">NO PUBLISHED DATA</span></div>
+      </header>
+      <div id="startup-status" class="startup-status" role="alert">Site controls have not initialized. Make sure the <code>assets/</code> folder was uploaded beside <code>index.html</code> and JavaScript is enabled.</div>
+      <noscript><div class="startup-status" role="alert">This archive requires JavaScript to display raid data. Enable JavaScript to use the site.</div></noscript>
+      <main id="main" class="main" tabindex="-1"></main>
+      <footer>PlusOne • Raid history and loot transparency <span>Unofficial community project. Not affiliated with Blizzard or Wowhead.</span></footer>
+    </div>
+  </div>
+  <dialog id="drawer" class="drawer"><div class="drawer-head"><div><div class="eyebrow" id="drawer-eyebrow">SESSION DETAILS</div><h2 id="drawer-title"></h2></div><button class="icon-button" id="drawer-close" aria-label="Close details">×</button></div><div id="drawer-body"></div></dialog>
+  <div id="toast-area" aria-live="polite" aria-atomic="true"></div>
 </body>
 </html>
