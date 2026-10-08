@@ -16,16 +16,30 @@ const qualityClass=q=>Number.isInteger(q)&&q>=0&&q<=7?`quality-${q}`:'';
 const qFrame=q=>Number.isInteger(q)&&q>=0&&q<=7?`q${q}`:'';
 const classMode=m=>m==='Main Spec'?'main':m==='Off Spec'?'off':m==='Transmog'?'transmog':'';
 const safeSlug=v=>{const n=String(v||'').replace(/\\/g,'/').split('/').pop().replace(/\.(?:jpg|png|webp)$/i,'').toLowerCase();return /[a-z]/.test(n)&&/^[a-z0-9_]+$/.test(n)?n:'';};
+// Forever is its own Wowhead database. Never resolve item IDs in Classic/Retail.
+const FOREVER_DB='https://www.wowhead.com/forever';
+const validItemId=item=>Number.isSafeInteger(Number(item?.id))&&Number(item?.id)>0?Number(item.id):null;
+const foreverItemURL=item=>{const id=validItemId(item);return id?`${FOREVER_DB}/item=${id}`:'';};
+const foreverTooltipAttr=item=>{const id=validItemId(item);return id?`data-wowhead="item=${id}&amp;domain=forever"`:'';};
 function icon(item,small=false){
-  const slug=safeSlug(item?.icon);const link=slug?`<img loading="lazy" src="https://wow.zamimg.com/images/wow/icons/${small?'medium':'large'}/${slug}.jpg" alt="" onerror="this.replaceWith(document.createTextNode('◇'))">`:'<span class="fallback">✦</span>';
-  return `<span class="item-frame ${qFrame(item?.quality)}">${link}</span>`;
+  // Exported client texture names reflect Forever's actual in-game icon,
+  // including any Forever-only texture, without Classic item lookups.
+  const slug=safeSlug(item?.icon);
+  const image=slug?`<img loading="lazy" src="https://wow.zamimg.com/images/wow/icons/${small?'medium':'large'}/${slug}.jpg" alt="" onerror="this.replaceWith(document.createTextNode('◇'))">`:'';
+  if(image)return `<span class="item-frame ${qFrame(item?.quality)}">${image}</span>`;
+  // If the export has no texture name, allow Wowhead's Forever-aware tooltip
+  // script to supply an icon in this slot. Without it, keep a neutral glyph.
+  const url=foreverItemURL(item);
+  if(url)return `<span class="item-frame ${qFrame(item?.quality)}"><a class="item-icon-link" href="${url}" target="_blank" rel="noopener noreferrer" ${foreverTooltipAttr(item)} data-wh-icon-size="small" aria-label="View ${safe(item?.name||'item')} in Wowhead Forever"><span class="fallback">✦</span></a></span>`;
+  return `<span class="item-frame ${qFrame(item?.quality)}"><span class="fallback">✦</span></span>`;
 }
 function itemName(item){
   const name=safe(item?.name||'Unknown item'),q=qualityClass(item?.quality);
-  if(item?.id && Number.isSafeInteger(item.id) && item.id>0){
-    const url=`https://www.wowhead.com/classic/item=${item.id}`;
-    // Wowhead's public Classic database may lack Forever-specific items. Item text always remains usable.
-    return `<a class="item-link ${q}" href="${url}" target="_blank" rel="noopener noreferrer" data-wowhead="item=${item.id}&amp;domain=classic" ${!safeSlug(item.icon)?'data-wh-icon-size="tiny"':''} title="${safe(item.name)} — view on Wowhead Classic">${name}</a>`;
+  const url=foreverItemURL(item);
+  if(url){
+    // The exported name and quality remain authoritative; do not let Wowhead
+    // overwrite them if its public Forever database has not discovered an item.
+    return `<a class="item-link ${q}" href="${url}" target="_blank" rel="noopener noreferrer" ${foreverTooltipAttr(item)} title="${name} — view on Wowhead Forever">${name}</a>`;
   }
   return `<span class="${q}">${name}</span>`;
 }
