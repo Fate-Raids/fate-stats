@@ -23,18 +23,19 @@
         <button class="nav-button" data-view="sessions"><span class="nav-icon">▤</span> Raid sessions</button>
         <button class="nav-button" data-view="loot"><span class="nav-icon">⬡</span> Loot history</button>
         <button class="nav-button" data-view="players"><span class="nav-icon">♙</span> Raiders</button>
+        <button class="nav-button" data-view="gear"><span class="nav-icon">♜</span> Raid gear</button>
         <button class="nav-button" data-view="rolls"><span class="nav-icon">⚄</span> Roll analytics</button>
         <button class="nav-button" data-view="statistics"><span class="nav-icon">▥</span> Statistics</button>
       </nav>
       <div class="sidebar-bottom">
         <div class="connection"><i></i> PUBLIC RAID ARCHIVE</div>
         <div class="sidebar-note">Read-only raid history. Guild officers publish session exports using GitHub.</div>
-        <div class="version">WEB ARCHIVE <span>v0.4.1 GITHUB</span></div>
+        <div class="version">WEB ARCHIVE <span>v0.5.0 GITHUB</span></div>
       </div>
     </aside>
     <div class="workspace">
       <header class="topbar"><button id="mobile-nav" aria-label="Toggle menu" class="menu-button">☰</button><div class="crumb">PLUSONE <span>/</span> <strong id="breadcrumb">OVERVIEW</strong></div>
-        <div class="top-actions"><span class="mode-flag" id="data-flag">NO PUBLISHED DATA</span></div>
+        <div class="top-actions"><label class="view-button preview-button" for="import-files">Preview JSON</label><input id="import-files" type="file" accept=".json,application/json" multiple hidden><button id="preview-clear" class="view-button" hidden>Clear preview</button><span class="mode-flag" id="data-flag">NO PUBLISHED DATA</span></div>
       </header>
       <div id="startup-status" class="startup-status" role="alert">Site controls have not initialized. Make sure the <code>assets/</code> folder was uploaded beside <code>index.html</code> and JavaScript is enabled.</div>
       <noscript><div class="startup-status" role="alert">This archive requires JavaScript to display raid data. Enable JavaScript to use the site.</div></noscript>

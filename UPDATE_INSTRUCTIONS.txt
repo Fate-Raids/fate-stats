@@ -1,20 +1,7 @@
-# PlusOne Raid Archive v0.4.1 – Forever database integration
+PlusOne Raid Archive v0.5.0
 
-Update your existing GitHub Pages site using the contents of this ZIP.
+Extract and replace these SIX files in your GitHub repository, preserving the assets/ folder paths. Commit to main and confirm GitHub Actions succeeds.
 
-Replace all three files in the repository, preserving the assets/ folder:
-- index.html
-- assets/app.js
-- assets/styles.css
+KEEP your existing raid-exports/ and .github/workflows/deploy.yml unchanged. Do not upload this ZIP file itself.
 
-Commit to main. The existing GitHub Actions workflow publishes automatically.
-DO NOT delete raid-exports/ or change .github/workflows/deploy.yml.
-Your existing uploaded JSON exports will continue working.
-
-New behavior:
-- Item links route to https://www.wowhead.com/forever/item=ID.
-- Embedded tooltip links request the Forever domain.
-- Icons use the in-game Forever export icon if available; if absent, they request a Wowhead widget icon with a generic fallback.
-
-Limitations: Live tooltip rendering depends on Wowhead's external script and its Forever-domain support.
-The site's item links, names, quality and client-provided icons work without the tooltip script.
+This update adds gear capture, character identity, tie-aware roll analytics and a temporary local preview.
