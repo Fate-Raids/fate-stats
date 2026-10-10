@@ -1,10 +1,10 @@
 {
   "name": "plusone-raid-archive-github-pages",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "node scripts/build-archive.mjs",
+    "build": "node scripts/build-browser-parser.mjs && node scripts/build-archive.mjs",
     "test": "node --test tests/*.test.js",
     "test:ui": "python tests/browser_smoke.py"
   }
