@@ -135,6 +135,7 @@ export function normalizeMode(raw){
   if(['tmog','transmog','mog','appearance','3'].includes(t)) return 'Transmog';
   if(['softres','softreserve','sr','reserved','5'].includes(t))return 'Soft Res';
   if(['pass','passed','declined','0','4'].includes(t))return 'Pass';
+  if(['disenchant','de','disenchanting'].includes(t))return 'Disenchant';
   return str(raw).trim() || 'Unspecified';
 }
 function extractEntry(rec,i,sessionStart) {
@@ -143,14 +144,14 @@ function extractEntry(rec,i,sessionStart) {
   for(const key of ['award','result','distribution','outcome']) {
     if(!winner && isObj(rec[key])) winner=extractName(rec[key],playerKeys);
   }
-  const rawMode=pick(rec,typeKeys)|| (isObj(rec.award)?pick(rec.award,typeKeys):undefined);
+  const rawMode=pick(rec,['response','rollType','spec','category','choice','vote','awardType','reason']) || (isObj(rec.award)?pick(rec.award,typeKeys):undefined) || pick(rec,['lootType','mode']);
   const timestamp=findDate(rec,['timestamp','awardedAt','time','date','createdAt','completedAt']);
   return {
     id: str(pick(rec,['entryId','awardId','lootId','guid','id']))||String(i+1),
     item,
     winner:winner.trim(),mode:normalizeMode(rawMode),
     timestamp:timestamp||sessionStart, boss:extractName(rec,['boss','bossName','encounter','encounterName','source']),
-    quantity:item.count,
+    quantity:item.count,contestId:str(pick(rec,['contestId','roundId'])),roundId:str(pick(rec,['roundId'])),
     raw:rec,
   };
 }
@@ -163,9 +164,9 @@ function softReservations(session, root) {
       const p=parseItem(item);
       const count=Number(pick(item,['reserveCount','reserveSlots','slots'])??1);
       // Entries remain independent; duplicate reserves are never silently merged.
-      for(let j=0;j<Math.min(100,Math.max(1,Number.isFinite(count)?count:1));j++)out.push({raider:name||extractName(item,['raider','player','name']),item:p});
+      for(let j=0;j<Math.min(100,Math.max(1,Number.isFinite(count)?count:1));j++)out.push({raider:name||extractName(item,['raider','player','name']),item:p,consumed:item.consumed===true,consumedAt:readDate(item.consumedAt),awardRecipient:str(item.awardRecipient),raw:item});
     }else if(typeof item==='string' || typeof item==='number') {
-      out.push({raider:name,item:parseItem({item:typeof item==='number'?{itemId:item}:item})});
+      out.push({raider:name,item:parseItem({item:typeof item==='number'?{itemId:item}:item}),consumed:false,raw:item});
     }
   };
   if(Array.isArray(raw)) {
@@ -205,9 +206,9 @@ function numericRoll(raw,maximum){
 }
 function rollEvent(event,i,start,award=null){
   const participants=participantRows(event);
-  if(!participants.length)return null;
   const item=parseItem(event.item!==undefined||event.itemId!==undefined||event.itemID!==undefined||event.itemLink!==undefined?event:(award||event));
-  const winner=extractName(event,['winner','winnerName','awardedTo','recipient'])||award?.winner||'';
+  const tied=event.disposition==='TIE_REROLL'||event.tied===true;
+  const winner=tied?'':(extractName(event,['winner','winnerName','awardedTo','recipient'])||award?.winner||'');
   const eventId=str(pick(event,['roundId','rollId','eventId','awardId','entryId','id']))||award?.id||`round-${i+1}`;
   const timestamp=findDate(event,['timestamp','resolvedAt','awardedAt','time','date','createdAt'])||award?.timestamp||start;
   const rows=participants.map((row,j)=>{
@@ -220,17 +221,22 @@ function rollEvent(event,i,start,award=null){
     const value=numericRoll(pick(o,['value','rollValue','rollNumber','rollResult','roll']),max);
     const rawOutcome=str(pick(o,['outcome','result','status'])).toLowerCase().trim();
     const passed=mode==='Pass'||rawOutcome==='pass'||rawOutcome==='passed';
+    const timedOut=rawOutcome==='timeout'||rawOutcome==='timed-out';
     const explicitWon=pick(o,['won','isWinner']);
     const laterWinnerAttempt=participants.slice(j+1).some(next=>isObj(next)&&extractName(next,['player','playerName','raider','name','character','unit']).toLowerCase()===player.toLowerCase());
-    const won=typeof explicitWon==='boolean'?explicitWon:(!!winner && winner.toLowerCase()===player.toLowerCase()&&!passed&&!laterWinnerAttempt);
+    const won=tied?null:(typeof explicitWon==='boolean'?explicitWon:(!!winner && winner.toLowerCase()===player.toLowerCase()&&!passed&&!laterWinnerAttempt));
     const resolved=pick(event,['resolved','finalized'])===true||!!winner||rawOutcome==='lost'||rawOutcome==='won';
     return {id:`${eventId}:${j}`,eventId,player,mode,value,max,
-      status:passed?'passed':value!==null?'rolled':'choice-only',
-      won:resolved?won:null,timestamp,item,boss:extractName(event,['boss','bossName','encounter','encounterName'])||award?.boss||'',winner,
-      raw:o};
+      status:timedOut?'timeout':passed?'passed':value!==null?'rolled':'choice-only',
+      won:tied?null:resolved?won:null,timestamp:findDate(o,['timestamp','time'])||timestamp,item,boss:extractName(event,['boss','bossName','encounter','encounterName'])||award?.boss||'',winner,
+      attempt:Number(pick(o,['attempt'])||1), voteMethod:str(pick(o,['voteMethod'])||pick(event,['voteMethod'])),
+      source:str(pick(o,['source'])), raw:o};
   }).filter(Boolean);
-  if(!rows.length)return null;
-  return {id:eventId,item,winner,timestamp,boss:rows[0].boss,rolls:rows,raw:event};
+  const contestId=str(pick(event,['contestId']))||eventId;
+  return {id:eventId,contestId,tiebreakerRound:Number(pick(event,['tiebreakerRound'])||0),
+    tied, tiePlayers:Array.isArray(event.tiePlayers)?event.tiePlayers.map(str):[],
+    disposition:str(pick(event,['disposition'])),kind:str(pick(event,['kind'])),
+    item,winner,timestamp,boss:rows[0]?.boss||'',rolls:rows,raw:event};
 }
 function collectRollEvents(session,root,entries,start){
   const out=[],ids=new Set();
@@ -267,6 +273,88 @@ export function rollSummary(rows){
     wins,resolved:resolved.length,winRate:resolved.length?wins/resolved.length:null};
 }
 
+// The Master stores stable normalized NameKey map keys. Display labels come
+// from record.name/player; never substitute those internal lowercase keys.
+const sexNames={0:'Male',1:'Female',2:'None',3:'Both',4:'Neutral'};
+const nameKey=s=>str(s).trim().toLocaleLowerCase('en-US');
+const gearSlotNames=['Head','Neck','Shoulder','Shirt','Chest','Waist','Legs','Feet','Wrist','Hands','Finger 1','Finger 2','Trinket 1','Trinket 2','Back','Main Hand','Off Hand','Ranged / Relic','Tabard'];
+export {gearSlotNames};
+export function characterIdentity(roster={}, snapshot={}) {
+  const joined={...roster,...Object.fromEntries(Object.entries(snapshot||{}).filter(([,v])=>v!==undefined && v!==null && v!==''))};
+  const sexId=joined.characterSexID;
+  const sex=Number.isInteger(sexId) && Object.hasOwn(sexNames,sexId)?sexNames[sexId]:
+    ['Male','Female','None','Both','Neutral'].includes(joined.characterSex)?joined.characterSex:'Unknown';
+  return {role:str(joined.role)||'Unknown',class:str(joined.className||joined.class)||'Unknown',classToken:str(joined.class),
+    race:str(joined.race||joined.raceToken)||'Unknown',raceToken:str(joined.raceToken||joined.race),
+    characterSex:sex,characterSexID:Number.isInteger(sexId)?sexId:null};
+}
+function rosterAndGear(session,root) {
+  const rosterRaw=isObj(session.roster)?session.roster:isObj(root.roster)?root.roster:{};
+  const gearRaw=isObj(session.gearSnapshots)?session.gearSnapshots:isObj(root.gearSnapshots)?root.gearSnapshots:{};
+  const records=new Map();
+  const put=(key,obj,kind)=>{
+    const ident=nameKey(key);if(!ident)return;
+    const before=records.get(ident)||{key:ident,name:'',roster:{},snapshot:null};
+    const next={...before};
+    if(kind==='roster')next.roster=isObj(obj)?obj:{name:str(obj)};
+    else if(isObj(obj))next.snapshot=obj;
+    next.name=str(next.roster?.name||next.roster?.display||next.snapshot?.player||key);
+    records.set(ident,next);
+  };
+  for(const [key,obj] of Object.entries(rosterRaw))put(key,obj,'roster');
+  for(const [key,obj] of Object.entries(gearRaw))put(key,obj,'snapshot');
+  // Preserve older rosters represented as arrays.
+  const arr=Array.isArray(session.roster)?session.roster:Array.isArray(root.roster)?root.roster:[];
+  for(const entry of arr){const name=isObj(entry)?str(entry.name||entry.display):str(entry);if(name)put(name,entry,'roster');}
+  const result=[...records.values()].map(record=>{
+    const gear=record.snapshot;
+    const occupied=new Map(Array.isArray(gear?.slots)?gear.slots.filter(v=>isObj(v)&&Number.isInteger(v.slot)&&v.slot>=1&&v.slot<=19).map(v=>[v.slot,v]):[]);
+    const slots=gear?gearSlotNames.map((label,i)=>{const slot=i+1;const raw=occupied.get(slot)||{slot,empty:true};
+      const item=raw.empty===false?parseItem(raw):null;
+      return {slot,label,empty:raw.empty!==false,item,raw};}):[];
+    const identity=characterIdentity(record.roster,gear);
+    return {...record,...identity,gear:gear?{capturedAt:readDate(gear.capturedAt),captureMethod:str(gear.captureMethod),
+       equippedCount:Number.isInteger(gear.equippedCount)?gear.equippedCount:slots.filter(v=>!v.empty).length,
+       playerGUID:str(gear.playerGUID),slots,raw:gear}:null};
+  });
+  return {members:result.sort((a,b)=>a.name.localeCompare(b.name)),byKey:new Map(result.map(m=>[m.key,m]))};
+}
+function rollContests(rounds,entries){
+  const groups=new Map();
+  for(const round of rounds){const key=round.contestId||round.id;let group=groups.get(key);
+    if(!group){group={id:key,rounds:[],item:round.item,winner:'',award:null};groups.set(key,group);}
+    group.rounds.push(round);if(round.winner&&!round.tied)group.winner=round.winner;
+  }
+  for(const entry of entries){const key=entry.contestId||entry.roundId;
+    let group=groups.get(key) || [...groups.values()].find(g=>g.rounds.some(r=>r.id===key));
+    if(group&&!group.award){group.award=entry;group.winner=entry.winner||group.winner;}
+  }
+  for(const group of groups.values())group.rounds.sort((a,b)=>a.tiebreakerRound-b.tiebreakerRound||(a.timestamp||'').localeCompare(b.timestamp||''));
+  return [...groups.values()];
+}
+function stableSessionId(session,rawId,start,name,source,i){
+  if(!rawId||rawId===String(i+1)&&!pick(session,['id','sessionId','sessionID','raidId','raidID','guid']))return `${source.id}:${i}`;
+  return `session:${rawId.length>4?rawId:`${rawId}:${start}:${name}`}`;
+}
+function mergeNewSession(old,latest){
+  const mergeBy=(left,right,key)=>{
+    const map=new Map();for(const v of [...left,...right])map.set(key(v),v);return [...map.values()];
+  };
+  const richest=(a,b)=>({...(a||{}),...(b||{})});
+  const members=mergeBy(old.members||[],latest.members||[],m=>m.key).map(m=>{
+    const first=(old.members||[]).find(x=>x.key===m.key),second=(latest.members||[]).find(x=>x.key===m.key);
+    if(!first||!second)return m;
+    const gear=first.gear&&second.gear?(first.gear.capturedAt>second.gear.capturedAt?first.gear:second.gear):first.gear||second.gear;
+    const identity=characterIdentity(first.roster,second.snapshot||first.snapshot||{});
+    return {...first,...second,...identity,roster:richest(first.roster,second.roster),snapshot:second.snapshot||first.snapshot,gear};
+  });
+  const entries=mergeBy(old.entries,latest.entries,(e,i)=>String(e.id||'')+':'+str(e.timestamp)+':'+str(e.item?.id)+':'+nameKey(e.winner));
+  const rollEvents=mergeBy(old.rollEvents,latest.rollEvents,e=>e.id);
+  const softRes=latest.softRes.length?latest.softRes:old.softRes;
+  const plusOnes={...old.plusOnes,...latest.plusOnes};
+  return {...old,...latest,entries,rollEvents,contests:rollContests(rollEvents,entries),softRes,plusOnes,members,gearCount:members.filter(m=>m.gear).length,
+    players:[...new Set([...old.players,...latest.players,...members.map(m=>m.name)])],raw:latest.raw};
+}
 export function normalizeSource(source) {
   const root=source.payload;
   const candidates=sessionCandidates(root);
@@ -283,43 +371,51 @@ export function normalizeSource(source) {
     const entries=entryCandidates(session).map((r,j)=>extractEntry(r,j,start)).filter(e=>e.winner && !['none','nobody','unassigned'].includes(e.winner.toLowerCase()));
     const softRes=softReservations(session,root);
     const rollEvents=collectRollEvents(session,root,entries,start);
-    let roster=pick(session,['roster','raiders','players','participants','members'])??pick(root,['roster','raiders','players','participants','members']);
-    if(isObj(roster))roster=Object.keys(roster);
-    if(!Array.isArray(roster))roster=[];
-    roster=roster.map(x=>isObj(x)?extractName(x,['name','player','character','fullName']):str(x)).filter(Boolean);
-    const players=[...new Set([...roster,...entries.map(e=>e.winner).filter(Boolean),...softRes.map(e=>e.raider).filter(Boolean),...rollEvents.flatMap(e=>e.rolls.map(r=>r.player))])];
-    return {id:`${source.id}:${rawId}:${i}`,sourceId:source.id,sourceName:source.name,rawId,name,start,end,
+    const rosterGear=rosterAndGear(session,root);
+    let legacyRoster=pick(session,['raiders','players','participants','members'])??pick(root,['raiders','players','participants','members']);
+    if(isObj(legacyRoster))legacyRoster=Object.values(legacyRoster);
+    if(!Array.isArray(legacyRoster))legacyRoster=[];
+    legacyRoster=legacyRoster.map(x=>isObj(x)?extractName(x,['name','player','character','fullName']):str(x)).filter(Boolean);
+    const players=[...new Set([...rosterGear.members.map(x=>x.name),...legacyRoster,...entries.map(e=>e.winner).filter(Boolean),...softRes.map(e=>e.raider).filter(Boolean),...rollEvents.flatMap(e=>e.rolls.map(r=>r.player))])];
+    return {id:stableSessionId(session,rawId,start,name,source,i),sourceId:source.id,sourceName:source.name,rawId,name,start,end,
       guild:extractName(session,['guild','guildName'])||extractName(root,['guild','guildName']),
       difficulty:extractName(session,['difficulty','raidDifficulty']),
-      entries,softRes,rollEvents,players,raw:session,schema:extractName(root,['schema','format','schemaVersion','version'])||'Unknown',
+      entries,softRes,rollEvents,contests:rollContests(rollEvents,entries),members:rosterGear.members,plusOnes:isObj(session.plusOnes)?session.plusOnes:{},
+      gearCount:rosterGear.members.filter(m=>m.gear).length,players,raw:session,schema:extractName(root,['schema','format','schemaVersion','version'])||'Unknown',
     };
   });
 }
 export function assemble(sources) {
   const unique=[...new Map(sources.filter(s=>isObj(s)&&isObj(s.payload)).map(s=>[s.id,s])).values()];
-  const sessions=unique.flatMap(normalizeSource).sort((a,b)=>((b.start||'').localeCompare(a.start||''))||a.name.localeCompare(b.name));
+  const sessionMap=new Map();
+  for(const session of unique.flatMap(normalizeSource)){
+    const previous=sessionMap.get(session.id);sessionMap.set(session.id,previous?mergeNewSession(previous,session):session);
+  }
+  const sessions=[...sessionMap.values()].sort((a,b)=>((b.start||'').localeCompare(a.start||''))||a.name.localeCompare(b.name));
   const allEntries=sessions.flatMap(session=>session.entries.map(entry=>({...entry,sessionId:session.id,sessionName:session.name,sessionStart:session.start})));
   const allRolls=sessions.flatMap(session=>session.rollEvents.flatMap(round=>round.rolls.map(r=>({...r,roundId:round.id,sessionId:session.id,sessionName:session.name,sessionStart:session.start}))));
   const playerMap=new Map();
   for (const session of sessions){
     for (const name of session.players) {
       const key=name.toLowerCase();let p=playerMap.get(key);
-      if(!p){p={name,sessionIds:new Set(),awards:[],reserves:[],rolls:[]};playerMap.set(key,p);}
+      if(!p){p={name,sessionIds:new Set(),awards:[],reserves:[],rolls:[],memberRecords:[],plusOnes:[]};playerMap.set(key,p);}
       p.sessionIds.add(session.id);
     }
+    for(const member of session.members){const key=nameKey(member.name);const p=playerMap.get(key);if(p)p.memberRecords.push({...member,sessionId:session.id,sessionName:session.name});}
+    for(const [key,value] of Object.entries(session.plusOnes||{})){const p=playerMap.get(nameKey(key));if(p&&Number.isInteger(value))p.plusOnes.push({sessionId:session.id,sessionName:session.name,value});}
     for(const entry of session.entries){
       if(!entry.winner)continue;const key=entry.winner.toLowerCase();let p=playerMap.get(key);
-      if(!p){p={name:entry.winner,sessionIds:new Set(),awards:[],reserves:[],rolls:[]};playerMap.set(key,p);}
+      if(!p){p={name:entry.winner,sessionIds:new Set(),awards:[],reserves:[],rolls:[],memberRecords:[],plusOnes:[]};playerMap.set(key,p);}
       p.sessionIds.add(session.id);p.awards.push({...entry,sessionId:session.id,sessionName:session.name});
     }
     for(const entry of session.softRes){const key=entry.raider.toLowerCase();let p=playerMap.get(key);
-      if(!p){p={name:entry.raider,sessionIds:new Set(),awards:[],reserves:[],rolls:[]};playerMap.set(key,p);}
+      if(!p){p={name:entry.raider,sessionIds:new Set(),awards:[],reserves:[],rolls:[],memberRecords:[],plusOnes:[]};playerMap.set(key,p);}
       p.sessionIds.add(session.id);p.reserves.push({...entry,sessionId:session.id});
     }
   }
   for(const roll of allRolls){
     const key=roll.player.toLowerCase();let p=playerMap.get(key);
-    if(!p){p={name:roll.player,sessionIds:new Set(),awards:[],reserves:[],rolls:[]};playerMap.set(key,p);}
+    if(!p){p={name:roll.player,sessionIds:new Set(),awards:[],reserves:[],rolls:[],memberRecords:[],plusOnes:[]};playerMap.set(key,p);}
     p.sessionIds.add(roll.sessionId);p.rolls.push(roll);
   }
   return {sources:unique,sessions,entries:allEntries,rolls:allRolls,players:[...playerMap.values()].sort((a,b)=>b.awards.length-a.awards.length||a.name.localeCompare(b.name))};

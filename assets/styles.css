@@ -24,3 +24,33 @@ a.button{text-decoration:none;display:inline-flex;align-items:center;gap:7px;whi
 .item-icon-link .fallback{font-size:18px;line-height:1}
 .item-icon-link:has(img) .fallback,.item-icon-link:has([class*="icon"]:not(.item-icon-link)) .fallback{display:none}
 .item-icon-link img{max-width:100%;max-height:100%;width:100%;height:100%;object-fit:cover}
+
+/* v0.5: 19-slot snapshots and identity fields */
+.identity-note{margin:0 0 18px;line-height:1.7}.identity-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}.gear-table th,.gear-table td{white-space:nowrap}.gear-table td{vertical-align:middle}.equipment-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:16px}.equip-slot{padding:12px 14px;min-height:88px;border:1px solid #2b5063;background:#152734;border-radius:9px}.equip-slot.is-empty{background:#121c26;border-color:#243746}.slot-number{font-size:10px;color:#84cddd;font-weight:800;letter-spacing:1px;display:block;margin-bottom:8px}.slot-empty{font-size:11px;color:#75899a}.slot-item{display:flex;gap:10px;align-items:center;min-width:0;overflow:hidden}.slot-item .item-frame{width:33px;height:33px;flex-shrink:0}.slot-item>span:last-child{overflow:hidden;min-width:0;font-size:12px}.slot-item a{overflow-wrap:anywhere}.slot-item small{display:block;color:var(--muted);font-size:10px}.preview-button{cursor:pointer;white-space:nowrap}.tag.off{margin-left:10px}@media(max-width:1100px){.identity-grid{grid-template-columns:1fr}}@media(max-width:700px){.equipment-grid{grid-template-columns:1fr}.top-actions{gap:5px}.preview-button,#preview-clear{font-size:10px;padding:6px 8px}.equip-slot{min-height:70px}}
+
+@media(min-width:1101px){.metrics{grid-template-columns:repeat(5,minmax(0,1fr))}}
+
+/* v0.5.1: immediate, session-specific gear navigation. Card details stay visible
+ * on a desktop without forcing users to discover far-right table columns. */
+.raider-name-link{padding:0;border:0;background:none;color:#d9f8fe;font-weight:750;font-size:12px;text-align:left;cursor:pointer;white-space:nowrap}
+.raider-name-link:hover,.raider-name-link:focus-visible{text-decoration:underline;color:#68e2ee}
+.raider-name-link span{font-size:11px;color:#67c9d9}
+.gear-cards{padding:18px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.gear-card{min-width:0;background:linear-gradient(160deg,#142835,#101c28);border:1px solid #315369;border-radius:10px;padding:15px;display:flex;flex-direction:column;gap:11px}
+.gear-card-action{cursor:pointer;transition:background .12s,border-color .12s,transform .12s}
+.gear-card-action:hover,.gear-card-action:focus-visible{background:#1c3543;border-color:#50c9da;outline:0;transform:translateY(-1px)}
+.gear-card-head{display:flex;align-items:center;gap:12px;min-width:0}.gear-avatar{display:grid;place-items:center;width:38px;height:38px;flex:none;border-radius:8px;background:#1b4654;color:#c9f8fe;font-size:17px;font-weight:800;border:1px solid #36788a}
+.gear-card-identity{min-width:0;flex:1}.gear-card-title{font-size:15px;font-weight:800;color:#e4f8ff}.gear-card-secondary{font-size:11px;color:#8faeba;margin-top:3px;line-height:1.6}
+.gear-card-chevron{color:#55d6e6;font-size:21px}.gear-card-session{font-size:11px;color:#95b5c7;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gear-preview{display:flex;gap:6px;align-items:center;flex-wrap:wrap;min-height:36px}.preview-item{display:flex;align-items:center;justify-content:center}
+.gear-preview .item-frame,.gear-preview .mini-empty{width:32px;height:32px;display:grid;place-items:center;flex:none;border:1px solid #375970;border-radius:6px;background:#10202d}
+.gear-preview .mini-empty{color:#526c78}.gear-preview .item-frame img{width:100%;height:100%;object-fit:cover}
+.gear-card-foot{display:flex;justify-content:space-between;align-items:center;gap:6px;padding-top:9px;border-top:1px solid #284556;font-size:11px;color:#91adb9}.gear-card-foot strong{color:#6adeef}
+.session-gear-option{display:flex;align-items:center;justify-content:space-between;gap:14px;border:1px solid #32556a;border-radius:8px;background:#152c39;padding:11px 12px;margin-bottom:9px}
+.session-gear-option strong{display:block;color:#e1f8ff;font-size:12px}.session-gear-option small{display:block;color:#8fbbcb;font-size:11px;margin-top:4px}
+.gear-preview-heading{margin-top:20px!important;padding-top:16px;border-top:1px solid #35566a}
+.item-frame{position:relative}.item-placeholder{display:block;width:80%;height:80%;max-width:38px;color:#84c5d8;margin:auto;filter:drop-shadow(0 1px 2px #081924)}.local-icon-fallback{width:100%;height:100%;display:grid;place-items:center}.item-icon-link:has(img) .local-icon-fallback{display:none}
+.item-icon-link:has(img[style*="display: none"]) .local-icon-fallback{display:grid}
+.item-frame.q3 .item-placeholder{color:#9d9dec}.item-frame.q4 .item-placeholder{color:#b88de5}.item-frame.q2 .item-placeholder{color:#7fd69e}
+@media(max-width:1100px){.gear-cards{grid-template-columns:1fr}}
+@media(max-width:700px){.gear-cards{padding:12px;gap:10px}.gear-card{padding:12px}.session-gear-option{align-items:flex-start;flex-direction:column}.gear-card-secondary{font-size:10px}}
