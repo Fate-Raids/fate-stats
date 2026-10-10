@@ -6,12 +6,83 @@
   <meta name="theme-color" content="#0b1019">
   <meta name="description" content="PlusOne Raid Archive — search raid loot, historical sessions, raiders, and soft reserves.">
   <title>PlusOne | Raid Archive</title>
-  <link rel="stylesheet" href="assets/styles.css?v=0.5.1">
+  <style>
+:root{font-family:Inter,"Segoe UI",Arial,sans-serif;color-scheme:dark;--bg:#0b111a;--panel:#121c28;--panel2:#172332;--panel3:#1a2939;--border:#273a4a;--line:#24313f;--text:#e7eff8;--muted:#8295a9;--dim:#5e7184;--cyan:#3bbcd3;--cyanbright:#68e0ec;--green:#75caab;--gold:#d6ac64;--epic:#bb85ff;--rare:#62a6ee;--shadow:0 15px 50px #02060a77}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5}button,input,select{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--cyanbright);outline-offset:2px}
+.app-shell{display:flex;min-height:100vh}.sidebar{width:240px;flex-shrink:0;background:#0e1722;border-right:1px solid #243746;display:flex;flex-direction:column;padding:29px 16px 20px;position:sticky;top:0;height:100vh;z-index:10}.brand{display:flex;align-items:center;gap:11px;padding:0 11px 39px}.brand-mark{height:44px;width:44px;display:grid;place-items:center;border:2px solid var(--cyan);border-radius:12px;background:#102b39;color:#e6ffff;font-size:22px;font-weight:900;box-shadow:0 0 20px #30d4ee16}.brand b{display:block;letter-spacing:2.8px;font-size:17px}.brand small{display:block;font-size:9px;color:var(--cyan);letter-spacing:2.4px;margin-top:2px}.side-group-title,.eyebrow{font-size:10px;letter-spacing:2px;font-weight:800;color:var(--cyan);text-transform:uppercase}.side-group-title{padding:0 14px;margin-bottom:13px}.nav{display:grid;gap:5px}.nav-button{width:100%;border:1px solid transparent;color:#98aabc;background:transparent;display:flex;align-items:center;gap:14px;text-align:left;padding:12px 13px;border-radius:8px;font-weight:600}.nav-button:hover{color:#fff;background:#182a38}.nav-button.active{background:linear-gradient(90deg,#173643,#152632);border-color:#2c6972;color:#f0ffff;box-shadow:inset 3px 0 0 var(--cyan)}.nav-icon{display:grid;place-items:center;width:19px;font-size:19px;color:var(--cyan)}.sidebar-bottom{margin-top:auto}.connection{font-size:10px;letter-spacing:1.6px;font-weight:750;color:var(--green);border-top:1px solid var(--line);padding:22px 9px 8px}.connection i{display:inline-block;width:6px;height:6px;background:var(--green);border-radius:50%;margin-right:7px}.sidebar-note{padding:5px 10px 28px;color:#728599;font-size:12px}.version{display:flex;justify-content:space-between;padding:12px 10px;border-top:1px solid var(--line);font-size:10px;letter-spacing:1px;color:#8397a9}.version span{color:var(--cyan)}.workspace{display:flex;flex:1;flex-direction:column;min-width:0}.topbar{height:75px;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:0 39px;border-bottom:1px solid var(--line);background:#0d1621}.crumb{font-size:11px;letter-spacing:1.8px;font-weight:700;color:#7c93a9}.crumb span{margin:0 12px;color:#354d5c}.crumb strong{color:#d0e9ef}.top-actions{display:flex;gap:10px;align-items:center}.mode-flag{background:#1c2931;color:#7dc6cf;padding:7px 12px;border:1px solid #2a4b54;border-radius:5px;font-size:10px;font-weight:800;letter-spacing:1px;margin-right:5px}.button{border-radius:7px;padding:10px 16px;font-size:12px;font-weight:750;white-space:nowrap;border:1px solid var(--cyan);transition:.15s ease}.button span{margin-right:5px;font-size:17px;line-height:0}.button-outline{background:#17242e;color:#d4f6fa}.button-outline:hover{background:#23414b;border-color:var(--cyanbright)}.button-primary{background:#197f91;color:#eaffff;border-color:#35b7ca}.button-primary:hover{background:#229db0}.button:disabled{opacity:.45;cursor:not-allowed}.menu-button{display:none}#main{max-width:1700px;width:100%;margin:0 auto;padding:36px 40px 90px;min-height:calc(100vh - 140px)}.hero{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:28px}.eyebrow{margin-bottom:9px}.hero h1{font-size:30px;line-height:1.2;letter-spacing:-.7px;margin:0 0 9px;font-weight:750}.hero p{color:var(--muted);margin:0}.hero-aside{text-align:right;color:var(--muted);font-size:12px}.hero-aside b{color:#f1f7ff;display:block;font-size:13px}.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px;margin-bottom:25px}.metric{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:19px 20px;position:relative;overflow:hidden}.metric:before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:#286e79}.metric-label{font-size:10px;color:#96aabe;letter-spacing:1.35px;font-weight:750}.metric-number{font-size:32px;font-weight:770;line-height:1.4;letter-spacing:-.8px}.metric-foot{font-size:11px;color:#708ba0}.metric-art{position:absolute;right:20px;top:19px;color:#396878;font-size:19px}.panel{border:1px solid var(--border);border-radius:11px;background:var(--panel);overflow:hidden}.panel-head{padding:20px 22px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px solid var(--line)}.panel-head h2{font-size:15px;font-weight:760;margin:0}.panel-head p{font-size:12px;color:var(--muted);margin:4px 0 0}.panel-link{color:var(--cyan);font-weight:750;font-size:11px;border:0;background:transparent;cursor:pointer}.panel-link:hover{color:var(--cyanbright)}.overview-layout{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(270px,1fr);gap:17px}.two-panels{display:grid;grid-template-columns:1fr 1fr;gap:17px}.list-row{display:flex;align-items:center;gap:15px;padding:15px 22px;border-bottom:1px solid #202f3c;min-height:65px}.list-row:last-child{border:0}.list-row:hover{background:#182634}.list-row.action{cursor:pointer}.avatar,.item-frame,.raid-glyph{display:grid;place-items:center;flex-shrink:0;border:1px solid #385b70;background:#1c3443;color:#8bd5e4}.avatar{width:37px;height:37px;border-radius:8px;font-weight:850;font-size:14px}.raid-glyph{width:42px;height:42px;border-radius:9px;font-size:22px}.item-frame{width:44px;height:44px;border-radius:7px;position:relative;overflow:hidden}.item-frame img{width:100%;height:100%;object-fit:cover}.item-frame .fallback{font-size:21px;color:#829eae}.item-frame.q4{border-color:#8652c2}.item-frame.q3{border-color:#4676b1}.item-frame.q2{border-color:#3e9c74}.row-primary{min-width:0;flex:1}.row-title{font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.row-sub{font-size:11px;color:#8498ab;margin-top:2px}.row-right{text-align:right;font-size:11px;color:var(--muted);white-space:nowrap}.row-right b{display:block;color:#e2eef9;font-size:12px}.tag{display:inline-block;padding:3px 9px;border-radius:4px;border:1px solid #395262;background:#192e3b;color:#aed7df;font-size:10px;font-weight:750;white-space:nowrap}.tag.main{color:#7fd9be;border-color:#276453;background:#1b3d35}.tag.off{color:#e7bf7e;border-color:#655037;background:#3e3328}.tag.transmog{color:#c8a0f6;border-color:#564071;background:#322945}.quality-4{color:var(--epic)!important}.quality-3{color:var(--rare)!important}.quality-2{color:#73d18b!important}.quality-5{color:#f29d53!important}.quality-1{color:#f1f1f1!important}.quality-0{color:#999!important}.muted{color:var(--muted)}.small{font-size:12px}.toolbar{display:flex;align-items:center;gap:10px;padding:16px 18px;border-bottom:1px solid var(--line);flex-wrap:wrap}.searchbox{display:flex;align-items:center;gap:8px;background:#0d1721;border:1px solid #355065;padding:0 13px;border-radius:7px;flex:1;min-width:180px}.searchbox span{color:#64889e;font-size:19px}.searchbox input{border:0;outline:0;background:transparent;color:#e5f4ff;width:100%;height:41px;font-size:13px}.searchbox input::placeholder{color:#688198}select{height:42px;max-width:260px;border:1px solid #355065;padding:0 30px 0 12px;border-radius:7px;color:#d9e9f6;background:#101e2c}.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse}th{text-align:left;color:#8199ac;background:#111c28;font-size:10px;letter-spacing:1px;font-weight:850;padding:15px 20px;white-space:nowrap}td{padding:13px 20px;border-top:1px solid #253644;font-size:12px;color:#ccd7e4}tbody tr:hover{background:#1a2938}td .item-cell{display:flex;gap:10px;align-items:center;min-width:195px}td .item-frame{width:34px;height:34px}td .item-frame .fallback{font-size:15px}.cell-link{color:#a6dbeb}.cell-link:hover{text-decoration:underline;color:var(--cyanbright)}.item-link:hover{text-decoration:underline}.view-button{border:1px solid #35566a;color:#bcebf2;border-radius:6px;padding:7px 11px;background:#17313f;font-size:11px}.view-button:hover{background:#235063}.empty{padding:55px 22px;text-align:center;color:#8a9cb0}.empty-icon{font-size:36px;color:#3ba0b0;margin-bottom:13px}.empty h3{margin:0;color:#d9e7f4;font-size:16px}.empty p{max-width:460px;margin:9px auto 18px;font-size:12px;line-height:1.7}.empty .button{margin:2px}.row-count{font-size:11px;color:#7d95ab;padding:10px 20px;border-top:1px solid var(--line);background:#111b27}.stat-bars{padding:12px 20px 23px}.stat-bar{display:grid;grid-template-columns:130px 1fr 40px;gap:13px;align-items:center;margin:14px 0;color:#abc1cf;font-size:12px}.bar-track{height:8px;background:#233644;border-radius:20px;overflow:hidden}.bar-fill{height:100%;background:linear-gradient(90deg,#267a8a,#45c4d4);border-radius:20px}.stat-bar b{text-align:right;color:#f2fafc}.insight{padding:20px;border-bottom:1px solid var(--line)}.insight:last-child{border:0}.insight-kicker{font-size:10px;color:#7c95a9;letter-spacing:1.2px}.insight-value{font-weight:780;color:#e5f5f9;font-size:18px;margin:6px 0 2px}.insight-sub{font-size:11px;color:#8297aa}.notice{padding:12px 17px;background:#15303a;border:1px solid #2b6976;border-radius:8px;color:#b1e8ee;font-size:12px;margin:0 0 22px;display:flex;align-items:center;justify-content:space-between;gap:20px}.notice button{border:0;background:none;color:#e8fdff;font-weight:800;cursor:pointer}.pill{display:inline-block;background:#234252;border-radius:50px;color:#96dbe7;padding:3px 10px;font-size:10px;font-weight:750}.drawer{position:fixed;right:0;left:auto;top:0;margin:0;height:100vh;width:min(660px,100%);max-height:100vh;overflow:auto;background:#101b27;border:0;border-left:1px solid #315264;box-shadow:-20px 0 80px #0009;padding:0;color:var(--text)}.drawer::backdrop{background:#040810bb;backdrop-filter:blur(2px)}.drawer-head{position:sticky;top:0;z-index:3;background:#15232f;padding:25px 28px;display:flex;justify-content:space-between;border-bottom:1px solid #365064}.drawer-head h2{font-size:23px;margin:0}.icon-button{border:1px solid #446374;background:#1c3240;color:#c7f3fb;font-size:27px;height:37px;width:37px;border-radius:7px}.drawer-section{padding:23px 28px;border-bottom:1px solid var(--line)}.drawer-section h3{margin:0 0 14px;font-size:13px;letter-spacing:.2px}.drawer-kv{display:grid;grid-template-columns:1fr 1fr;gap:13px}.kv{border:1px solid #314454;border-radius:7px;padding:12px 13px;background:#152330}.kv small{display:block;color:#7e95a8;font-size:10px;text-transform:uppercase;letter-spacing:1px}.kv b{font-size:15px;font-weight:750;display:block;margin-top:4px}.divider-line{height:1px;background:var(--line);margin:0}.drawer .list-row{padding-left:0;padding-right:0}.chip-list{display:flex;flex-wrap:wrap;gap:8px}.chip{border:1px solid #315569;background:#172d3b;border-radius:5px;color:#a7d4de;padding:6px 9px;font-size:11px}.subtle-button{font-size:11px;padding:7px 10px;color:#b2dfec;background:#152c39;border:1px solid #2e6c7a;border-radius:6px;cursor:pointer}.subtle-button:hover{background:#235060}.warning{border-color:#78653f;background:#312c21;color:#e6c994}.help-layout{display:grid;grid-template-columns:1fr 1fr;gap:14px}.help-card{padding:18px;background:#152432;border:1px solid #294555;border-radius:8px}.help-card b{color:#d8f6f7;display:block;margin-bottom:6px}.help-card p{font-size:12px;color:#8fa7b7;margin:0}.feature-number{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:6px;color:#bff6ff;background:#1e4957;margin-right:7px}footer{display:flex;justify-content:space-between;gap:12px;color:#667e93;border-top:1px solid var(--line);font-size:10px;padding:17px 40px}.loader{padding:100px;text-align:center;color:#829aad}#toast-area{position:fixed;bottom:25px;right:25px;z-index:30;max-width:min(430px,90vw)}.toast{background:#162c39;border:1px solid #3c8491;border-radius:8px;color:#d7faff;padding:13px 18px;margin-top:8px;box-shadow:var(--shadow);font-size:12px}.toast.error{background:#3a2127;border-color:#9b4f5a}.source-table{width:100%;table-layout:fixed}.source-table td{word-break:break-word}
+@media(max-width:1100px){.sidebar{width:205px}#main{padding:29px 22px 60px}.topbar{padding:0 22px}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.overview-layout{grid-template-columns:1fr}.two-panels{grid-template-columns:1fr}.mode-flag{display:none}}
+@media(max-width:700px){.sidebar{position:fixed;left:0;transform:translateX(-100%);transition:transform .2s;height:100dvh;box-shadow:var(--shadow)}body.nav-open .sidebar{transform:translateX(0)}.menu-button{display:block;border:0;background:none;color:var(--text);font-size:20px}.topbar{height:70px;padding:0 14px}.crumb{display:none}.top-actions{margin-left:auto;gap:7px}.button{padding:10px 11px}.top-actions .button{font-size:11px}#main{padding:23px 13px 60px}.hero{align-items:start}.hero-aside{display:none}.hero h1{font-size:26px}.metrics{gap:8px}.metric{padding:15px}.metric-number{font-size:26px}.overview-layout{gap:12px}.panel-head{padding:16px}.list-row{padding:12px 15px}.toolbar{padding:12px}.searchbox{width:100%;flex:auto}.stat-bar{grid-template-columns:95px 1fr 25px;gap:8px}.drawer-section{padding:18px}.drawer-head{padding:19px}.help-layout{grid-template-columns:1fr}footer{padding:16px;display:block}footer span{display:block;margin-top:5px}}
+
+/* v0.1.1 startup diagnostics, native file-picker label and optional file drop */
+.startup-status{margin:16px 26px 0;padding:12px 16px;background:#302317;border:1px solid #89602c;border-radius:7px;color:#ffe4b7}
+.startup-status[hidden]{display:none!important}
+#import-button{display:inline-flex;align-items:center;gap:8px;justify-content:center;cursor:pointer;white-space:nowrap}
+#import-button:focus-visible{outline:2px solid var(--cyanbright);outline-offset:2px}
+.drop-mask{display:none;position:fixed;inset:12px;z-index:9999;background:#0b1723ef;border:3px dashed var(--cyan);border-radius:12px;align-items:center;justify-content:center;pointer-events:none}
+.drop-mask>div{font-size:22px;font-weight:700;color:var(--cyanbright);padding:20px;text-align:center}
+.dragging-files .drop-mask{display:flex}
+
+/* v0.2.0 public archive: links mirror action buttons. */
+a.button{text-decoration:none;display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+
+/* Roll Analytics v0.4.0 */
+.roll-filter-panel{display:flex;gap:14px;flex-wrap:wrap;padding:18px;margin-bottom:17px}.roll-filter-panel label{display:grid;gap:6px;flex:1;min-width:170px;font-weight:700;font-size:11px;letter-spacing:.06em;color:var(--muted)}.roll-filter-panel select{width:100%;min-height:38px;padding:7px 11px;border:1px solid #37566b;background:#10202d;border-radius:6px;color:#e9faff}.roll-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0 0 18px}.roll-metric{border:1px solid var(--border);border-radius:9px;background:var(--panel);padding:14px 16px;display:grid;gap:2px}.roll-metric small{font-size:10px;letter-spacing:1.1px;font-weight:800;color:#8bb5c2}.roll-metric strong{font-size:28px;color:#e3f8ff}.roll-metric span{font-size:11px;color:var(--muted)}.roll-chart-content{padding:20px 22px;min-height:220px}.roll-chart-content .stat-bars{padding:0}.distribution{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:7px;height:180px;align-items:end}.distribution-col{min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:end;height:100%;gap:4px}.distribution-col b{font-size:10px;color:var(--cyan)}.distribution-track{height:140px;background:#10202b;width:100%;max-width:37px;position:relative;border-radius:4px;overflow:hidden;display:flex;align-items:end}.distribution-track div{width:100%;background:linear-gradient(180deg,#4bdde5,#256e86);min-height:0;border-radius:4px}.distribution-col small{font-size:9px;color:var(--muted);white-space:nowrap}.roll-trend{width:100%;height:auto;max-height:220px}.roll-trend line{stroke:#597282;stroke-width:1.5}.roll-trend .gridline{stroke:#294452;stroke-dasharray:3 4}.roll-trend polyline{fill:none;stroke:#57d3df;stroke-width:3;stroke-linejoin:round}.roll-trend text{fill:#90abbb;font-size:12px}.roll-value{font-weight:800;color:#d5eff8;font-variant-numeric:tabular-nums}.roll-value.winning,.won-label{color:#78d8ac;font-weight:800}.roll-table th,.roll-table td{white-space:nowrap}.roll-mini{font-size:12px;color:var(--cyan);padding:10px 0}.drawer .roll-table{min-width:550px}.drawer .table-wrap{max-width:100%;overflow:auto}@media(max-width:1000px){.roll-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:700px){.roll-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.roll-chart-content{padding:14px}.distribution-col small{font-size:8px}}
+
+/* v0.4.1 Forever item metadata: inline fallback icons never expand loot rows. */
+.item-icon-link{display:grid;place-items:center;width:100%;height:100%;overflow:hidden;color:inherit;line-height:1}
+.item-icon-link .fallback{font-size:18px;line-height:1}
+.item-icon-link:has(img) .fallback,.item-icon-link:has([class*="icon"]:not(.item-icon-link)) .fallback{display:none}
+.item-icon-link img{max-width:100%;max-height:100%;width:100%;height:100%;object-fit:cover}
+
+/* v0.5: 19-slot snapshots and identity fields */
+.identity-note{margin:0 0 18px;line-height:1.7}.identity-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}.gear-table th,.gear-table td{white-space:nowrap}.gear-table td{vertical-align:middle}.equipment-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:16px}.equip-slot{padding:12px 14px;min-height:88px;border:1px solid #2b5063;background:#152734;border-radius:9px}.equip-slot.is-empty{background:#121c26;border-color:#243746}.slot-number{font-size:10px;color:#84cddd;font-weight:800;letter-spacing:1px;display:block;margin-bottom:8px}.slot-empty{font-size:11px;color:#75899a}.slot-item{display:flex;gap:10px;align-items:center;min-width:0;overflow:hidden}.slot-item .item-frame{width:33px;height:33px;flex-shrink:0}.slot-item>span:last-child{overflow:hidden;min-width:0;font-size:12px}.slot-item a{overflow-wrap:anywhere}.slot-item small{display:block;color:var(--muted);font-size:10px}.preview-button{cursor:pointer;white-space:nowrap}.tag.off{margin-left:10px}@media(max-width:1100px){.identity-grid{grid-template-columns:1fr}}@media(max-width:700px){.equipment-grid{grid-template-columns:1fr}.top-actions{gap:5px}.preview-button,#preview-clear{font-size:10px;padding:6px 8px}.equip-slot{min-height:70px}}
+
+@media(min-width:1101px){.metrics{grid-template-columns:repeat(5,minmax(0,1fr))}}
+
+/* v0.5.1: immediate, session-specific gear navigation. Card details stay visible
+ * on a desktop without forcing users to discover far-right table columns. */
+.raider-name-link{padding:0;border:0;background:none;color:#d9f8fe;font-weight:750;font-size:12px;text-align:left;cursor:pointer;white-space:nowrap}
+.raider-name-link:hover,.raider-name-link:focus-visible{text-decoration:underline;color:#68e2ee}
+.raider-name-link span{font-size:11px;color:#67c9d9}
+.gear-cards{padding:18px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.gear-card{min-width:0;background:linear-gradient(160deg,#142835,#101c28);border:1px solid #315369;border-radius:10px;padding:15px;display:flex;flex-direction:column;gap:11px}
+.gear-card-action{cursor:pointer;transition:background .12s,border-color .12s,transform .12s}
+.gear-card-action:hover,.gear-card-action:focus-visible{background:#1c3543;border-color:#50c9da;outline:0;transform:translateY(-1px)}
+.gear-card-head{display:flex;align-items:center;gap:12px;min-width:0}.gear-avatar{display:grid;place-items:center;width:38px;height:38px;flex:none;border-radius:8px;background:#1b4654;color:#c9f8fe;font-size:17px;font-weight:800;border:1px solid #36788a}
+.gear-card-identity{min-width:0;flex:1}.gear-card-title{font-size:15px;font-weight:800;color:#e4f8ff}.gear-card-secondary{font-size:11px;color:#8faeba;margin-top:3px;line-height:1.6}
+.gear-card-chevron{color:#55d6e6;font-size:21px}.gear-card-session{font-size:11px;color:#95b5c7;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gear-preview{display:flex;gap:6px;align-items:center;flex-wrap:wrap;min-height:36px}.preview-item{display:flex;align-items:center;justify-content:center}
+.gear-preview .item-frame,.gear-preview .mini-empty{width:32px;height:32px;display:grid;place-items:center;flex:none;border:1px solid #375970;border-radius:6px;background:#10202d}
+.gear-preview .mini-empty{color:#526c78}.gear-preview .item-frame img{width:100%;height:100%;object-fit:cover}
+.gear-card-foot{display:flex;justify-content:space-between;align-items:center;gap:6px;padding-top:9px;border-top:1px solid #284556;font-size:11px;color:#91adb9}.gear-card-foot strong{color:#6adeef}
+.session-gear-option{display:flex;align-items:center;justify-content:space-between;gap:14px;border:1px solid #32556a;border-radius:8px;background:#152c39;padding:11px 12px;margin-bottom:9px}
+.session-gear-option strong{display:block;color:#e1f8ff;font-size:12px}.session-gear-option small{display:block;color:#8fbbcb;font-size:11px;margin-top:4px}
+.gear-preview-heading{margin-top:20px!important;padding-top:16px;border-top:1px solid #35566a}
+.item-frame{position:relative}.item-placeholder{display:block;width:80%;height:80%;max-width:38px;color:#84c5d8;margin:auto;filter:drop-shadow(0 1px 2px #081924)}.local-icon-fallback{width:100%;height:100%;display:grid;place-items:center}.item-icon-link:has(img) .local-icon-fallback{display:none}
+.item-icon-link:has(img[style*="display: none"]) .local-icon-fallback{display:grid}
+.item-frame.q3 .item-placeholder{color:#9d9dec}.item-frame.q4 .item-placeholder{color:#b88de5}.item-frame.q2 .item-placeholder{color:#7fd69e}
+@media(max-width:1100px){.gear-cards{grid-template-columns:1fr}}
+@media(max-width:700px){.gear-cards{padding:12px;gap:10px}.gear-card{padding:12px}.session-gear-option{align-items:flex-start;flex-direction:column}.gear-card-secondary{font-size:10px}}
+
+/* v0.5.2: equipment and raider profiles are full-width pages, not drawers. */
+.detail-header { margin-bottom:12px; }
+.gear-back { margin:0 0 14px; min-height:42px; }
+.detail-full {border:1px solid #274255; background:#101e2a; border-radius:12px; padding:18px 20px; width:100%; max-width:1300px; }
+.detail-full .drawer-section { padding:15px 0 22px; border-bottom:1px solid #304452; }
+.detail-full .drawer-section:first-child { padding-top:0; }
+.detail-full .drawer-section:last-child { border-bottom:0; }
+.detail-full .equipment-grid {grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+.detail-full .equip-slot {min-height:74px;}
+.detail-full .drawer-kv {grid-template-columns:repeat(4,minmax(0,1fr));}
+.detail-full .gear-overview-meta {grid-template-columns:repeat(3,minmax(0,1fr));}
+.detail-full .session-gear-option {min-height:57px;}
+.gear-card-action, .raider-name-link, [data-action=gear], [data-action=player] { cursor:pointer; }
+@media(max-width:980px){.detail-full .drawer-kv,.detail-full .gear-overview-meta{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media(max-width:600px){.detail-full{padding:12px}.detail-full .equipment-grid{grid-template-columns:1fr}.detail-full .drawer-kv,.detail-full .gear-overview-meta{grid-template-columns:1fr 1fr}.gear-back{width:100%}}
+
+  </style>
   <script>const whTooltips={colorLinks:false,renameLinks:false,iconizeLinks:false,iconSize:true};</script>
-  <script src="assets/parser-browser.js?v=0.5.1" defer></script>
-  <script src="assets/app.js?v=0.5.1" defer></script>
   <!-- Wowhead Forever item tooltips are optional. Exported item names, qualities and icons remain usable without this external script. -->
-  <script src="https://wow.zamimg.com/js/tooltips.js" async onload="try{window.WH?.Tooltips?.refreshLinks?.();window.$WowheadPower?.refreshLinks?.()}catch(_){}"></script>
 </head>
 <body>
   <div class="app-shell">
@@ -30,14 +101,14 @@
       <div class="sidebar-bottom">
         <div class="connection"><i></i> PUBLIC RAID ARCHIVE</div>
         <div class="sidebar-note">Read-only raid history. Guild officers publish session exports using GitHub.</div>
-        <div class="version">WEB ARCHIVE <span>v0.5.1 GITHUB</span></div>
+        <div class="version">WEB ARCHIVE <span>v0.5.2 SINGLE-FILE</span></div>
       </div>
     </aside>
     <div class="workspace">
       <header class="topbar"><button id="mobile-nav" aria-label="Toggle menu" class="menu-button">☰</button><div class="crumb">PLUSONE <span>/</span> <strong id="breadcrumb">OVERVIEW</strong></div>
         <div class="top-actions"><label class="view-button preview-button" for="import-files">Preview JSON</label><input id="import-files" type="file" accept=".json,application/json" multiple hidden><button id="preview-clear" class="view-button" hidden>Clear preview</button><span class="mode-flag" id="data-flag">NO PUBLISHED DATA</span></div>
       </header>
-      <div id="startup-status" class="startup-status" role="alert">Site controls have not initialized. Make sure the <code>assets/</code> folder was uploaded beside <code>index.html</code> and JavaScript is enabled.</div>
+      <div id="startup-status" class="startup-status" role="alert">The v0.5.2 page did not initialize. Verify JavaScript is enabled and that the root <code>index.html</code> was fully uploaded.</div>
       <noscript><div class="startup-status" role="alert">This archive requires JavaScript to display raid data. Enable JavaScript to use the site.</div></noscript>
       <main id="main" class="main" tabindex="-1"></main>
       <footer>PlusOne • Raid history and loot transparency <span>Unofficial community project. Not affiliated with Blizzard or Wowhead.</span></footer>
@@ -45,5 +116,802 @@
   </div>
   <dialog id="drawer" class="drawer"><div class="drawer-head"><div><div class="eyebrow" id="drawer-eyebrow">SESSION DETAILS</div><h2 id="drawer-title"></h2></div><button class="icon-button" id="drawer-close" aria-label="Close details">×</button></div><div id="drawer-body"></div></dialog>
   <div id="toast-area" aria-live="polite" aria-atomic="true"></div>
+
+  <script>
+/* Generated classic-script adapter from parser.js. No ES module/CORS requirement. */
+(function(){
+'use strict';
+/* PlusOne Raid Archive: flexible adapter for current and future JSON exports.
+ * No original export fields are discarded; the raw JSON stays in each source archive.
+ */
+const ARCHIVE_FORMAT = 'plusone-web-archive-v1';
+const isObj = v => v !== null && typeof v === 'object' && !Array.isArray(v);
+const pick = (o, keys) => { if (!isObj(o)) return undefined; for (const key of keys) if (o[key] !== undefined && o[key] !== null && o[key] !== '') return o[key]; };
+const str = v => v === undefined || v === null ? '' : typeof v === 'string' ? v : typeof v === 'number' ? String(v) : '';
+const arrays = (o, keys) => keys.flatMap(key => Array.isArray(o?.[key]) ? [o[key]] : []);
+const itemRE = /\|Hitem:(\d+)[^|]*\|h\[([^\]]+)\]\|h/i;
+const itemRawRE = /(?:^|[^a-z])item:(\d+)(?::|\b)/i;
+const itemURLRE = /(?:item=|\/item\/)(\d+)/i;
+const sessionArrayKeys = ['sessions', 'archivedSessions','raidSessions','sessionHistory','raids','raidHistory','completedSessions','history'];
+const entryArrayKeys = ['loot','lootHistory','lootEntries','lootLog','lootRecords','awards','items','drops','events','history','records','entries','distributedLoot'];
+const nestedKeys = ['data','archive','export','payload','raid','session','history','raidHistory','raidData','sessionData'];
+const resKeys = ['softResSnapshot','softresSnapshot','softReserves','softRes','softres','softResData','softReserve','softReservations','reservations','reserves'];
+const dateKeys = ['startedAt','startTime','start','createdAt','date','timestamp','time','sessionDate','raidDate','openedAt'];
+const endKeys = ['endedAt','endTime','end','closedAt','finishedAt'];
+const playerKeys = ['winner','winnerName','awardedTo','recipient','receivedBy','lootedBy','player','playerName','owner','raider','character','to'];
+const typeKeys = ['rollType','roll','spec','category','choice','vote','awardType','reason','lootType','mode'];
+const itemKeys = ['item','itemLink','link','itemData','lootItem','awardedItem'];
+const nameKeys = ['itemName','lootName','name','title'];
+const itemIdKeys = ['itemID','itemId','item_id','itemid','id'];
+const qualityKeys = ['itemQuality','quality','rarity','itemRarity','qualityId'];
+const iconKeys = ['iconName','itemIconName','icon','itemIcon','iconPath','texture'];
+const quantityKeys = ['count','quantity','stackCount','amount'];
+
+function hashText(text) {
+  let a = 2166136261, b = 2166136261;
+  for (let i=0;i<text.length;i++) { const c=text.charCodeAt(i); a=Math.imul(a^c, 16777619); b=Math.imul(b^(c+(i&255)),16777619); }
+  return `${(a>>>0).toString(36)}${(b>>>0).toString(36)}${text.length.toString(36)}`;
+}
+function makeSource(payload, filename='raid-export.json') {
+  if (!payload || typeof payload !== 'object' || Array.isArray(payload)) throw Error('Expected a JSON object. Import a PlusOne session export or a site archive.');
+  const id = hashText(JSON.stringify(payload));
+  return { id, name:String(filename).slice(0,180), importedAt:new Date().toISOString(), payload };
+}
+function isArchive(obj) {return isObj(obj) && obj.format===ARCHIVE_FORMAT && Array.isArray(obj.sources);}
+function unwrapImports(payload, filename) {
+  if (isArchive(payload)) return payload.sources.filter(x=>isObj(x) && isObj(x.payload)).map(x=>({id:hashText(JSON.stringify(x.payload)),name:str(x.name)||filename,importedAt:str(x.importedAt)||new Date().toISOString(),payload:x.payload}));
+  if (Array.isArray(payload)) return payload.map((p,i)=>makeSource(p,`${filename} [${i+1}]`));
+  return [makeSource(payload,filename)];
+}
+function readDate(input) {
+  if (input===undefined || input===null || input==='') return '';
+  if (typeof input==='number') {
+    let n=input; if (n>1e9 && n<1e11) n*=1000;
+    const d=new Date(n); return Number.isFinite(d.valueOf())?d.toISOString():'';
+  }
+  if (/^\d{10,13}$/.test(String(input))) return readDate(Number(input));
+  const d=new Date(input); return Number.isFinite(d.valueOf())?d.toISOString():'';
+}
+function findDate(o, keys=dateKeys) {return readDate(pick(o,keys));}
+function plausibleSession(o){
+  if (!isObj(o)) return false;
+  if (arrays(o,entryArrayKeys.filter(k=>k!=='history')).length) return true;
+  if (pick(o,['sessionID','sessionId','sessionName','raidName','raidZone','raidInstance','zone','instance'])!==undefined) return true;
+  return !!(pick(o,['startTime','startedAt','endTime']) && (pick(o,['players','roster','participants'])||pick(o,resKeys)));
+}
+function plausibleEntry(o){
+  if (!isObj(o)) return false;
+  if (pick(o,playerKeys)!==undefined && pick(o,['item','itemLink','itemName','itemId','itemID','loot','item_id'])!==undefined) return true;
+  if (pick(o,['winner','recipient','awardedTo','winnerName'])!==undefined && pick(o,['name','link','id'])!==undefined) return true;
+  if (isObj(o.item) && pick(o.item,['name','id','itemId','itemID','link'])!==undefined) return true;
+  if (typeof o.item==='string' && o.item.includes('|Hitem:')) return true;
+  return false;
+}
+function sessionCandidates(data, depth=0, seen=new Set()) {
+  if (!isObj(data) || depth>5 || seen.has(data)) return [];
+  seen.add(data);
+  for(const key of sessionArrayKeys) {
+    const a=data[key];
+    if (Array.isArray(a) && a.some(plausibleSession)) return a.filter(isObj);
+    if (isObj(a) && a!==data) {
+      const nested=sessionCandidates(a,depth+1,seen); if(nested.length) return nested;
+    }
+  }
+  for(const key of nestedKeys) {
+    const o=data[key];
+    if(isObj(o)) {const nested=sessionCandidates(o,depth+1,seen);if(nested.length)return nested;}
+  }
+  // Some exports wrap sessions under a map keyed by numeric session id.
+  for(const key of ['sessions','raidSessions','archive','sessionHistory']) {
+    const o=data[key];if(isObj(o)){const a=Object.values(o).filter(plausibleSession);if(a.length)return a;}
+  }
+  if (plausibleSession(data)) return [data];
+  return [];
+}
+function entryCandidates(data, depth=0, seen=new Set()) {
+  if (depth>4||!isObj(data)||seen.has(data)) return [];
+  seen.add(data);
+  const entries=[];
+  for(const key of entryArrayKeys){
+    const a=data[key];
+    if(Array.isArray(a)) entries.push(...a.filter(plausibleEntry));
+    else if(isObj(a) && ['loot','lootHistory','lootEntries','awards','drops','records'].includes(key)) entries.push(...Object.values(a).filter(plausibleEntry));
+  }
+  if(entries.length)return entries;
+  for(const key of ['data','session','sessionData','raid','result']){
+    if(isObj(data[key])) {const sub=entryCandidates(data[key],depth+1,seen);if(sub.length)return sub;}
+  }
+  return [];
+}
+function extractName(obj, keys) {
+  const v=pick(obj,keys);
+  if(isObj(v))return str(pick(v,['name','fullName','characterName','playerName','displayName','label']))||str(v.id)||'';
+  return str(v);
+}
+function parseItem(rec) {
+  const item=pick(rec,itemKeys);
+  const o=isObj(item)?item:{};
+  const stringItem=str(item);
+  const link=str(pick(rec,['itemLink','link','lootLink'])||pick(o,['link','itemLink'])||stringItem);
+  const match=link.match(itemRE);
+  const idFromLink=match?.[1]||link.match(itemRawRE)?.[1]||link.match(itemURLRE)?.[1];
+  const fromRoot=pick(rec,['itemID','itemId','item_id','itemid']);
+  const fromNested=pick(o,itemIdKeys);
+  const rawId=fromRoot??fromNested??idFromLink;
+  const itemId=/^\d+$/.test(str(rawId)) ? Number(rawId):null;
+  let name=str(pick(rec,['itemName','lootName'])||pick(o,nameKeys)||match?.[2]);
+  if(!name && stringItem && !stringItem.includes('|Hitem:')) name=stringItem;
+  if(!name && !itemId) name=extractName(rec,['name','title']);
+  if(!name && itemId) name=`Item #${itemId}`;
+  const rawQuality=pick(rec,qualityKeys) ?? pick(o,qualityKeys);
+  const qmap={poor:0,common:1,uncommon:2,rare:3,epic:4,legendary:5,artifact:6,heirloom:7};
+  const quality=typeof rawQuality==='number'?rawQuality: /^\d+$/.test(str(rawQuality))?Number(rawQuality):qmap[str(rawQuality).toLowerCase()]??null;
+  const rawIcon=pick(rec,['itemIconName','itemIcon','iconName','icon'])??pick(o,iconKeys);
+  const icon=str(rawIcon).trim();
+  const count=Number(pick(rec,quantityKeys)??pick(o,quantityKeys)??1);
+  return {id:itemId,name:name||'Unknown item',link,quality,icon,count:Number.isFinite(count)&&count>0?count:1};
+}
+function normalizeMode(raw){
+  const t=str(raw).trim().toLowerCase().replace(/[\s_-]/g,'');
+  if(['main','ms','mainspec','need','1','primary'].includes(t)) return 'Main Spec';
+  if(['off','os','offspec','greed','2','secondary'].includes(t)) return 'Off Spec';
+  if(['tmog','transmog','mog','appearance','3'].includes(t)) return 'Transmog';
+  if(['softres','softreserve','sr','reserved','5'].includes(t))return 'Soft Res';
+  if(['pass','passed','declined','0','4'].includes(t))return 'Pass';
+  if(['disenchant','de','disenchanting'].includes(t))return 'Disenchant';
+  return str(raw).trim() || 'Unspecified';
+}
+function extractEntry(rec,i,sessionStart) {
+  const item=parseItem(rec);
+  let winner=extractName(rec,playerKeys);
+  for(const key of ['award','result','distribution','outcome']) {
+    if(!winner && isObj(rec[key])) winner=extractName(rec[key],playerKeys);
+  }
+  const rawMode=pick(rec,['response','rollType','spec','category','choice','vote','awardType','reason']) || (isObj(rec.award)?pick(rec.award,typeKeys):undefined) || pick(rec,['lootType','mode']);
+  const timestamp=findDate(rec,['timestamp','awardedAt','time','date','createdAt','completedAt']);
+  return {
+    id: str(pick(rec,['entryId','awardId','lootId','guid','id']))||String(i+1),
+    item,
+    winner:winner.trim(),mode:normalizeMode(rawMode),
+    timestamp:timestamp||sessionStart, boss:extractName(rec,['boss','bossName','encounter','encounterName','source']),
+    quantity:item.count,contestId:str(pick(rec,['contestId','roundId'])),roundId:str(pick(rec,['roundId'])),
+    raw:rec,
+  };
+}
+function softReservations(session, root) {
+  const raw=pick(session,resKeys)??pick(root,resKeys);
+  if(!raw)return [];
+  const out=[];
+  const add=(name,item)=>{
+    if(isObj(item)) {
+      const p=parseItem(item);
+      const count=Number(pick(item,['reserveCount','reserveSlots','slots'])??1);
+      // Entries remain independent; duplicate reserves are never silently merged.
+      for(let j=0;j<Math.min(100,Math.max(1,Number.isFinite(count)?count:1));j++)out.push({raider:name||extractName(item,['raider','player','name']),item:p,consumed:item.consumed===true,consumedAt:readDate(item.consumedAt),awardRecipient:str(item.awardRecipient),raw:item});
+    }else if(typeof item==='string' || typeof item==='number') {
+      out.push({raider:name,item:parseItem({item:typeof item==='number'?{itemId:item}:item}),consumed:false,raw:item});
+    }
+  };
+  if(Array.isArray(raw)) {
+    for (const row of raw) {
+      if(!isObj(row))continue;
+      const name=extractName(row,['raider','player','playerName','name','character']);
+      const entries=pick(row,['items','reserves','reservations','softRes','softReserves']);
+      if(Array.isArray(entries)){for(const e of entries)add(name,e);}
+      else add(name,row);
+    }
+  }else if(isObj(raw)) {
+    for(const [key,row] of Object.entries(raw)) {
+      if(Array.isArray(row))for(const e of row)add(key,e);
+      else if(isObj(row)){
+        const entries=pick(row,['items','reserves','reservations','softRes']);
+        if(Array.isArray(entries))for(const e of entries)add(key,e);
+        else add(key,row);
+      } else add(key,row);
+    }
+  }
+  return out;
+}
+// Numeric roll events are independent from awards. No numbers or winners are inferred
+// when absent; a Pass or automatic reserve eligibility is not a numeric roll.
+const rollEventKeys=['rollEvents','rollRounds','rollHistory'];
+const participantKeys=['rolls','rollResults','participants','bids','votes'];
+function participantRows(obj){
+  const raw=pick(obj,participantKeys);
+  if(Array.isArray(raw))return raw;
+  if(isObj(raw))return Object.entries(raw).map(([name,value])=>isObj(value)?{player:name,...value}:{player:name,roll:value});
+  return [];
+}
+function numericRoll(raw,maximum){
+  if(raw===null || raw===undefined || raw==='' || typeof raw==='boolean')return null;
+  const n=Number(raw);
+  return Number.isInteger(n)&&n>=1&&n<=maximum?n:null;
+}
+function rollEvent(event,i,start,award=null){
+  const participants=participantRows(event);
+  const item=parseItem(event.item!==undefined||event.itemId!==undefined||event.itemID!==undefined||event.itemLink!==undefined?event:(award||event));
+  const tied=event.disposition==='TIE_REROLL'||event.tied===true;
+  const winner=tied?'':(extractName(event,['winner','winnerName','awardedTo','recipient'])||award?.winner||'');
+  const eventId=str(pick(event,['roundId','rollId','eventId','awardId','entryId','id']))||award?.id||`round-${i+1}`;
+  const timestamp=findDate(event,['timestamp','resolvedAt','awardedAt','time','date','createdAt'])||award?.timestamp||start;
+  const rows=participants.map((row,j)=>{
+    const o=isObj(row)?row:{player:String(row)};
+    const player=extractName(o,['player','playerName','raider','name','character','unit'])||'';
+    if(!player)return null;
+    const mode=normalizeMode(pick(o,['category','rollType','choice','vote','spec','mode','type']));
+    const maxRaw=pick(o,['max','rollMax','sides','rollRange'])??pick(event,['max','rollMax','sides']);
+    const max=Math.max(1,Math.min(100000,Number(maxRaw)||100));
+    const value=numericRoll(pick(o,['value','rollValue','rollNumber','rollResult','roll']),max);
+    const rawOutcome=str(pick(o,['outcome','result','status'])).toLowerCase().trim();
+    const passed=mode==='Pass'||rawOutcome==='pass'||rawOutcome==='passed';
+    const timedOut=rawOutcome==='timeout'||rawOutcome==='timed-out';
+    const explicitWon=pick(o,['won','isWinner']);
+    const laterWinnerAttempt=participants.slice(j+1).some(next=>isObj(next)&&extractName(next,['player','playerName','raider','name','character','unit']).toLowerCase()===player.toLowerCase());
+    const won=tied?null:(typeof explicitWon==='boolean'?explicitWon:(!!winner && winner.toLowerCase()===player.toLowerCase()&&!passed&&!laterWinnerAttempt));
+    const resolved=pick(event,['resolved','finalized'])===true||!!winner||rawOutcome==='lost'||rawOutcome==='won';
+    return {id:`${eventId}:${j}`,eventId,player,mode,value,max,
+      status:timedOut?'timeout':passed?'passed':value!==null?'rolled':'choice-only',
+      won:tied?null:resolved?won:null,timestamp:findDate(o,['timestamp','time'])||timestamp,item,boss:extractName(event,['boss','bossName','encounter','encounterName'])||award?.boss||'',winner,
+      attempt:Number(pick(o,['attempt'])||1), voteMethod:str(pick(o,['voteMethod'])||pick(event,['voteMethod'])),
+      source:str(pick(o,['source'])), raw:o};
+  }).filter(Boolean);
+  const contestId=str(pick(event,['contestId']))||eventId;
+  return {id:eventId,contestId,tiebreakerRound:Number(pick(event,['tiebreakerRound'])||0),
+    tied, tiePlayers:Array.isArray(event.tiePlayers)?event.tiePlayers.map(str):[],
+    disposition:str(pick(event,['disposition'])),kind:str(pick(event,['kind'])),
+    item,winner,timestamp,boss:rows[0]?.boss||'',rolls:rows,raw:event};
+}
+function collectRollEvents(session,root,entries,start){
+  const out=[],ids=new Set();
+  const record=(event,i,award=null)=>{
+    const r=rollEvent(event,i,start,award);
+    if(!r)return;
+    // Identical round identifiers within a session are one contest, even if
+    // represented in both the session's rollEvents and an award's rolls.
+    if(ids.has(r.id))return;ids.add(r.id);out.push(r);
+  };
+  let index=0;
+  for(const key of rollEventKeys){
+    const candidate=session[key]??(session===root?null:root[key]);
+    if(Array.isArray(candidate))for(const event of candidate)if(isObj(event))record(event,index++);
+  }
+  for(const entry of entries){
+    if(participantRows(entry.raw).length){
+      const withId={...entry.raw,roundId:pick(entry.raw,['roundId','rollId','eventId','awardId','entryId'])||entry.id};
+      record(withId,index++,entry);
+    }
+  }
+  return out;
+}
+function rollSummary(rows){
+  const numeric=rows.filter(r=>r.value!==null && Number.isInteger(r.value));
+  const resolved=rows.filter(r=>r.won!==null && r.value!==null && r.mode!=='Pass');
+  const wins=resolved.filter(r=>r.won===true).length;
+  const values=numeric.map(r=>r.value).sort((a,b)=>a-b);
+  return {participations:rows.length,choices:rows.filter(r=>r.mode!=='Pass').length,
+    numericRolls:numeric.length,passes:rows.filter(r=>r.mode==='Pass').length,
+    avg:values.length?values.reduce((a,b)=>a+b,0)/values.length:null,
+    median:values.length?(values[Math.floor((values.length-1)/2)]+values[Math.floor(values.length/2)])/2:null,
+    best:values.length?values[values.length-1]:null,worst:values.length?values[0]:null,
+    wins,resolved:resolved.length,winRate:resolved.length?wins/resolved.length:null};
+}
+
+// The Master stores stable normalized NameKey map keys. Display labels come
+// from record.name/player; never substitute those internal lowercase keys.
+const sexNames={0:'Male',1:'Female',2:'None',3:'Both',4:'Neutral'};
+const nameKey=s=>str(s).trim().toLocaleLowerCase('en-US');
+const gearSlotNames=['Head','Neck','Shoulder','Shirt','Chest','Waist','Legs','Feet','Wrist','Hands','Finger 1','Finger 2','Trinket 1','Trinket 2','Back','Main Hand','Off Hand','Ranged / Relic','Tabard'];
+
+function characterIdentity(roster={}, snapshot={}) {
+  const joined={...roster,...Object.fromEntries(Object.entries(snapshot||{}).filter(([,v])=>v!==undefined && v!==null && v!==''))};
+  const sexId=joined.characterSexID;
+  const sex=Number.isInteger(sexId) && Object.hasOwn(sexNames,sexId)?sexNames[sexId]:
+    ['Male','Female','None','Both','Neutral'].includes(joined.characterSex)?joined.characterSex:'Unknown';
+  return {role:str(joined.role)||'Unknown',class:str(joined.className||joined.class)||'Unknown',classToken:str(joined.class),
+    race:str(joined.race||joined.raceToken)||'Unknown',raceToken:str(joined.raceToken||joined.race),
+    characterSex:sex,characterSexID:Number.isInteger(sexId)?sexId:null};
+}
+function rosterAndGear(session,root) {
+  const rosterRaw=isObj(session.roster)?session.roster:isObj(root.roster)?root.roster:{};
+  const gearRaw=isObj(session.gearSnapshots)?session.gearSnapshots:isObj(root.gearSnapshots)?root.gearSnapshots:{};
+  const records=new Map();
+  const put=(key,obj,kind)=>{
+    const ident=nameKey(key);if(!ident)return;
+    const before=records.get(ident)||{key:ident,name:'',roster:{},snapshot:null};
+    const next={...before};
+    if(kind==='roster')next.roster=isObj(obj)?obj:{name:str(obj)};
+    else if(isObj(obj))next.snapshot=obj;
+    next.name=str(next.roster?.name||next.roster?.display||next.snapshot?.player||key);
+    records.set(ident,next);
+  };
+  for(const [key,obj] of Object.entries(rosterRaw))put(key,obj,'roster');
+  for(const [key,obj] of Object.entries(gearRaw))put(key,obj,'snapshot');
+  // Preserve older rosters represented as arrays.
+  const arr=Array.isArray(session.roster)?session.roster:Array.isArray(root.roster)?root.roster:[];
+  for(const entry of arr){const name=isObj(entry)?str(entry.name||entry.display):str(entry);if(name)put(name,entry,'roster');}
+  const result=[...records.values()].map(record=>{
+    const gear=record.snapshot;
+    const occupied=new Map(Array.isArray(gear?.slots)?gear.slots.filter(v=>isObj(v)&&Number.isInteger(v.slot)&&v.slot>=1&&v.slot<=19).map(v=>[v.slot,v]):[]);
+    const slots=gear?gearSlotNames.map((label,i)=>{const slot=i+1;const raw=occupied.get(slot)||{slot,empty:true};
+      const item=raw.empty===false?parseItem(raw):null;
+      return {slot,label,empty:raw.empty!==false,item,raw};}):[];
+    const identity=characterIdentity(record.roster,gear);
+    return {...record,...identity,gear:gear?{capturedAt:readDate(gear.capturedAt),captureMethod:str(gear.captureMethod),
+       equippedCount:Number.isInteger(gear.equippedCount)?gear.equippedCount:slots.filter(v=>!v.empty).length,
+       playerGUID:str(gear.playerGUID),slots,raw:gear}:null};
+  });
+  return {members:result.sort((a,b)=>a.name.localeCompare(b.name)),byKey:new Map(result.map(m=>[m.key,m]))};
+}
+function rollContests(rounds,entries){
+  const groups=new Map();
+  for(const round of rounds){const key=round.contestId||round.id;let group=groups.get(key);
+    if(!group){group={id:key,rounds:[],item:round.item,winner:'',award:null};groups.set(key,group);}
+    group.rounds.push(round);if(round.winner&&!round.tied)group.winner=round.winner;
+  }
+  for(const entry of entries){const key=entry.contestId||entry.roundId;
+    let group=groups.get(key) || [...groups.values()].find(g=>g.rounds.some(r=>r.id===key));
+    if(group&&!group.award){group.award=entry;group.winner=entry.winner||group.winner;}
+  }
+  for(const group of groups.values())group.rounds.sort((a,b)=>a.tiebreakerRound-b.tiebreakerRound||(a.timestamp||'').localeCompare(b.timestamp||''));
+  return [...groups.values()];
+}
+function stableSessionId(session,rawId,start,name,source,i){
+  if(!rawId||rawId===String(i+1)&&!pick(session,['id','sessionId','sessionID','raidId','raidID','guid']))return `${source.id}:${i}`;
+  return `session:${rawId.length>4?rawId:`${rawId}:${start}:${name}`}`;
+}
+function mergeNewSession(old,latest){
+  const mergeBy=(left,right,key)=>{
+    const map=new Map();for(const v of [...left,...right])map.set(key(v),v);return [...map.values()];
+  };
+  const richest=(a,b)=>({...(a||{}),...(b||{})});
+  const members=mergeBy(old.members||[],latest.members||[],m=>m.key).map(m=>{
+    const first=(old.members||[]).find(x=>x.key===m.key),second=(latest.members||[]).find(x=>x.key===m.key);
+    if(!first||!second)return m;
+    const gear=first.gear&&second.gear?(first.gear.capturedAt>second.gear.capturedAt?first.gear:second.gear):first.gear||second.gear;
+    const identity=characterIdentity(first.roster,second.snapshot||first.snapshot||{});
+    return {...first,...second,...identity,roster:richest(first.roster,second.roster),snapshot:second.snapshot||first.snapshot,gear};
+  });
+  const entries=mergeBy(old.entries,latest.entries,(e,i)=>String(e.id||'')+':'+str(e.timestamp)+':'+str(e.item?.id)+':'+nameKey(e.winner));
+  const rollEvents=mergeBy(old.rollEvents,latest.rollEvents,e=>e.id);
+  const softRes=latest.softRes.length?latest.softRes:old.softRes;
+  const plusOnes={...old.plusOnes,...latest.plusOnes};
+  return {...old,...latest,entries,rollEvents,contests:rollContests(rollEvents,entries),softRes,plusOnes,members,gearCount:members.filter(m=>m.gear).length,
+    players:[...new Set([...old.players,...latest.players,...members.map(m=>m.name)])],raw:latest.raw};
+}
+function normalizeSource(source) {
+  const root=source.payload;
+  const candidates=sessionCandidates(root);
+  const found=candidates.length>0?candidates:[root];
+  return found.map((session,i)=>{
+    const nested=isObj(session.session)?session.session:null;
+    const start=findDate(session)||findDate(nested)||findDate(root);
+    const end=findDate(session,endKeys)||findDate(root,endKeys);
+    const name=extractName(session,['sessionName','raidName','name','title','instanceName','zone','instance','raidZone','raidInstance'])
+      ||extractName(nested,['name','zone','instance'])
+      ||extractName(root,['raidName','guild','name'])
+      || `Raid session ${i+1}`;
+    const rawId=str(pick(session,['sessionId','sessionID','raidId','raidID','guid','id']))||String(i+1);
+    const entries=entryCandidates(session).map((r,j)=>extractEntry(r,j,start)).filter(e=>e.winner && !['none','nobody','unassigned'].includes(e.winner.toLowerCase()));
+    const softRes=softReservations(session,root);
+    const rollEvents=collectRollEvents(session,root,entries,start);
+    const rosterGear=rosterAndGear(session,root);
+    let legacyRoster=pick(session,['raiders','players','participants','members'])??pick(root,['raiders','players','participants','members']);
+    if(isObj(legacyRoster))legacyRoster=Object.values(legacyRoster);
+    if(!Array.isArray(legacyRoster))legacyRoster=[];
+    legacyRoster=legacyRoster.map(x=>isObj(x)?extractName(x,['name','player','character','fullName']):str(x)).filter(Boolean);
+    const players=[...new Set([...rosterGear.members.map(x=>x.name),...legacyRoster,...entries.map(e=>e.winner).filter(Boolean),...softRes.map(e=>e.raider).filter(Boolean),...rollEvents.flatMap(e=>e.rolls.map(r=>r.player))])];
+    return {id:stableSessionId(session,rawId,start,name,source,i),sourceId:source.id,sourceName:source.name,rawId,name,start,end,
+      guild:extractName(session,['guild','guildName'])||extractName(root,['guild','guildName']),
+      difficulty:extractName(session,['difficulty','raidDifficulty']),
+      entries,softRes,rollEvents,contests:rollContests(rollEvents,entries),members:rosterGear.members,plusOnes:isObj(session.plusOnes)?session.plusOnes:{},
+      gearCount:rosterGear.members.filter(m=>m.gear).length,players,raw:session,schema:extractName(root,['schema','format','schemaVersion','version'])||'Unknown',
+    };
+  });
+}
+function assemble(sources) {
+  const unique=[...new Map(sources.filter(s=>isObj(s)&&isObj(s.payload)).map(s=>[s.id,s])).values()];
+  const sessionMap=new Map();
+  for(const session of unique.flatMap(normalizeSource)){
+    const previous=sessionMap.get(session.id);sessionMap.set(session.id,previous?mergeNewSession(previous,session):session);
+  }
+  const sessions=[...sessionMap.values()].sort((a,b)=>((b.start||'').localeCompare(a.start||''))||a.name.localeCompare(b.name));
+  const allEntries=sessions.flatMap(session=>session.entries.map(entry=>({...entry,sessionId:session.id,sessionName:session.name,sessionStart:session.start})));
+  const allRolls=sessions.flatMap(session=>session.rollEvents.flatMap(round=>round.rolls.map(r=>({...r,roundId:round.id,sessionId:session.id,sessionName:session.name,sessionStart:session.start}))));
+  const playerMap=new Map();
+  for (const session of sessions){
+    for (const name of session.players) {
+      const key=name.toLowerCase();let p=playerMap.get(key);
+      if(!p){p={name,sessionIds:new Set(),awards:[],reserves:[],rolls:[],memberRecords:[],plusOnes:[]};playerMap.set(key,p);}
+      p.sessionIds.add(session.id);
+    }
+    for(const member of session.members){const key=nameKey(member.name);const p=playerMap.get(key);if(p)p.memberRecords.push({...member,sessionId:session.id,sessionName:session.name});}
+    for(const [key,value] of Object.entries(session.plusOnes||{})){const p=playerMap.get(nameKey(key));if(p&&Number.isInteger(value))p.plusOnes.push({sessionId:session.id,sessionName:session.name,value});}
+    for(const entry of session.entries){
+      if(!entry.winner)continue;const key=entry.winner.toLowerCase();let p=playerMap.get(key);
+      if(!p){p={name:entry.winner,sessionIds:new Set(),awards:[],reserves:[],rolls:[],memberRecords:[],plusOnes:[]};playerMap.set(key,p);}
+      p.sessionIds.add(session.id);p.awards.push({...entry,sessionId:session.id,sessionName:session.name});
+    }
+    for(const entry of session.softRes){const key=entry.raider.toLowerCase();let p=playerMap.get(key);
+      if(!p){p={name:entry.raider,sessionIds:new Set(),awards:[],reserves:[],rolls:[],memberRecords:[],plusOnes:[]};playerMap.set(key,p);}
+      p.sessionIds.add(session.id);p.reserves.push({...entry,sessionId:session.id});
+    }
+  }
+  for(const roll of allRolls){
+    const key=roll.player.toLowerCase();let p=playerMap.get(key);
+    if(!p){p={name:roll.player,sessionIds:new Set(),awards:[],reserves:[],rolls:[],memberRecords:[],plusOnes:[]};playerMap.set(key,p);}
+    p.sessionIds.add(roll.sessionId);p.rolls.push(roll);
+  }
+  return {sources:unique,sessions,entries:allEntries,rolls:allRolls,players:[...playerMap.values()].sort((a,b)=>b.awards.length-a.awards.length||a.name.localeCompare(b.name))};
+}
+function publishedArchive(sources){return {format:ARCHIVE_FORMAT,generatedAt:new Date().toISOString(),sources:sources.map(s=>({id:s.id,name:s.name,importedAt:s.importedAt,payload:s.payload}))};}
+
+window.PlusOneParser={ARCHIVE_FORMAT,hashText,makeSource,isArchive,unwrapImports,normalizeMode,normalizeSource,assemble,publishedArchive,rollSummary};
+})();
+
+  </script>
+  <script>
+'use strict';
+const { assemble, unwrapImports, rollSummary } = window.PlusOneParser;
+
+const $=selector=>document.querySelector(selector);
+const main=$('#main');
+const escapeHTML=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const safe=s=>escapeHTML(s);
+const num=n=>Number(n||0).toLocaleString();
+const dateFmt=new Intl.DateTimeFormat('en-US',{month:'short',day:'numeric',year:'numeric'});
+const timeFmt=new Intl.DateTimeFormat('en-US',{hour:'numeric',minute:'2-digit'});
+const fmtDate=v=>v?dateFmt.format(new Date(v)):'Unknown date';
+const fmtTime=v=>v?timeFmt.format(new Date(v)):'';
+const state={view:'overview',returnView:'gear',search:'',session:'all',mode:'all',raider:'all',published:[],local:[],data:assemble([]),ready:false};
+const viewNames={overview:'Overview',sessions:'Raid sessions',loot:'Loot history',players:'Raiders',gear:'Raid gear',rolls:'Roll analytics',statistics:'Statistics'};
+const qualityClass=q=>Number.isInteger(q)&&q>=0&&q<=7?`quality-${q}`:'';
+const qFrame=q=>Number.isInteger(q)&&q>=0&&q<=7?`q${q}`:'';
+const classMode=m=>m==='Main Spec'?'main':m==='Off Spec'?'off':m==='Transmog'?'transmog':'';
+const safeSlug=v=>{const n=String(v||'').replace(/\\/g,'/').split('/').pop().replace(/\.(?:jpg|png|webp|blp|tga|jpeg)$/i,'').toLowerCase();return /[a-z]/.test(n)&&/^[a-z0-9_]+$/.test(n)?n:'';};
+// Forever is its own Wowhead database. Never resolve item IDs in Classic/Retail.
+const FOREVER_DB='https://www.wowhead.com/forever';
+const WEB_VERSION='0.5.2';
+const validItemId=item=>Number.isSafeInteger(Number(item?.id))&&Number(item?.id)>0?Number(item.id):null;
+const foreverItemURL=item=>{const id=validItemId(item);return id?`${FOREVER_DB}/item=${id}`:'';};
+const foreverTooltipAttr=item=>{const id=validItemId(item);return id?`data-wowhead="item=${id}&amp;domain=forever"`:'';};
+// Always render a visible item graphic. Actual textures require an exported icon
+// name/path; unverified item IDs must never be mapped to an unrelated texture.
+function iconFallback(item,slotLabel=''){
+  const text=(String(slotLabel)+' '+String(item?.name||'')).toLowerCase();
+  let kind='misc';
+  if(/head|helm|circlet|chapeau|hood|hat|crown/.test(text))kind='head';
+  else if(/chest|armor|robe|overshirt|tunic|vest/.test(text))kind='chest';
+  else if(/main hand|off hand|sword|barb|dagger|blade|staff|hammer|reaver|mace|axe|weapon|rod|might/.test(text))kind='weapon';
+  else if(/shield|aegis|guard|offhand/.test(text))kind='shield';
+  else if(/ring|finger|band|seal/.test(text))kind='ring';
+  else if(/neck|amulet|pendant|locket/.test(text))kind='neck';
+  else if(/feet|boot|slipper/.test(text))kind='feet';
+  else if(/glove|hands|gauntlet/.test(text))kind='hands';
+  else if(/trinket|watch|carrot|charm|orb/.test(text))kind='trinket';
+  else if(/cloak|back|cape|shawl/.test(text))kind='back';
+  else if(/bow|rifle|gun|ranged|relic|harpoon/.test(text))kind='ranged';
+  else if(/shoulder|mantle/.test(text))kind='shoulder';
+  else if(/waist|belt/.test(text))kind='waist';
+  else if(/legs|leggings|pants/.test(text))kind='legs';
+  else if(/wrist|bracers/.test(text))kind='wrist';
+  else if(/shirt|tabard/.test(text))kind='shirt';
+  const shapes={
+    head:'M5 8l3-4 4 3 4-3 3 4-1 10H6z M8 12h8',
+    chest:'M7 4l5 3 5-3 4 5-4 3v8H7v-8L3 9z',
+    weapon:'M4 20L19 5 M13 5l6 0 0 6 M5 16l3 3 M3 19l2 2',
+    shield:'M12 3l8 3v6c0 5-4 7-8 9-4-2-8-4-8-9V6z M12 7v10',
+    ring:'M8 5l4-2 4 2 1 5-5 3-5-3z M7 12a5 5 0 1010 0',
+    neck:'M4 4v4a8 8 0 0016 0V4 M10 17l2 4 2-4-2-3z',
+    feet:'M8 3v9l-4 5v3h16v-5l-8-1-2-5V3z',
+    hands:'M7 11V5a1 1 0 012 0v6V3a1 1 0 012 0v8V4a1 1 0 012 0v7V6a1 1 0 012 0v9l-4 6H9l-5-7 2-2z',
+    trinket:'M12 3l8 9-8 9-8-9z M12 8l3 4-3 4-3-4z',
+    back:'M7 3h10l3 18-8-4-8 4z M9 6h6',
+    ranged:'M5 5c13 0 13 14 0 14 M18 4v16 M3 12h15',
+    shoulder:'M5 8l7-4 7 4v6l-7 6-7-6z M9 11h6',
+    waist:'M3 8h18v8H3z M10 9v6h5V9z',
+    legs:'M7 3h10l1 18h-5l-1-11-1 11H6z',
+    wrist:'M5 6l14 0v12H5z M8 9h8v6H8z',
+    shirt:'M7 4l5 3 5-3 4 5-4 3v8H7v-8L3 9z',
+    misc:'M12 2l3 7 7 3-7 3-3 7-3-7-7-3 7-3z'
+  };
+  return `<svg class="item-placeholder" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="${shapes[kind]}"/></svg>`;
+}
+function icon(item,small=false,slotLabel='',plain=false){
+  const slug=safeSlug(item?.icon);
+  const shape=iconFallback(item,slotLabel);
+  const image=slug?`<img loading="lazy" src="https://wow.zamimg.com/images/wow/icons/${small?'medium':'large'}/${slug}.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">${`<span class="local-icon-fallback" style="display:none">${shape}</span>`}`:'';
+  const content=image||shape;
+  const label=slug?'Item icon from exported texture':'Illustrative equipment symbol; actual item texture not included in JSON';
+  const url=foreverItemURL(item);
+  const inner=plain||!url?content:`<a class="item-icon-link" href="${url}" target="_blank" rel="noopener noreferrer" ${foreverTooltipAttr(item)} data-wh-icon-size="small" aria-label="View ${safe(item?.name||'item')} on Wowhead Forever">${content}</a>`;
+  return `<span class="item-frame ${qFrame(item?.quality)}" title="${label}">${inner}</span>`;
+}
+
+function itemName(item){
+  const name=safe(item?.name||'Unknown item'),q=qualityClass(item?.quality);
+  const url=foreverItemURL(item);
+  if(url){
+    // The exported name and quality remain authoritative; do not let Wowhead
+    // overwrite them if its public Forever database has not discovered an item.
+    return `<a class="item-link ${q}" href="${url}" target="_blank" rel="noopener noreferrer" ${foreverTooltipAttr(item)} title="${name} — view on Wowhead Forever">${name}</a>`;
+  }
+  return `<span class="${q}">${name}</span>`;
+}
+function modeTag(m){return `<span class="tag ${classMode(m)}">${safe(m)}</span>`;}
+const jsonURL='data/archive.json';
+function allSources(){return [...state.published,...state.local];}
+function refreshData(){state.data=assemble(allSources());render();}
+function setStatus(){ $('#data-flag').textContent=state.local.length?'LOCAL PREVIEW · NOT PUBLISHED':state.published.length?'PUBLISHED ARCHIVE':'NO PUBLISHED DATA';const clear=$('#preview-clear');if(clear)clear.hidden=!state.local.length; }
+function toast(message,error=false){
+  const el=document.createElement('div');el.className=`toast${error?' error':''}`;el.textContent=message;$('#toast-area').append(el);
+  setTimeout(()=>el.remove(),6500);
+}
+async function fetchJson(path){const r=await fetch(path,{cache:'no-store'});if(!r.ok)throw Error(`HTTP ${r.status}: ${path}`);return r.json();}
+async function init(){
+  state.ready=true;refreshData();
+  const startup=$('#startup-status');if(startup)startup.hidden=true;
+  if(location.protocol==='file:') toast('Open the website through GitHub Pages or another local web server to load published sessions.',true);
+  try{const raw=await fetchJson(jsonURL);state.published=unwrapImports(raw,'archive.json');}
+  catch(e){console.warn('Archive not available:',e.message);toast('Could not load published raid history. Please check the latest GitHub Actions deployment.',true);}
+  refreshData();processHash();
+}
+const metric=(label,value,foot,art)=>`<section class="metric"><div class="metric-label">${safe(label)}</div><div class="metric-art">${art}</div><div class="metric-number">${num(value)}</div><div class="metric-foot">${safe(foot)}</div></section>`;
+function stats(){
+  const {sessions,entries,players}=state.data;
+  return `<div class="metrics">${metric('RAID SESSIONS',sessions.length,'Archived raid nights','▤')}${metric('ITEMS AWARDED',entries.length,'Logged loot distributions','◆')}${metric('UNIQUE RAIDERS',players.length,'Players across all sessions','♙')}${metric('GEAR SNAPSHOTS',sessions.reduce((n,s)=>n+s.members.filter(m=>m.gear).length,0),'Captured at scan time','♜')}${metric('SOFT RESERVES',sessions.reduce((n,s)=>n+s.softRes.length,0),'Historical snapshots','✧')}</div>`;
+}
+function header(title,subtitle){
+  return `<div class="hero"><div><div class="eyebrow">RAID INTELLIGENCE / ${safe(viewNames[state.view]).toUpperCase()}</div><h1>${safe(title)}</h1><p>${safe(subtitle)}</p></div><div class="hero-aside"><b>${safe(state.data.sources.length)} loaded export${state.data.sources.length===1?'':'s'}</b>${safe(new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'}))}</div></div>`;
+}
+function notice(){return state.data.sources.length && !state.data.entries.length?'<div class="notice warning">The published archive has no recognized loot awards yet.</div>':'';}
+function empty(text='No matching records',detail='There are no published raid records to display yet.'){
+  return `<div class="empty"><div class="empty-icon">⬡</div><h3>${safe(text)}</h3><p>${safe(detail)}</p></div>`;
+}
+function listSession(s){
+  return `<div class="list-row action" data-action="session" data-id="${safe(s.id)}" role="button" tabindex="0"><div class="raid-glyph">⚔</div><div class="row-primary"><div class="row-title">${safe(s.name)}</div><div class="row-sub">${fmtDate(s.start)} · ${s.players.length} raiders</div></div><div class="row-right"><b>${s.entries.length} awards</b>${s.softRes.length} reserves</div><span class="muted">›</span></div>`;
+}
+function rollMiniStats(rows){const m=rollSummary(rows);return `<div class="roll-mini">${m.numericRolls} numeric rolls · ${m.wins} wins · ${m.avg===null?'No average':m.avg.toFixed(1)+' average'}</div>`;}
+function listLoot(e){return `<div class="list-row">${icon(e.item)}<div class="row-primary"><div class="row-title">${itemName(e.item)}</div><div class="row-sub">${safe(e.winner||'Unassigned')} · ${safe(e.sessionName)}</div></div>${modeTag(e.mode)}</div>`;}
+function latestIdentity(p){return [...(p.memberRecords||[])].sort((a,b)=>{return String(b.gear?.capturedAt||b.sessionName||'').localeCompare(String(a.gear?.capturedAt||a.sessionName||''));})[0]||null;}
+function identityText(value){return value&&value!=='Unknown'?safe(value):'<span class="muted">Not captured</span>';}
+function listPlayer(p){return `<div class="list-row action" data-action="player" data-id="${safe(p.name)}" role="button" tabindex="0"><span class="avatar">${safe(p.name.slice(0,1).toUpperCase())}</span><div class="row-primary"><div class="row-title">${safe(p.name)}</div><div class="row-sub">${p.sessionIds.size} raid sessions · ${identityText(latestIdentity(p)?.class)}</div></div><div class="row-right"><b>${p.awards.length} items</b>${p.rolls.length} roll records</div><span class="muted">›</span></div>`;}
+function overview(){const {sessions,entries,players}=state.data;
+  return `${header('Raid Overview','One place for every session, every award, and every raider.')}${notice()}${stats()}<div class="overview-layout">
+  <div class="panel"><div class="panel-head"><div><h2>Recent raid sessions</h2><p>Latest published raid sessions</p></div><button class="panel-link" data-view="sessions">VIEW ALL →</button></div>${sessions.length?sessions.slice(0,6).map(listSession).join(''):empty('Your raid history starts here')}</div>
+  <div class="panel"><div class="panel-head"><div><h2>Latest loot awards</h2><p>Most recent recorded item distributions</p></div><button class="panel-link" data-view="loot">VIEW ALL →</button></div>${entries.length?[...entries].sort((a,b)=>((b.timestamp||'').localeCompare(a.timestamp||''))).slice(0,6).map(listLoot).join(''):empty('No loot awards yet')}</div>
+  </div><div style="height:17px"></div><div class="two-panels"><div class="panel"><div class="panel-head"><div><h2>Leading raiders</h2><p>Based strictly on recorded awards</p></div><button class="panel-link" data-view="players">VIEW RAIDERS →</button></div>${players.filter(p=>p.awards.length).slice(0,5).map(listPlayer).join('')||empty('No player awards')}</div>
+  <div class="panel"><div class="panel-head"><div><h2>About this archive</h2><p>Guild loot transparency</p></div></div><div class="insight"><div class="insight-kicker">HISTORY</div><div class="insight-value">Every recorded award</div><div class="insight-sub">Browse completed sessions and see who received each item.</div></div><div class="insight"><div class="insight-kicker">RAIDERS</div><div class="insight-value">Player histories</div><div class="insight-sub">Explore awards and historical SoftRes snapshots.</div></div><div class="insight"><div class="insight-kicker">READ-ONLY</div><div class="insight-value">GitHub-managed data</div><div class="insight-sub">Guild officers publish exports through the GitHub repository.</div></div></div></div>`;
+}
+function toolbar({searchLabel='Search loot, names, raids…',session=false,mode=false}={}){
+  const sessOptions=state.data.sessions.map(s=>`<option value="${safe(s.id)}" ${state.session===s.id?'selected':''}>${safe(s.name)} · ${fmtDate(s.start)}</option>`).join('');
+  return `<div class="toolbar"><label class="searchbox"><span>⌕</span><input id="archive-search" type="search" value="${safe(state.search)}" placeholder="${safe(searchLabel)}" autocomplete="off" aria-label="Search archive"></label>${session?`<select id="session-filter" aria-label="Filter by raid"><option value="all">All sessions</option>${sessOptions}</select>`:''}${mode?`<select id="mode-filter" aria-label="Filter by roll type">${['all','Main Spec','Off Spec','Transmog','Soft Res','Pass','Unspecified'].map(v=>`<option ${state.mode===v?'selected':''} value="${v}">${v==='all'?'All award types':v}</option>`).join('')}</select>`:''}</div>`;
+}
+function qMatch(...parts){const q=state.search.toLowerCase().trim();return !q||parts.some(p=>String(p??'').toLowerCase().includes(q));}
+function renderSessions(){const data=state.data.sessions.filter(s=>qMatch(s.name,s.guild,s.start,s.sourceName,...s.players,...s.entries.map(e=>e.item.name)));
+return `${header('Raid Sessions','Browse complete raid histories and examine every drop.')}${notice()}<div class="panel">${toolbar({searchLabel:'Search sessions, raiders, dates…'})}${data.length?data.map(listSession).join(''):empty('No matching raid sessions','Try changing your search.')}<div class="row-count">${data.length} of ${state.data.sessions.length} sessions</div></div>`;}
+function renderLoot(){const entries=state.data.entries.filter(e=>(state.session==='all'||e.sessionId===state.session)&&(state.mode==='all'||e.mode===state.mode)&&qMatch(e.item.name,e.item.id,e.winner,e.mode,e.sessionName,e.boss));
+return `${header('Loot History','Search every recorded award across the complete archive.')}${notice()}<div class="panel">${toolbar({session:true,mode:true})}<div class="table-wrap"><table><thead><tr><th>ITEM</th><th>AWARDED TO</th><th>ROLL TYPE</th><th>RAID SESSION</th><th>BOSS</th><th>ROLLS</th><th>DATE</th></tr></thead><tbody>${entries.map(e=>`<tr><td><div class="item-cell">${icon(e.item,true)}<span><b>${itemName(e.item)}</b>${e.item.id?`<div class="row-sub">Item #${e.item.id}</div>`:''}</span></div></td><td><button class="panel-link" data-action="player" data-id="${safe(e.winner)}">${safe(e.winner||'Unassigned')}</button></td><td>${modeTag(e.mode)}</td><td><button class="panel-link" data-action="session" data-id="${safe(e.sessionId)}">${safe(e.sessionName)}</button></td><td>${safe(e.boss||'—')}</td><td>${(()=>{const session=state.data.sessions.find(s=>s.id===e.sessionId);const contest=session?.contests.find(c=>c.id===e.contestId||c.rounds.some(r=>r.id===e.roundId||r.id===e.id));return contest?`<button class="panel-link" data-action="contest" data-id="${safe(contest.id)}" data-session="${safe(session.id)}">${contest.rounds.reduce((n,r)=>n+r.rolls.length,0)} entries ↗</button>`:'—';})()}</td><td>${fmtDate(e.timestamp)}</td></tr>`).join('')}</tbody></table>${!entries.length?empty('No matching loot awards'):''}</div><div class="row-count">Showing ${entries.length} of ${state.data.entries.length} awards</div></div>`;}
+function renderPlayers(){const players=state.data.players.filter(p=>qMatch(p.name,latestIdentity(p)?.class,latestIdentity(p)?.race,...p.awards.map(a=>a.item.name)));
+return `${header('Raiders','See every participant and what they have won.')}${notice()}<div class="panel">${toolbar({searchLabel:'Find a raider or awarded item…'})}<div class="table-wrap"><table><thead><tr><th>RAIDER</th><th>CLASS</th><th>RACE</th><th>SEX (CHARACTER)</th><th>RAIDS</th><th>TOTAL AWARDS</th><th>MAIN SPEC</th><th>OFF SPEC</th><th>SOFT RES SNAPSHOTS</th><th></th></tr></thead><tbody>${players.map(p=>`<tr><td><div style="display:flex;align-items:center;gap:11px"><span class="avatar">${safe(p.name.slice(0,1).toUpperCase())}</span><button class="raider-name-link" data-action="player" data-id="${safe(p.name)}">${safe(p.name)} <span aria-hidden="true">↗</span></button></div></td><td>${identityText(latestIdentity(p)?.class)}</td><td>${identityText(latestIdentity(p)?.race)}</td><td>${identityText(latestIdentity(p)?.characterSex)}</td><td>${p.sessionIds.size}</td><td>${p.awards.length}</td><td>${p.awards.filter(a=>a.mode==='Main Spec').length}</td><td>${p.awards.filter(a=>a.mode==='Off Spec').length}</td><td>${p.reserves.length}</td><td><button class="view-button" data-action="player" data-id="${safe(p.name)}">View ↗</button></td></tr>`).join('')}</tbody></table>${!players.length?empty('No matching raiders'):''}</div><div class="row-count">${players.length} of ${state.data.players.length} raiders</div></div>`;}
+function barRows(data){const max=Math.max(1,...data.map(r=>r[1]));return `<div class="stat-bars">${data.map(([name,count])=>`<div class="stat-bar"><span title="${safe(name)}">${safe(name)}</span><div class="bar-track"><div class="bar-fill" style="width:${Math.round(count/max*100)}%"></div></div><b>${num(count)}</b></div>`).join('')||'<div class="muted small">No awards to chart.</div>'}</div>`;}
+function rollBadge(r){return `<span class="roll-value ${r.won===true?'winning':''}">${r.value===null?'—':r.value}</span>`;}
+function rollTable(rows,limit=100){
+return `<div class="table-wrap"><table class="roll-table"><thead><tr><th>RAIDER</th><th>ITEM</th><th>TYPE</th><th>ROLL</th><th>METHOD</th><th>ATTEMPT</th><th>STATUS</th><th>OUTCOME</th><th>RAID</th></tr></thead><tbody>${rows.slice(0,limit).map(r=>`<tr><td><button class="panel-link" data-action="player" data-id="${safe(r.player)}">${safe(r.player)}</button></td><td>${itemName(r.item)}</td><td>${modeTag(r.mode)}</td><td>${rollBadge(r)}<span class="muted"> / ${Number(r.max)||100}</span></td><td>${safe(r.voteMethod||'Unknown')}</td><td>${Number.isFinite(r.attempt)?r.attempt:1}</td><td>${safe(r.status||'—')}</td><td>${r.won===true?'<span class="won-label">WON</span>':r.won===false?'Not won':'—'}</td><td>${safe(r.sessionName)}</td></tr>`).join('')}</tbody></table>${!rows.length?empty('No roll records','The addon must include participant roll records in future exports. Older archives remain browsable.'):''}</div>${rows.length>limit?`<div class="row-count">Showing latest ${limit} of ${rows.length} records</div>`:''}`;
+}
+function rollTrend(rows){
+const numeric=rows.filter(r=>r.value!==null).slice().sort((a,b)=>(a.timestamp||'').localeCompare(b.timestamp||''));
+if(numeric.length<2)return '<div class="muted small">At least two numeric rolls are needed to draw a trend.</div>';
+const max=100;const points=numeric.slice(-90).map((r,i,a)=>`${28+i*660/Math.max(1,a.length-1)},${187-Math.min(max,r.value/r.max*100)*1.55}`).join(' ');
+return `<svg viewBox="0 0 720 215" class="roll-trend" role="img" aria-label="Roll percentile trend, ordered by date"><line x1="28" y1="32" x2="28" y2="187"/><line x1="28" y1="187" x2="688" y2="187"/><line x1="28" y1="109" x2="688" y2="109" class="gridline"/><text x="1" y="38">100</text><text x="7" y="114">50</text><text x="13" y="191">0</text><polyline points="${points}"/></svg><div class="muted small">Numeric rolls scaled to percent of each roll’s maximum; oldest to newest. Last ${Math.min(90,numeric.length)}.</div>`;
+}
+function rollDistribution(rows){
+ const numeric=rows.filter(r=>r.value!==null);if(!numeric.length)return '<p class="muted small">No numeric rolls recorded for this selection.</p>';
+ const bins=Array.from({length:10},(_,i)=>[`${i*10+1}–${(i+1)*10}`,0]);
+ numeric.forEach(r=>{const pct=r.value/r.max*100;bins[Math.min(9,Math.max(0,Math.ceil(pct/10)-1))][1]++;});
+ return `<div class="distribution">${bins.map(([name,count])=>`<div class="distribution-col" title="${name}%: ${count} rolls"><b>${count||''}</b><div class="distribution-track"><div style="height:${(count/Math.max(1,...bins.map(v=>v[1])))*100}%"></div></div><small>${name}</small></div>`).join('')}</div><p class="muted small">Rolls grouped by percentile; compatible with different dice ranges.</p>`;
+}
+function renderRolls(){
+ const raiderOptions=state.data.players.filter(p=>p.rolls.length).sort((a,b)=>a.name.localeCompare(b.name)).map(p=>`<option value="${safe(p.name)}" ${state.raider===p.name?'selected':''}>${safe(p.name)}</option>`).join('');
+ const sessionOptions=state.data.sessions.map(s=>`<option value="${safe(s.id)}" ${state.session===s.id?'selected':''}>${safe(s.name)}</option>`).join('');
+ const filtered=state.data.rolls.filter(r=>(state.raider==='all'||r.player===state.raider)&&(state.session==='all'||r.sessionId===state.session)&&(state.mode==='all'||r.mode===state.mode));
+ const m=rollSummary(filtered);const metricValue=v=>v===null?'—':v;
+ const modeBreakdown=['Main Spec','Off Spec','Transmog','Soft Res','Pass'].map(name=>[name,filtered.filter(r=>r.mode===name).length]);
+ return `${header('Roll Analytics','Every individual roll, its category, and its outcome.')}
+ <div class="panel roll-filter-panel"><label>Raider<select id="roll-raider"><option value="all">All raiders</option>${raiderOptions}</select></label><label>Session<select id="session-filter"><option value="all">All sessions</option>${sessionOptions}</select></label><label>Category<select id="mode-filter">${['all','Main Spec','Off Spec','Transmog','Soft Res','Pass'].map(v=>`<option value="${v}" ${state.mode===v?'selected':''}>${v==='all'?'All categories':v}</option>`).join('')}</select></label></div>
+ <div class="roll-metrics">${[['ROLL ENTRIES',m.participations,'Includes votes and passes'],['NUMERIC ROLLS',m.numericRolls,'Only actual dice results'],['AVERAGE',m.avg===null?'—':m.avg.toFixed(1),'Of numeric results'],['BEST ROLL',metricValue(m.best),'Highest numeric result'],['WINS',m.wins,'Finalized awarded rounds'],['WIN RATE',m.winRate===null?'—':(m.winRate*100).toFixed(1)+'%','Only resolved, non-pass entries']].map(([title,value,detail])=>`<div class="roll-metric"><small>${title}</small><strong>${value}</strong><span>${detail}</span></div>`).join('')}</div>
+ <div class="two-panels"><div class="panel"><div class="panel-head"><div><h2>Roll distribution</h2><p>Frequency by roll percentile</p></div></div><div class="roll-chart-content">${rollDistribution(filtered)}</div></div><div class="panel"><div class="panel-head"><div><h2>Roll trend</h2><p>Individual numeric rolls through time</p></div></div><div class="roll-chart-content">${rollTrend(filtered)}</div></div></div>
+ <div style="height:17px"></div><div class="two-panels"><div class="panel"><div class="panel-head"><h2>Categories chosen</h2></div><div class="roll-chart-content">${barRows(modeBreakdown)}</div></div><div class="panel"><div class="panel-head"><h2>Statistics explained</h2></div><div class="roll-chart-content"><p class="muted">An average includes <b>numeric rolls only</b>. Passes, unrolled SoftRes eligibility, and categories without a dice result are excluded.</p><p class="muted">Wins are attributed only when the export identifies a winner or a resolved roll. Older exports without roll details do not create estimated rolls.</p><p class="muted">Roll percentages are shown on charts to support different roll ranges. The average displays the original dice values.</p></div></div></div>
+ <div style="height:17px"></div><div class="panel"><div class="panel-head"><h2>Individual roll history</h2><p>${filtered.length} records</p></div>${rollTable(filtered.slice().sort((a,b)=>(b.timestamp||'').localeCompare(a.timestamp||'')),200)}</div>`;
+}
+function sessionMembers(s){
+  if(s.members.length)return s.members;
+  return s.players.map(name=>({key:name.toLowerCase(),name,class:'Unknown',race:'Unknown',characterSex:'Unknown',gear:null}));
+}
+function gearStatus(member){return member.gear?'<span class="won-label">Captured</span>':'<span class="muted">Not captured</span>';}
+function gearRow(s,member){return `<tr><td><button class="panel-link" data-action="${member.gear?'gear':'player'}" data-id="${safe(member.gear?member.key:member.name)}" data-session="${safe(s.id)}">${safe(member.name)} ${member.gear?'↗':''}</button></td>
+<td>${identityText(member.class)}</td><td>${identityText(member.race)}</td><td>${identityText(member.characterSex)}</td>
+<td>${gearStatus(member)}</td><td>${member.gear?fmtDate(member.gear.capturedAt)+' '+fmtTime(member.gear.capturedAt):'—'}</td>
+<td>${member.gear?`${member.gear.equippedCount} / 19`:'—'}</td><td>${member.gear?`<button class="view-button" data-action="gear" data-id="${safe(member.key)}" data-session="${safe(s.id)}">View equipment ↗</button>`:'—'}</td></tr>`;}
+function gearTable(s,rows=sessionMembers(s)){
+  return `<div class="table-wrap"><table class="gear-table"><thead><tr><th>CHARACTER</th><th>CLASS</th><th>RACE</th><th>CHARACTER SEX</th><th>CAPTURE STATUS</th><th>CAPTURED AT</th><th>EQUIPPED</th><th>DETAILS</th></tr></thead>
+  <tbody>${rows.map(m=>gearRow(s,m)).join('')}</tbody></table></div>`;
+}
+function gearPreviewItems(member){
+  if(!member.gear)return '<span class="muted">No scan recorded</span>';
+  return [1,5,11,13,16,17,18].map(n=>{
+    const slot=member.gear.slots[n-1];
+    return `<span class="preview-item" title="${safe(slot?.label||'')} — ${safe(slot?.item?.name||'Empty')}">${slot&&!slot.empty?icon(slot.item,true,slot.label,true):'<span class="mini-empty" aria-label="Empty slot">−</span>'}</span>`;
+  }).join('');
+}
+function gearCard(s,m){
+  const isCaptured=!!m.gear;
+  const primary=`data-action="${isCaptured?'gear':'player'}" data-id="${safe(isCaptured?m.key:m.name)}" data-session="${safe(s.id)}" role="button" tabindex="0"`;
+  return `<article class="gear-card gear-card-action" ${primary}>
+    <div class="gear-card-head"><div class="gear-avatar">${safe(m.name.slice(0,1).toUpperCase())}</div><div class="gear-card-identity"><div class="gear-card-title">${safe(m.name)}</div><div class="gear-card-secondary">${identityText(m.class)} · ${identityText(m.race)} · ${identityText(m.characterSex)} · ${identityText(m.role||'Unknown role')}</div></div><div class="gear-card-chevron">${isCaptured?'↗':''}</div></div>
+    <div class="gear-card-session">${safe(s.name)} · ${fmtDate(s.start)}</div>
+    <div class="gear-preview" aria-label="Equipped item preview">${gearPreviewItems(m)}</div>
+    <div class="gear-card-foot"><span>${isCaptured?`${m.gear.equippedCount} / 19 equipped`:'Not captured'}</span><strong>${isCaptured?'View all 19 slots →':'No equipment snapshot'}</strong></div>
+  </article>`;
+}
+function renderGear(){
+ const sessions=state.data.sessions.filter(s=>state.session==='all'||state.session===s.id);
+ const listings=sessions.flatMap(s=>sessionMembers(s).filter(m=>qMatch(m.name,m.class,m.race,m.role,s.name)).map(m=>({s,m})));
+ const captured=listings.filter(x=>x.m.gear).length;
+ const equipped=listings.flatMap(x=>x.m.gear?.slots.filter(slot=>!slot.empty)||[]);
+ const missingIconNames=equipped.filter(slot=>!safeSlug(slot.item?.icon)).length;
+ return `${header('Raid Gear','Select a raider to view every equipped item from that specific raid session.')}
+ ${!captured&&listings.length?'<div class="notice warning">This upload contains zero equipment snapshots. Older Deadmines exports (PlusOneRaidHistory-4) record loot and rolls but no character gear. Upload <strong>PlusOne_FATE_v7_Full20Raider_Deadmines.json</strong> to display all 20 equipment sets. Player profiles are still clickable.</div>':''}
+ ${missingIconNames?`<div class="notice" role="note">${missingIconNames} of ${equipped.length} equipped items lack a web-compatible icon texture name in the published export. Distinct equipment symbols are shown instead of blank squares. Accurate item artwork requires icon filenames from the addon or a verified Forever item-icon mapping.</div>`:''}
+ <div class="panel"><div class="panel-head"><div><h2>Choose a raider</h2><p>${captured} captured equipment snapshots / ${listings.length} participants. Click any captured player card to open all 19 slots.</p></div></div>
+ ${toolbar({searchLabel:'Search by raider, class, role, raid…',session:true})}
+ <div class="gear-cards">${listings.length?listings.map(({s,m})=>gearCard(s,m)).join(''):empty('No roster or equipment found','Upload a v7 session export to show recorded equipment.')}</div>
+ </div>`;
+}
+
+function slotContents(slot){
+  if(slot.empty)return `<span class="slot-empty">Empty at capture</span>`;
+  const item=slot.item;
+  return `<span class="slot-item">${icon(item,true)}<span>${itemName(item)}${item.id?`<small>Item #${item.id}</small>`:'<small>Item ID not available</small>'}</span></span>`;
+}
+function equipmentMarkup(member){
+  const g=member?.gear;
+  if(!g)return '<div class="muted small">Equipment was not captured for this session.</div>';
+  return `<div class="equipment-grid">${g.slots.map(slot=>`<div class="equip-slot ${slot.empty?'is-empty':''}"><span class="slot-number">${slot.slot.toString().padStart(2,'0')} · ${safe(slot.label)}</span>${slotContents(slot)}</div>`).join('')}</div>`;
+}
+function openGear(sessionId,key){
+  const session=state.data.sessions.find(s=>s.id===sessionId);
+  const member=session?.members.find(m=>m.key===key);
+  if(!member||!member.gear){toast('No equipment snapshot was captured for this character in this session.',true);return;}
+  const g=member.gear;
+  const content=`<div class="drawer-section"><div class="drawer-kv gear-overview-meta"><div class="kv"><small>RAID SESSION</small><b>${safe(session.name)}</b></div><div class="kv"><small>ROLE</small><b>${identityText(member.role)}</b></div><div class="kv"><small>CLASS</small><b>${identityText(member.class)}</b></div><div class="kv"><small>RACE</small><b>${identityText(member.race)}</b></div><div class="kv"><small>CHARACTER SEX</small><b>${identityText(member.characterSex)}</b></div><div class="kv"><small>EQUIPPED</small><b>${g.equippedCount} / 19</b></div></div>
+  <p class="small muted">Captured ${fmtDate(g.capturedAt)} ${fmtTime(g.capturedAt)} · ${safe(g.captureMethod==='MASTER_SELF'?'Master snapshot':g.captureMethod==='RAIDER_ADDON'?'Raider addon snapshot':g.captureMethod||'Unknown method')}</p>
+  <div class="notice">Equipment recorded at scan time in this session. It is not a live armory. Item images are exact only when an icon texture was exported; symbols indicate missing icon metadata.</div></div>
+  <div class="drawer-section"><button class="panel-link" data-action="player" data-id="${safe(member.name)}">← Back to ${safe(member.name)} profile</button><h3>All 19 equipment slots</h3>${equipmentMarkup(member)}</div>`;
+  showDrawer('RAID EQUIPMENT',member.name,content);
+}
+
+function identityDistribution(field){
+ const map=new Map();for(const session of state.data.sessions){for(const member of sessionMembers(session)){
+   const group=member[field];const key=group&&group!=='Unknown'?group:'Unknown / Not captured';map.set(key,(map.get(key)||0)+1);
+ }}return [...map].sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0]));
+}
+function renderStatistics(){const {players,entries,sessions}=state.data;const m=new Map();for(const e of entries)m.set(e.mode,(m.get(e.mode)||0)+1);const total=entries.length,sorted=[...m].sort((a,b)=>b[1]-a[1]);
+return `${header('Archive Statistics','Distribution trends across your recorded raid nights.')}${notice()}${stats()}<div class="identity-note muted small">Character identity and equipment values describe in-game characters only. Each character is counted once per session; unknown data is kept separate.</div><div class="two-panels"><div class="panel"><div class="panel-head"><div><h2>Awards by roll category</h2><p>Results already confirmed in the loot history</p></div></div>${barRows(sorted)}</div><div class="panel"><div class="panel-head"><div><h2>Top loot recipients</h2><p>Item awards recorded per player</p></div></div>${barRows(players.filter(p=>p.awards.length).slice(0,8).map(p=>[p.name,p.awards.length]))}</div></div><div style="height:17px"></div><div class="two-panels"><div class="panel"><div class="panel-head"><div><h2>Sessions by instance</h2><p>Where your group has been raiding</p></div></div>${barRows([...sessions.reduce((map,s)=>(map.set(s.name,(map.get(s.name)||0)+1),map),new Map())].sort((a,b)=>b[1]-a[1]).slice(0,8))}</div><div class="panel"><div class="panel-head"><div><h2>Understanding the numbers</h2></div></div><div class="insight"><div class="insight-kicker">CONFIRMED AWARDS</div><div class="insight-value">${num(total)}</div><div class="insight-sub">Counts are taken from recorded loot history, not rolls or reservations.</div></div><div class="insight"><div class="insight-kicker">SOFT RESERVE SNAPSHOTS</div><div class="insight-value">Historical records</div><div class="insight-sub">Snapshots can include already-consumed reserves and duplicate reserves. They are not current eligibility lists.</div></div><div class="insight"><div class="insight-kicker">DATA QUALITY</div><div class="insight-value">Only what was exported</div><div class="insight-sub">Missing raid members, timestamps, or roll categories are not inferred.</div></div></div></div><div style="height:17px"></div><div class="identity-grid"><div class="panel"><div class="panel-head"><h2>Class distribution</h2></div>${barRows(identityDistribution('classToken'))}</div><div class="panel"><div class="panel-head"><h2>Race distribution</h2></div>${barRows(identityDistribution('raceToken'))}</div><div class="panel"><div class="panel-head"><h2>In-game character sex</h2></div>${barRows(identityDistribution('characterSex'))}</div></div>`;
+}
+function render(){if(!state.ready){main.innerHTML='<div class="loader">Loading raid archive…</div>';return;}
+  setStatus();document.querySelectorAll('[data-view].nav-button').forEach(el=>el.classList.toggle('active',el.dataset.view===state.view));
+  $('#breadcrumb').textContent=(viewNames[state.view]||'Overview').toUpperCase();
+  let active=document.activeElement,focusId=active?.id,selection=active?.selectionStart;
+  main.innerHTML=({overview, sessions:renderSessions,loot:renderLoot,players:renderPlayers,gear:renderGear,rolls:renderRolls,statistics:renderStatistics}[state.view]||overview)();
+  if(focusId==='archive-search'){const input=$('#archive-search');if(input){input.focus();if(typeof selection==='number')input.setSelectionRange(selection,selection);}}
+  try{if(window.WH?.Tooltips?.refreshLinks)window.WH.Tooltips.refreshLinks();else if(window.$WowheadPower?.refreshLinks)window.$WowheadPower.refreshLinks();}catch(e){console.warn('Wowhead tooltip refresh failed:',e)}
+}
+function showDrawer(eyebrow,title,html){
+  // Full-page character and equipment records do not depend on dialog.showModal,
+  // legacy external JavaScript, a hidden control, or a narrow sidebar drawer.
+  if(eyebrow==='RAID EQUIPMENT'||eyebrow==='RAIDER PROFILE'){
+    if(state.view!=='detail')state.returnView=state.view;
+    state.view='detail';
+    if($('#drawer').open)$('#drawer').close();
+    $('#breadcrumb').textContent=eyebrow;
+    document.querySelectorAll('[data-view].nav-button').forEach(el=>el.classList.toggle('active',el.dataset.view===state.returnView));
+    main.innerHTML=`<div class="hero detail-header"><div><div class="eyebrow">${safe(eyebrow)}</div><h1>${safe(title)}</h1><p>Recorded character information and equipment from your uploaded raid sessions.</p></div></div><button type="button" class="view-button gear-back" data-action="back">← Back to ${safe(viewNames[state.returnView]||'Raid gear')}</button><section class="detail-full">${html}</section>`;
+    main.scrollIntoView({block:'start',behavior:'instant'});
+    try{window.WH?.Tooltips?.refreshLinks?.();window.$WowheadPower?.refreshLinks?.();}catch{}
+    return;
+  }
+  $('#drawer-eyebrow').textContent=eyebrow;
+  $('#drawer-title').textContent=title;
+  $('#drawer-body').innerHTML=html;
+  const d=$('#drawer');
+  if(!d.open)d.showModal();
+  try{window.WH?.Tooltips?.refreshLinks?.();window.$WowheadPower?.refreshLinks?.();}catch{}
+}
+function openSession(id,updateHash=true){const s=state.data.sessions.find(s=>s.id===id);if(!s){toast('Session not found in the loaded archive.',true);return;}
+ const content=`<div class="drawer-section"><div class="drawer-kv"><div class="kv"><small>DATE</small><b>${fmtDate(s.start)}</b></div><div class="kv"><small>START TIME</small><b>${fmtTime(s.start)||'Unknown'}</b></div><div class="kv"><small>AWARDS</small><b>${s.entries.length}</b></div><div class="kv"><small>PARTICIPANTS</small><b>${s.players.length}</b></div></div><p class="small muted">${safe(s.guild||s.sourceName)} · Export schema: ${safe(s.schema)}</p><button class="subtle-button" data-action="share" data-id="${safe(s.id)}">Copy session link</button></div>
+ <div class="drawer-section"><h3>Loot distributed</h3>${s.entries.length?s.entries.map(e=>`<div class="list-row" style="padding-left:0;padding-right:0">${icon(e.item)}<div class="row-primary"><div class="row-title">${itemName(e.item)}</div><div class="row-sub">${safe(e.winner||'Unassigned')}${e.boss?' · '+safe(e.boss):''}</div></div>${modeTag(e.mode)}</div>`).join(''):'<div class="muted small">No awarded items recorded.</div>'}</div>
+ <div class="drawer-section"><h3>Recorded loot contests <span class="pill">${s.contests.length} CONTESTS</span></h3><p class="small muted">Ties and reroll windows remain linked to their original contest. Only confirmed awards count as distributed loot.</p>${s.contests.length?s.contests.map(contest=>`<div class="list-row"><div class="row-primary"><div class="row-title">${itemName(contest.item)}</div><div class="row-sub">${contest.rounds.length} voting window${contest.rounds.length===1?'':'s'} · ${contest.rounds.reduce((n,r)=>n+r.rolls.length,0)} participant records ${contest.rounds.some(r=>r.tied)?' · Tie/reroll':''}</div></div><button class="view-button" data-action="contest" data-id="${safe(contest.id)}" data-session="${safe(s.id)}">View contest ↗</button></div>`).join(''):'<div class="muted small">No vote or roll history was exported.</div>'}</div>
+ <div class="drawer-section"><h3>Raid gear <span class="pill">${s.members.filter(m=>m.gear).length} / ${s.members.length||s.players.length} CAPTURED</span></h3><p class="small muted">Equipment is from each raider's last successful scan in this session. Not captured is not the same as not having the addon.</p>${s.members.length?gearTable(s):'<p class="muted small">No equipment snapshots in this session. Older session exports do not contain gear data.</p>'}</div>
+ <div class="drawer-section"><h3>Soft reserve snapshot <span class="pill">${s.softRes.length} ENTRIES</span></h3><p class="small muted">This is a historical snapshot and can include consumed or duplicate reserves.</p>${s.softRes.length?s.softRes.map(r=>`<div class="list-row" style="padding-left:0;padding-right:0">${icon(r.item,true)}<div class="row-primary"><div class="row-title">${itemName(r.item)}</div><div class="row-sub">${safe(r.raider||'Unknown raider')} · ${r.consumed?'Consumed'+(r.awardRecipient?' by '+safe(r.awardRecipient):''):'Not consumed in snapshot'}</div></div></div>`).join(''):'<div class="muted small">No reserves found in this export.</div>'}</div>
+ <div class="drawer-section"><h3>Raiders</h3><div class="chip-list">${s.players.map(p=>`<button class="chip" data-action="player" data-id="${safe(p)}">${safe(p)}</button>`).join('')||'<span class="muted">No roster data</span>'}</div></div>`;
+ showDrawer('RAID SESSION',s.name,content);
+ if(updateHash)safeHistoryReplace(`#session=${encodeURIComponent(s.id)}`);
+}
+function openContest(id,sessionId){
+ const session=state.data.sessions.find(s=>s.id===sessionId);
+ const contest=session?.contests.find(c=>c.id===id);
+ if(!contest){toast('Roll contest not found.',true);return;}
+ const awarded=contest.award;
+ const meta=`<div class="drawer-section"><div class="drawer-kv"><div class="kv"><small>FINAL WINNER</small><b>${safe(awarded?.winner||contest.winner||'Not confirmed')}</b></div><div class="kv"><small>VOTING WINDOWS</small><b>${contest.rounds.length}</b></div><div class="kv"><small>CONFIRMED AWARD</small><b>${awarded?'Yes':'No'}</b></div><div class="kv"><small>SESSION</small><b>${safe(session.name)}</b></div></div></div>`;
+ const rounds=contest.rounds.map((r,i)=>`<div class="drawer-section"><h3>${r.tiebreakerRound?'Tie reroll '+r.tiebreakerRound:'Original vote'} ${r.tied?'<span class="tag off">SUPERSEDED TIE</span>':''}</h3>
+ <p class="muted small">Window ${safe(r.id)} · ${safe(r.kind||'Standard')} · ${safe(r.disposition||'Unresolved')}${r.tiePlayers.length?' · Tied: '+r.tiePlayers.map(safe).join(', '):''}</p>
+ ${rollTable(r.rolls.map(x=>({...x,sessionName:session.name})),150)}</div>`).join('');
+ showDrawer('LOOT CONTEST',contest.item.name,meta+rounds);
+}
+function openRound(id,sessionId){
+ const session=state.data.sessions.find(s=>s.id===sessionId);
+ const round=session?.rollEvents.find(r=>r.id===id);
+ if(!round){toast('Roll round not found.',true);return;}
+ const rows=round.rolls.map(r=>({...r,sessionName:session.name}));
+ const summary=rollSummary(rows);
+ showDrawer('ITEM ROLL DETAILS',round.item.name,`<div class="drawer-section"><div class="drawer-kv"><div class="kv"><small>WINNER</small><b>${safe(round.winner||'Not resolved')}</b></div><div class="kv"><small>PARTICIPANTS</small><b>${rows.length}</b></div><div class="kv"><small>NUMERIC ROLLS</small><b>${summary.numericRolls}</b></div><div class="kv"><small>SESSION</small><b>${safe(session.name)}</b></div></div></div><div class="drawer-section">${rollTable(rows,100)}</div>`);
+}
+function openPlayer(name){const p=state.data.players.find(p=>p.name.toLowerCase()===String(name).toLowerCase());if(!p){toast('Raider not found.',true);return;}
+ const identity=latestIdentity(p);
+ const profileIdentity=`<div class="drawer-section"><h3>Character identity</h3><div class="drawer-kv"><div class="kv"><small>CLASS</small><b>${identityText(identity?.class)}</b></div><div class="kv"><small>RACE</small><b>${identityText(identity?.race)}</b></div><div class="kv"><small>CHARACTER SEX</small><b>${identityText(identity?.characterSex)}</b></div><div class="kv"><small>CAPTURES</small><b>${p.memberRecords.filter(m=>m.gear).length}</b></div></div><p class="muted small">Identity reflects the available game character metadata, not the human player.</p></div>`;
+ const plusOneHistory=`<div class="drawer-section"><h3>Recorded +1 values</h3><p class="muted small">Exported end-of-session +1 totals, shown per raid. Off Spec does not add +1.</p>${p.plusOnes.length?p.plusOnes.map(x=>`<div class="list-row"><div class="row-primary">${safe(x.sessionName)}</div><b>+${x.value}</b></div>`).join(''):'<span class="muted small">No +1 values exported.</span>'}</div>`;
+ const records=p.memberRecords.filter(m=>m.gear).slice().sort((a,b)=>String(b.gear.capturedAt).localeCompare(String(a.gear.capturedAt)));
+ const mostRecent=records[0]||null;
+ const gearHistory=`<div class="drawer-section"><h3>Equipment by raid session</h3><p class="small muted">Select a session to inspect the exact 19 recorded slots. Latest capture is displayed below.</p>
+ ${records.map(m=>`<div class="session-gear-option"><div><strong>${safe(m.sessionName)}</strong><small>${fmtDate(m.gear.capturedAt)} · ${m.gear.equippedCount}/19 equipped</small></div><button class="view-button" data-action="gear" data-id="${safe(m.key)}" data-session="${safe(m.sessionId)}">View all 19 slots ↗</button></div>`).join('')||'<p class="muted small">No equipment was captured for this raider.</p>'}
+ ${mostRecent?`<h3 class="gear-preview-heading">Latest captured equipment · ${safe(mostRecent.sessionName)}</h3>${equipmentMarkup(mostRecent)}`:''}
+ </div>`;
+
+ const content=`<div class="drawer-section"><div class="drawer-kv"><div class="kv"><small>RAID SESSIONS</small><b>${p.sessionIds.size}</b></div><div class="kv"><small>LOOT AWARDS</small><b>${p.awards.length}</b></div><div class="kv"><small>MAIN SPEC</small><b>${p.awards.filter(a=>a.mode==='Main Spec').length}</b></div><div class="kv"><small>SOFT RES SNAPSHOTS</small><b>${p.reserves.length}</b></div></div></div><div class="drawer-section"><h3>Items received</h3>${p.awards.length?p.awards.map(e=>`<div class="list-row" style="padding-left:0;padding-right:0">${icon(e.item)}<div class="row-primary"><div class="row-title">${itemName(e.item)}</div><div class="row-sub">${safe(e.sessionName)}</div></div>${modeTag(e.mode)}</div>`).join(''):'<div class="muted small">No confirmed awards found.</div>'}</div><div class="drawer-section"><h3>Soft reserves in archived snapshots</h3>${p.reserves.length?p.reserves.map(r=>`<div class="list-row" style="padding-left:0;padding-right:0">${icon(r.item,true)}<div class="row-primary"><div class="row-title">${itemName(r.item)}</div><div class="row-sub">${safe(state.data.sessions.find(s=>s.id===r.sessionId)?.name||'Raid')} · ${r.consumed?'Consumed':'Not consumed in snapshot'}</div></div></div>`).join(''):'<div class="muted small">No historical reserves found.</div>'}</div>`;
+ showDrawer('RAIDER PROFILE',p.name,profileIdentity+gearHistory+content+plusOneHistory+`<div class="drawer-section"><h3>Roll statistics</h3>${rollMiniStats(p.rolls)}${rollTable(p.rolls.slice().reverse(),80)}</div>`);safeHistoryReplace(`#player=${encodeURIComponent(p.name)}`);
+}
+function safeHistoryReplace(path){try{history.replaceState(null,'',path);}catch(e){console.warn('History unavailable:',e.message);}}
+function closeDrawer(){const drawer=$('#drawer');if(drawer.open)drawer.close();if(location.hash)safeHistoryReplace(location.pathname+location.search);}
+function processHash(){const m=location.hash.match(/^#(session|player)=(.+)$/);if(!m)return;let id;try{id=decodeURIComponent(m[2]);}catch{return;}if(m[1]==='session')openSession(id,false);else openPlayer(id);}
+function route(view){if(!(view in viewNames))return;state.view=view;state.search='';state.mode='all';state.session='all';state.raider='all';document.body.classList.remove('nav-open');if($('#drawer').open)closeDrawer();if(location.hash)safeHistoryReplace(location.pathname+location.search);render();}
+document.addEventListener('click',async e=>{
+ const view=e.target.closest('[data-view]');if(view){route(view.dataset.view);return;}
+ const action=e.target.closest('[data-action]');if(!action)return;
+ const id=action.dataset.id;switch(action.dataset.action){
+  case 'session':openSession(id);break;case 'player':openPlayer(id);break;case 'round':openRound(id,action.dataset.session);break;case 'contest':openContest(id,action.dataset.session);break;case 'gear':openGear(action.dataset.session,id);break;case 'back':route(state.returnView||'gear');break;
+  case 'share':{
+   const url=new URL(location.href);url.hash=`session=${encodeURIComponent(id)}`;
+   try{await navigator.clipboard.writeText(url.href);toast('Session link copied. It works on the published site after this source is deployed.');}catch{toast('Could not copy automatically; use your address bar.',true);}
+  }break;
+ }
+},true);
+main.addEventListener('keydown',e=>{if(e.key!=='Enter'&&e.key!==' ')return;const a=e.target?.dataset?.action;if(!['session','player','gear'].includes(a))return;e.preventDefault();if(a==='session')openSession(e.target.dataset.id);if(a==='player')openPlayer(e.target.dataset.id);if(a==='gear')openGear(e.target.dataset.session,e.target.dataset.id);});
+main.addEventListener('input',e=>{if(e.target.id==='archive-search'){state.search=e.target.value;render();}});
+main.addEventListener('change',e=>{if(e.target.id==='session-filter')state.session=e.target.value;if(e.target.id==='mode-filter')state.mode=e.target.value;if(e.target.id==='roll-raider')state.raider=e.target.value;render();});
+async function importPreviewFiles(files){
+ if(!files?.length)return;
+ const parsed=[];
+ for(const file of files){if(!file.name.toLowerCase().endsWith('.json')){toast(`Skipped ${file.name}: JSON files only.`,true);continue;}
+  if(file.size>10*1024*1024){toast(`${file.name} exceeds 10 MiB.`,true);continue;}
+  try{const payload=JSON.parse(await file.text());const imports=unwrapImports(payload,file.name);
+   if(!imports.length||!imports.every(x=>x.payload && (x.payload.schema||x.payload.sessions||x.payload.sessionId||x.payload.sessionName||x.payload.raidName))){throw Error('Not a recognized PlusOne export');}
+   parsed.push(...imports);
+  }catch(err){toast(`${file.name}: ${err.message}`,true);}
+ }
+ if(parsed.length){state.local=[...state.local,...parsed];refreshData();toast(`${parsed.length} export(s) loaded for local preview only. Publish them by committing JSON to raid-exports/ on GitHub.`);}
+}
+$('#import-files')?.addEventListener('change',e=>{importPreviewFiles([...e.target.files]);e.target.value='';});
+$('#preview-clear')?.addEventListener('click',()=>{state.local=[];refreshData();toast('Local preview cleared. Published data is unchanged.');});
+window.addEventListener('dragover',e=>{if([...e.dataTransfer?.types||[]].includes('Files'))e.preventDefault();});
+window.addEventListener('drop',e=>{if([...e.dataTransfer?.types||[]].includes('Files')){e.preventDefault();importPreviewFiles([...e.dataTransfer.files]);}});
+$('#mobile-nav').addEventListener('click' ,()=>document.body.classList.toggle('nav-open'));
+$('#drawer-close').addEventListener('click',closeDrawer);
+$('#drawer').addEventListener('click',e=>{if(e.target===$('#drawer'))closeDrawer();});
+$('#drawer').addEventListener('close',()=>{if(location.hash)safeHistoryReplace(location.pathname+location.search);});
+window.addEventListener('hashchange',processHash);
+init();
+
+  </script>
+  <script src="https://wow.zamimg.com/js/tooltips.js" async onload="try{window.WH?.Tooltips?.refreshLinks?.();window.$WowheadPower?.refreshLinks?.()}catch(_){}"></script>
 </body>
 </html>
