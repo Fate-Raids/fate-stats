@@ -16,23 +16,25 @@ function fixtureRoot(){
  return d;
 }
 function run(dir){try{return {ok:true,out:execFileSync(process.execPath,['scripts/build-archive.mjs'],{cwd:dir,encoding:'utf8'})}}catch(e){return {ok:false,out:e.stderr?.toString()||e.message}}}
-function archive(dir){return JSON.parse(readFileSync(path.join(dir,'dist/data/archive.json'),'utf8'));}
+function archive(dir){return JSON.parse(readFileSync(path.join(dir,'dist/data/manifest.json'),'utf8'));}
 
 test('empty new GitHub site deploys without accidentally publishing sample data',()=>{
  const dir=fixtureRoot();const r=run(dir);assert.ok(r.ok,r.out);
- assert.equal(archive(dir).sources.length,0);
+ assert.equal(archive(dir).sourceCount,0);
+ assert.equal(existsSync(path.join(dir,'dist/data/archive.json')),false);
  assert.equal(existsSync(path.join(dir,'dist/raid-exports')),false);
  assert.equal(existsSync(path.join(dir,'dist/scripts')),false);
- assert.equal(existsSync(path.join(dir,'dist/assets/parser.js')),false);
+ assert.equal(existsSync(path.join(dir,'dist/assets/site.js')),true);
+ assert.equal(existsSync(path.join(dir,'dist/data/characters/index.json')),true);
 });
 
 test('synthetic export builds 1 raid, 60 awards, 20 raiders, 26 reserves',async()=>{
  const dir=fixtureRoot();cpSync(SAMPLE,path.join(dir,'raid-exports','sample.json'));
  const r=run(dir);assert.ok(r.ok,r.out);
  assert.match(r.out,/1 raid session\(s\), 60 awards, 20 raider\(s\), 26 soft-reserve slots/);
- const a=archive(dir);assert.equal(a.sources.length,1);
- assert.equal(a.sources[0].payload.synthetic,true);
- assert.equal(a.sources[0].payload.sessions[0].roster.length,20);
+ const a=archive(dir);assert.equal(a.sourceCount,1);
+ assert.equal(a.counts.characters,20);
+ assert.equal(a.counts.sessions,1);
 });
 
 test('duplicate payload is counted once even with different filenames',()=>{
@@ -41,7 +43,7 @@ test('duplicate payload is counted once even with different filenames',()=>{
  cpSync(SAMPLE,path.join(dir,'raid-exports','b.json'));
  const r=run(dir);assert.ok(r.ok,r.out);
  assert.match(r.out,/1 duplicate\(s\) skipped/);
- assert.equal(archive(dir).sources.length,1);
+ assert.equal(archive(dir).sourceCount,1);
 });
 
 test('two different exports are preserved separately',()=>{
@@ -52,15 +54,15 @@ test('two different exports are preserved separately',()=>{
  writeFileSync(path.join(dir,'raid-exports','second.json'),JSON.stringify(raw));
  const r=run(dir);assert.ok(r.ok,r.out);
  assert.match(r.out,/2 raid session\(s\), 120 awards/);
- assert.equal(archive(dir).sources.length,2);
+ assert.equal(archive(dir).sourceCount,2);
 });
 
 test('malformed JSON fails deployment without replacing previous build',()=>{
  const dir=fixtureRoot();const first=run(dir);assert.ok(first.ok,first.out);
- const before=readFileSync(path.join(dir,'dist/data/archive.json'),'utf8');
+ const before=readFileSync(path.join(dir,'dist/data/manifest.json'),'utf8');
  writeFileSync(path.join(dir,'raid-exports','bad.json'),'{ this is not json');
  const r=run(dir);assert.equal(r.ok,false);assert.match(r.out,/bad\.json: invalid JSON/);
- assert.equal(readFileSync(path.join(dir,'dist/data/archive.json'),'utf8'),before);
+ assert.equal(readFileSync(path.join(dir,'dist/data/manifest.json'),'utf8'),before);
 });
 
 test('unrelated JSON is rejected instead of being displayed as a fake raid',()=>{
@@ -71,8 +73,9 @@ test('unrelated JSON is rejected instead of being displayed as a fake raid',()=>
 test('previously published web archives can be imported with original raw fields',()=>{
  const dir=fixtureRoot();const payload=JSON.parse(readFileSync(SAMPLE,'utf8'));
  writeFileSync(path.join(dir,'raid-exports','old-archive.json'),JSON.stringify({format:'plusone-web-archive-v1',sources:[{id:'old',name:'older.json',payload}]}));
- const r=run(dir);assert.ok(r.ok,r.out);assert.equal(archive(dir).sources.length,1);
- assert.equal(archive(dir).sources[0].payload.syntheticDisclaimer,payload.syntheticDisclaimer);
+ const r=run(dir);assert.ok(r.ok,r.out);assert.equal(archive(dir).sourceCount,1);
+ assert.equal(archive(dir).counts.sessions,1);
+ assert.equal(existsSync(path.join(dir,'dist/data/archive.json')),false);
 });
 
 
