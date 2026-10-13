@@ -1,13 +1,20 @@
-# PlusOne Raid Archive 0.4.0 — Roll Analytics
+# Change Log
 
-- Added a dedicated Roll Analytics page with raider, session, and category filters.
-- Added total participations, numeric dice rolls, average, best, wins and resolved win rate.
-- Added roll distribution and chronological trend charts (by percentile for varying dice ranges).
-- Added individual roll history and item-specific roll detail views within Loot History and raid session details.
-- Raider profiles now include a personal roll-history table and summary.
-- Accepts `rollResults` stored alongside an award and new `session.rollEvents` arrays. Handles Main Spec, Off Spec, Transmog, Soft Res, Pass, multiple attempts and multiple drops of the same item.
-- Preserves older JSON without inventing missing dice results; ignored passes and unrolled automatic SoftRes eligibility when calculating numeric averages.
-- Enhanced synthetic Molten Core data for 20 raiders and 60 awards with individual numeric rolls, passes, and unrolled SoftRes selections.
-- No PHP; GitHub Pages + existing GitHub Actions workflow still work unchanged.
+## v1.0.0 — FATE Guild Armory redesign (2026-10-13)
 
-**Addon status:** The bundled standalone Lua recorder module and wiring guide are provided separately. Integration into the current PlusOneMaster alpha is **not complete**; the master source code was not available for editing in this environment. Do not install the kit as a fully functional addon.
+- Completely new user interface: original heraldry, dark stone and bronze styling, responsive layout, 6 primary guild areas.
+- Original JSON authoritative; character/item/session derived JSON indexes built during GitHub Actions deployment.
+- Character identity, 19-slot snapshot history, equipment deltas, raid attendance, awarded loot, SoftRes and roll records.
+- Historical gear selector and two-way navigation between character, item, and session pages.
+- Search, clickable-sort headers, filters and pagination; all-time roll totals and per-raider full roll records.
+- Corrected inferred gear item-quality from Warcraft colored links where explicit quality is missing.
+- Item icon pipeline supports verified texture slugs, optional central overrides, provider iconization and honest fallback.
+- Retired monolithic v0.5.2 inline frontend and published full raw archive copy.
+- Preserves backward input compatibility with older PlusOne exports and web archive v1 files.
+- No 500-file/50-MB arbitrary build cutoff; publication safeguards remain for unexpected oversized inputs.
+- Zero npm packages, GitHub Pages Actions-compatible.
+- Added addon-exporter handoff for icons, GUIDs and dungeon group loot semantics.
+
+## v0.5.2 — Previous known-working rollback
+
+Original full ZIP supplied by the project owner. Keep for rollback; not included as a source copy in this release.

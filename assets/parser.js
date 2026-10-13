@@ -123,10 +123,14 @@ function parseItem(rec) {
   const rawQuality=pick(rec,qualityKeys) ?? pick(o,qualityKeys);
   const qmap={poor:0,common:1,uncommon:2,rare:3,epic:4,legendary:5,artifact:6,heirloom:7};
   const quality=typeof rawQuality==='number'?rawQuality: /^\d+$/.test(str(rawQuality))?Number(rawQuality):qmap[str(rawQuality).toLowerCase()]??null;
+  // Gear exports often omit quality but preserve the Warcraft color escape in itemLink.
+  const linkQuality={'9d9d9d':0,'ffffff':1,'1eff00':2,'0070dd':3,'a335ee':4,'ff8000':5,'e6cc80':6};
+  const color=str(link).match(/\|cff([a-f0-9]{6})/i)?.[1]?.toLowerCase();
+  const resolvedQuality=quality===null?(linkQuality[color]??null):quality;
   const rawIcon=pick(rec,['itemIconName','itemIcon','iconName','icon'])??pick(o,iconKeys);
   const icon=str(rawIcon).trim();
   const count=Number(pick(rec,quantityKeys)??pick(o,quantityKeys)??1);
-  return {id:itemId,name:name||'Unknown item',link,quality,icon,count:Number.isFinite(count)&&count>0?count:1};
+  return {id:itemId,name:name||'Unknown item',link,quality:resolvedQuality,icon,count:Number.isFinite(count)&&count>0?count:1};
 }
 export function normalizeMode(raw){
   const t=str(raw).trim().toLowerCase().replace(/[\s_-]/g,'');
@@ -348,7 +352,9 @@ function mergeNewSession(old,latest){
     const identity=characterIdentity(first.roster,second.snapshot||first.snapshot||{});
     return {...first,...second,...identity,roster:richest(first.roster,second.roster),snapshot:second.snapshot||first.snapshot,gear};
   });
-  const entries=mergeBy(old.entries,latest.entries,(e,i)=>String(e.id||'')+':'+str(e.timestamp)+':'+str(e.item?.id)+':'+nameKey(e.winner));
+  // An updated export can correct the winner without creating a second award.
+  // Prefer stable nonnumeric addon award IDs; legacy positional IDs need a composite.
+  const entries=mergeBy(old.entries,latest.entries,e=>{const id=str(e.id);return id&&!/^\d+$/.test(id)?`award:${id}`:`legacy:${id}:${str(e.timestamp)}:${str(e.item?.id)}:${nameKey(e.winner)}`;});
   const rollEvents=mergeBy(old.rollEvents,latest.rollEvents,e=>e.id);
   const softRes=latest.softRes.length?latest.softRes:old.softRes;
   const plusOnes={...old.plusOnes,...latest.plusOnes};
@@ -379,6 +385,7 @@ export function normalizeSource(source) {
     const players=[...new Set([...rosterGear.members.map(x=>x.name),...legacyRoster,...entries.map(e=>e.winner).filter(Boolean),...softRes.map(e=>e.raider).filter(Boolean),...rollEvents.flatMap(e=>e.rolls.map(r=>r.player))])];
     return {id:stableSessionId(session,rawId,start,name,source,i),sourceId:source.id,sourceName:source.name,rawId,name,start,end,
       guild:extractName(session,['guild','guildName'])||extractName(root,['guild','guildName']),
+      lootSystem:extractName(session,['lootSystem','lootMode','distributionMode'])||extractName(root,['lootSystem','lootMode','distributionMode'])||'Unknown',
       difficulty:extractName(session,['difficulty','raidDifficulty']),
       entries,softRes,rollEvents,contests:rollContests(rollEvents,entries),members:rosterGear.members,plusOnes:isObj(session.plusOnes)?session.plusOnes:{},
       gearCount:rosterGear.members.filter(m=>m.gear).length,players,raw:session,schema:extractName(root,['schema','format','schemaVersion','version'])||'Unknown',
