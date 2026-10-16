@@ -17,6 +17,34 @@ const classToken=v=>str(v).toUpperCase().replace(/[^A-Z]/g,'');
 const state={page:'overview',id:'',tab:'loot',q:'',filter:'all',filter2:'all',sortKey:'',sortDir:-1,pageNum:0,snapshot:'',viewerMode:'2d',localPreview:false,loading:false,records:{},manifest:null,overview:null,characters:[],sessions:[],items:[],identity:{},itemMap:new Map(),error:''};
 const cache=new Map();
 const routes={overview:'GUILD OVERVIEW',characters:'THE ARMORY',sessions:'RAID CHRONICLES',items:'LOOT TREASURY',rolls:'ROLL ANALYZER',statistics:'GUILD STATISTICS',character:'CHARACTER ARMORY',session:'SESSION RECORD',item:'ITEM RECORD'};
+// Per-device reading preference. Scaling is applied to CSS typography rather
+// than to entire panels, which keeps armor icons and other artwork at their sizes.
+const FONT_STORAGE_KEY='fate.fontScale.v1';
+let fontScale=100;
+function changeFontScale(value){
+ const v=Math.min(160,Math.max(100,Number(value)||100));
+ fontScale=Math.round(v/5)*5;
+ document.documentElement.style.setProperty('--fate-font-scale',String(fontScale/100));
+ const range=el('font-scale-range');if(range)range.value=String(fontScale);
+ for(const id of ['font-scale-display','font-range-output'])if(el(id))el(id).textContent=`${fontScale}%`;
+ for(const button of document.querySelectorAll('[data-font-scale]'))button.setAttribute('aria-pressed',String(Number(button.dataset.fontScale)===fontScale));
+ try{localStorage.setItem(FONT_STORAGE_KEY,String(fontScale));}catch(_){} // private browsing may disable storage
+}
+function closeFontSettings(){const panel=el('font-settings-panel'),button=el('font-settings-button');
+ if(panel)panel.hidden=true;if(button)button.setAttribute('aria-expanded','false');}
+function initFontSettings(){
+ let stored=100;try{stored=Number(localStorage.getItem(FONT_STORAGE_KEY))||100;}catch(_){}
+ changeFontScale(stored);
+ const button=el('font-settings-button'),panel=el('font-settings-panel');
+ button.addEventListener('click',()=>{const opening=panel.hidden;panel.hidden=!opening;button.setAttribute('aria-expanded',String(opening));if(opening)el('font-scale-range').focus();});
+ el('font-scale-range').addEventListener('input',e=>changeFontScale(e.target.value));
+ for(const preset of document.querySelectorAll('[data-font-scale]'))preset.addEventListener('click',()=>changeFontScale(preset.dataset.fontScale));
+ el('font-reset').addEventListener('click',()=>changeFontScale(100));
+ document.addEventListener('pointerdown',e=>{if(!el('font-controls').contains(e.target))closeFontSettings();});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!panel.hidden){closeFontSettings();button.focus();}});
+}
+initFontSettings();
+let lastModelError='';
 let toastTimer;
 let viewerInstance=null, viewerRequest=0;
 function disposeViewer(){viewerRequest++;if(viewerInstance){try{viewerInstance.destroy?.();}catch(e){console.warn('3D cleanup:',e);}viewerInstance=null;}}
@@ -24,16 +52,22 @@ async function init3D(){
  const node=el('fate-model-canvas'),status=el('fate-model-status');if(!node||!status||state.viewerMode!=='3d')return;
  const profile=state.records.current;if(!profile||state.page!=='character')return;
  const gear=state.snapshot==='latest'||!state.snapshot?profile.latestGear:profile.gearHistory[Number(state.snapshot)]?.gear||profile.latestGear;
- const payload=modelPayload(profile,gear,state.itemMap);const token=++viewerRequest;
+ const payload=modelPayload(profile,gear,state.itemMap);const token=++viewerRequest;lastModelError='';
  if(!payload){status.textContent='Verified character race and sex are needed. The 2D equipment panel remains available.';return;}
  const expected=(gear?.slots||[]).filter(x=>x.item).length, supported=payload.items.length;
  status.textContent=`Loading experimental Classic model… ${supported} of ${expected} occupied slots have usable visual IDs.`;
  try{const model=await createModel(node,payload);
   if(token!==viewerRequest||!node.isConnected){try{model?.destroy?.();}catch(_){}return;}
-  viewerInstance=model;status.textContent=supported===0?'Base character only · Equipment appearance IDs are absent from this export.':`Experimental 3D · ${supported} visual slots supplied · Model may differ from Forever.`;
+  viewerInstance=model;
+  status.textContent=supported===0?'Renderer initialized · No armor appearances are available in this export. A base character may display.':`Renderer initialized · ${supported} visual slots supplied. Appearance cannot yet be verified against Forever.`;
+  // A successful library call does not prove that remote art/meshes have rendered.
+  if(!node.querySelector('canvas'))status.textContent+=' No canvas detected yet; external art may still be blocked.';
  }catch(err){if(token!==viewerRequest)return;console.warn('3D model unavailable:',err);
-  status.textContent=`3D unavailable: ${err.message}. Equipment icons and history are unaffected.`;
-  node.innerHTML='<div class="model-fallback"><img src="assets/character-silhouette.svg" alt="Decorative silhouette when the 3D renderer is unavailable"></div>';
+  lastModelError=`${err?.name||'Error'}: ${err?.message||String(err)}`;
+  status.textContent=`3D could not load: ${err?.message||'External model assets unavailable'}. The 2D equipment remains correct.`;
+  node.innerHTML=`<div class="model-fallback"><div class="model-error-box"><img src="assets/character-silhouette.svg" alt="Placeholder when external 3D assets cannot be loaded"><p>Unable to render character model</p><button class="model-retry" data-model-retry="true" type="button">Retry 3D</button></div></div>`;
+  const stage=node.closest('.model-stage');
+  if(stage&&!stage.querySelector('.model-help'))stage.insertAdjacentHTML('beforeend','<details class="model-help"><summary>Why is my model not loading?</summary><p>The viewer requests model files from Wowhead. GitHub Pages cannot provide the proxy required by the library, and browsers may block those files via CORS. Gear display IDs are also missing from current exports.</p><button type="button" data-model-debug>Copy diagnostics</button></details>');
  }
 }
 function toast(message){const box=el('toast');box.textContent=message;box.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>box.classList.remove('show'),4500);}
@@ -184,6 +218,8 @@ document.addEventListener('click',e=>{
  const step=e.target.closest('[data-page-move]');if(step){state.pageNum+=Number(step.dataset.pageMove);render();return;}
  const tab=e.target.closest('[data-tab]');if(tab){state.tab=tab.dataset.tab;render();return;}
  const snap=e.target.closest('[data-snapshot]');if(snap){state.snapshot=snap.dataset.snapshot;render();return;}
+ const retry=e.target.closest('[data-model-retry]');if(retry){render();return;}
+ const debug=e.target.closest('[data-model-debug]');if(debug){const description=`FATE v1.2 3D viewer\n${lastModelError||'No error recorded'}\nBrowser: ${navigator.userAgent}\nPage: ${location.href}\nViewer asset source: wow.zamimg.com/modelviewer/classic/`;if(navigator.clipboard?.writeText)navigator.clipboard.writeText(description).then(()=>toast('3D diagnostics copied.')).catch(()=>toast('Browser blocked copying diagnostics.'));else toast('Browser does not allow clipboard access.');return;}
  const mode=e.target.closest('[data-model-toggle]');if(mode){state.viewerMode=mode.dataset.modelToggle==='3d'?'3d':'2d';render();return;}
 });
 el('main').addEventListener('input',e=>{if(e.target.id!=='search')return;const cursor=e.target.selectionStart;state.q=e.target.value;state.pageNum=0;render();const field=el('search');if(field){field.focus();field.setSelectionRange(cursor,cursor);}});

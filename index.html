@@ -6,6 +6,7 @@
 <title>FATE | Guild Armory & Raid Archives</title>
 <link rel="icon" type="image/svg+xml" href="assets/fate-crest.svg">
 <link rel="preconnect" href="https://wow.zamimg.com" crossorigin>
+<script>try{const size=Number(localStorage.getItem('fate.fontScale.v1'));if(Number.isFinite(size)&&size>=100&&size<=160)document.documentElement.style.setProperty('--fate-font-scale',String(size/100));}catch(_){}</script>
 <link rel="stylesheet" href="assets/site.css">
 <script>const whTooltips={colorLinks:false,renameLinks:false,iconizeLinks:false,iconSize:true};</script>
 <script defer src="https://wow.zamimg.com/js/tooltips.js"></script>
@@ -32,14 +33,14 @@
     <div class="sidebar-quote"><span class="decor-quote">“</span> Every victory leaves its mark.<br>Every name has a story.</div>
     <div class="sidebar-divider"></div>
     <div class="side-status"><i></i><span id="archive-status">CONNECTING TO THE ARCHIVE</span></div>
-    <div class="sidebar-small">WORLD OF WARCRAFT: FOREVER<br>UNOFFICIAL GUILD ARCHIVE <b>v1.1</b></div>
+    <div class="sidebar-small">WORLD OF WARCRAFT: FOREVER<br>UNOFFICIAL GUILD ARCHIVE <b>v1.2</b></div>
   </div>
  </aside>
  <div class="body-pane">
   <header class="topbar">
    <button id="menu-toggle" class="icon-button menu-toggle" aria-label="Open navigation">☰</button>
    <div class="breadcrumb"><span>FATE</span><span class="chevron">/</span><strong id="page-crumb">GUILD OVERVIEW</strong></div>
-   <div class="top-actions"><span class="top-status">✧ &nbsp; A LIVING HISTORY</span><label class="upload-btn"><input id="preview-files" type="file" accept=".json,application/json" multiple hidden><span>＋</span> PREVIEW EXPORT</label><button id="clear-preview" class="subtle-btn" hidden>CLEAR PREVIEW</button></div>
+   <div class="top-actions"><div class="font-controls" id="font-controls"><button type="button" class="font-settings-button" id="font-settings-button" aria-label="Text size settings" aria-controls="font-settings-panel" aria-expanded="false"><span class="font-icon" aria-hidden="true">Aa</span><span class="button-label">TEXT SIZE</span></button><section class="font-settings-panel" id="font-settings-panel" aria-label="Text size" hidden><div class="font-settings-title"><span>Reading settings</span><span id="font-scale-display">100%</span></div><p>Increase headings, table rows and text across the entire guild archive.</p><label for="font-scale-range"><span>Text size</span><span id="font-range-output">100%</span></label><input id="font-scale-range" type="range" min="100" max="160" step="5" value="100"><div class="font-presets"><button data-font-scale="100" type="button">100%</button><button data-font-scale="115" type="button">115%</button><button data-font-scale="130" type="button">130%</button><button data-font-scale="150" type="button">150%</button></div><button class="font-reset" id="font-reset" type="button">Reset to default</button></section></div><span class="top-status">✧ &nbsp; A LIVING HISTORY</span><label class="upload-btn"><input id="preview-files" type="file" accept=".json,application/json" multiple hidden><span>＋</span> PREVIEW EXPORT</label><button id="clear-preview" class="subtle-btn" hidden>CLEAR PREVIEW</button></div>
   </header>
   <main id="main" class="main" tabindex="-1"><div class="loading"><div class="loading-mark">✦</div><p>Opening the archives…</p></div></main>
   <footer class="site-footer"><span>FATE GUILD ARCHIVES <em>✦</em> FOR THE PEOPLE WHO WERE THERE</span><span>UNOFFICIAL FAN PROJECT · NOT AFFILIATED WITH BLIZZARD ENTERTAINMENT</span></footer>

@@ -6,10 +6,12 @@ import {createCatalog} from '../assets/catalog.js';
 import {readFileSync} from 'node:fs';
 const fixture=JSON.parse(readFileSync(new URL('../reference-fixtures/PlusOne_FATE_v7_Full20Raider_Deadmines.json',import.meta.url)));
 test('male and female Classic character identities use actual race/sex records',()=>{
- assert.deepEqual(modelIdentity({race:'Human',characterSex:'Male'}),{race:1,gender:0});
- assert.deepEqual(modelIdentity({race:'Night Elf',characterSex:'Female'}),{race:4,gender:1});
- assert.deepEqual(modelIdentity({race:'Blood Elf',characterSex:'Female'}),{race:10,gender:1});
+ assert.deepEqual(modelIdentity({race:'Human',characterSex:'Male'}),{race:1,gender:1});
+ assert.deepEqual(modelIdentity({race:'Night Elf',characterSex:'Female'}),{race:4,gender:0});
+ assert.deepEqual(modelIdentity({race:'Blood Elf',characterSex:'Female'}),{race:10,gender:0});
  assert.deepEqual(modelIdentity({race:'Unknown',characterSex:'Unknown'}),{race:null,gender:null});
+ assert.deepEqual(modelIdentity({raceID:1,characterSexID:0}),{race:1,gender:1});
+ assert.deepEqual(modelIdentity({raceID:1,characterSexID:1}),{race:1,gender:0});
 });
 test('never misrepresent item IDs as visual display IDs',()=>{
  const gear={slots:[{slot:1,item:{id:19019,name:'Sword'}}]};
