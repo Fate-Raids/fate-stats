@@ -23,6 +23,7 @@ const itemIdKeys = ['itemID','itemId','item_id','itemid','id'];
 const qualityKeys = ['itemQuality','quality','rarity','itemRarity','qualityId'];
 const iconKeys = ['iconName','itemIconName','icon','itemIcon','iconPath','texture'];
 const quantityKeys = ['count','quantity','stackCount','amount'];
+const displayKeys = ['itemDisplayID','itemDisplayId','displayID','displayId','visualDisplayID','visualDisplayId','modelDisplayId'];
 
 export function hashText(text) {
   let a = 2166136261, b = 2166136261;
@@ -130,7 +131,9 @@ function parseItem(rec) {
   const rawIcon=pick(rec,['itemIconName','itemIcon','iconName','icon'])??pick(o,iconKeys);
   const icon=str(rawIcon).trim();
   const count=Number(pick(rec,quantityKeys)??pick(o,quantityKeys)??1);
-  return {id:itemId,name:name||'Unknown item',link,quality:resolvedQuality,icon,count:Number.isFinite(count)&&count>0?count:1};
+  const displayRaw=pick(rec,displayKeys)??pick(o,displayKeys);
+  const displayId=/^\d+$/.test(str(displayRaw))&&Number(displayRaw)>0?Number(displayRaw):null;
+  return {id:itemId,name:name||'Unknown item',link,quality:resolvedQuality,icon,displayId,count:Number.isFinite(count)&&count>0?count:1};
 }
 export function normalizeMode(raw){
   const t=str(raw).trim().toLowerCase().replace(/[\s_-]/g,'');
@@ -290,7 +293,9 @@ export function characterIdentity(roster={}, snapshot={}) {
     ['Male','Female','None','Both','Neutral'].includes(joined.characterSex)?joined.characterSex:'Unknown';
   return {role:str(joined.role)||'Unknown',class:str(joined.className||joined.class)||'Unknown',classToken:str(joined.class),
     race:str(joined.race||joined.raceToken)||'Unknown',raceToken:str(joined.raceToken||joined.race),
-    characterSex:sex,characterSexID:Number.isInteger(sexId)?sexId:null};
+    characterSex:sex,characterSexID:Number.isInteger(sexId)?sexId:null,
+    raceID:Number.isInteger(Number(joined.raceID??joined.raceId))&&Number(joined.raceID??joined.raceId)>0?Number(joined.raceID??joined.raceId):null,
+    appearance:isObj(joined.appearance)?Object.fromEntries(['skin','face','hairStyle','hairColor','facialStyle'].filter(k=>Number.isInteger(joined.appearance[k])).map(k=>[k,joined.appearance[k]])):{}};
 }
 function rosterAndGear(session,root) {
   const rosterRaw=isObj(session.roster)?session.roster:isObj(root.roster)?root.roster:{};

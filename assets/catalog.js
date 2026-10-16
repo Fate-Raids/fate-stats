@@ -8,7 +8,8 @@ const iso = v => v || '';
 const safeItem = v => v ? {
   id:Number.isSafeInteger(Number(v.id)) && Number(v.id)>0?Number(v.id):null,
   name:String(v.name||''),quality:Number.isInteger(v.quality)?v.quality:null,
-  icon: typeof v.icon==='string'?v.icon:'',link:v.link||'',count:Number(v.count)||1
+  icon: typeof v.icon==='string'?v.icon:'',link:v.link||'',
+  displayId:Number.isSafeInteger(Number(v.displayId))&&Number(v.displayId)>0?Number(v.displayId):null,count:Number(v.count)||1
 }: null;
 const itemKey = v => v?.id?`id:${v.id}`:`name:${norm(v?.name)}`;
 const showItem = v => !!v && (v.id || (v.name && v.name!=='Unknown item'));
@@ -55,7 +56,7 @@ export function createCatalog(data, {generatedAt='', overrides={}}={}) {
   function player(name,s){
     if(!String(name||'').trim())return null;
     const key=identityKey(name,s);let p=chars.get(key);
-    if(!p){p={id:toId('char',key),key,name:String(name).trim(),aliases:[],guid:key.startsWith('guid:')?key.slice(5):'',class:'Unknown',race:'Unknown',characterSex:'Unknown',
+    if(!p){p={id:toId('char',key),key,name:String(name).trim(),aliases:[],guid:key.startsWith('guid:')?key.slice(5):'',class:'Unknown',race:'Unknown',characterSex:'Unknown',raceID:null,characterSexID:null,appearance:{},
       sessionCount:0,awardCount:0,rollCount:0,rollWins:0,reserveCount:0,latestRole:'Unknown',lastSeen:'',latestGear:null,
       currentEquipmentDate:'',sessions:[],awards:[],rolls:[],reserves:[],gearHistory:[],plusOnes:[]};chars.set(key,p);}
     if(!p.aliases.includes(String(name).trim()))p.aliases.push(String(name).trim());
@@ -65,9 +66,10 @@ export function createCatalog(data, {generatedAt='', overrides={}}={}) {
   function addItem(item,kind,record){
     if(!showItem(item))return;
     const key=itemKey(item);let it=items.get(key);
-    if(!it){it={key,id:item.id,name:item.name,quality:item.quality,icon:item.icon||'',aliases:[],awards:[],rolls:[],reserves:[],equippedBy:[],seenIn:[]};items.set(key,it);}
+    if(!it){it={key,id:item.id,name:item.name,quality:item.quality,icon:item.icon||'',displayId:item.displayId||null,aliases:[],awards:[],rolls:[],reserves:[],equippedBy:[],seenIn:[]};items.set(key,it);}
     if(item.name && !it.aliases.includes(item.name))it.aliases.push(item.name);
     if(item.icon&&!it.icon)it.icon=item.icon;
+    if(item.displayId&&!it.displayId)it.displayId=item.displayId;
     if(item.quality!==null&&it.quality===null)it.quality=item.quality;
     if(kind==='seen'){if(!it.seenIn.includes(record))it.seenIn.push(record);}else it[kind].push(record);
   }
@@ -84,9 +86,12 @@ export function createCatalog(data, {generatedAt='', overrides={}}={}) {
     }
     for(const m of s.members){const p=player(m.name,s);if(!p)continue;
       for(const field of ['class','race','characterSex'])if(m[field]&&m[field]!=='Unknown')p[field]=m[field];
+      if(m.raceID!=null)p.raceID=m.raceID;
+      if(m.characterSexID!=null)p.characterSexID=m.characterSexID;
+      if(m.appearance&&Object.keys(m.appearance).length)p.appearance={...p.appearance,...m.appearance};
       if(iso(s.start)>=iso(p.lastSeen) && m.role!=='Unknown')p.latestRole=m.role;
       const presence=p.sessions.find(x=>x.id===sid);if(presence){presence.role=m.role||'Unknown';presence.hasGear=!!m.gear;}
-      ses.members.push({id:p.id,key:m.key,name:m.name,class:m.class,race:m.race,characterSex:m.characterSex,role:m.role,
+      ses.members.push({id:p.id,key:m.key,name:m.name,class:m.class,race:m.race,characterSex:m.characterSex,raceID:m.raceID,characterSexID:m.characterSexID,appearance:m.appearance,role:m.role,
         gear:keptGear(m.gear)});
       if(m.gear){counts.gear++;const gear=keptGear(m.gear);
         p.gearHistory.push({sessionId:sid,sessionName:ses.name,date:ses.start,capturedAt:gear.capturedAt||ses.start,gear});
@@ -144,12 +149,12 @@ export function createCatalog(data, {generatedAt='', overrides={}}={}) {
   const itemRecords=[...items.values()].map(it=>{
     const override=overrides?.[String(it.id)]||null;
     it.slug=toId('item',it.key);
-    if(override){if(override.icon)it.icon=String(override.icon);if(override.name)it.name=String(override.name);if(Number.isInteger(override.quality))it.quality=override.quality;}
+    if(override){if(override.icon)it.icon=String(override.icon);if(override.name)it.name=String(override.name);if(Number.isInteger(override.quality))it.quality=override.quality;if(Number.isSafeInteger(override.displayId)&&override.displayId>0)it.displayId=override.displayId;}
     it.awards.sort(dateSort);it.rolls.sort(dateSort);it.reserves.sort(dateSort);
     it.awardCount=it.awards.length;it.winnerCount=new Set(it.awards.map(a=>a.characterId)).size;it.rollCount=it.rolls.length;it.reserveCount=it.reserves.length;
     return it;
   }).sort((a,b)=>a.name.localeCompare(b.name));
-  const itemIndex=itemRecords.map(({key,slug,id,name,quality,icon,awardCount,winnerCount,rollCount,reserveCount,aliases})=>({key,slug,id,name,quality,icon,awardCount,winnerCount,rollCount,reserveCount,aliases}));
+  const itemIndex=itemRecords.map(({key,slug,id,name,quality,icon,displayId,awardCount,winnerCount,rollCount,reserveCount,aliases})=>({key,slug,id,name,quality,icon,displayId,awardCount,winnerCount,rollCount,reserveCount,aliases}));
   const sessIndex=sessionRecords.map(s=>({id:s.id,name:s.name,start:s.start,end:s.end,originalId:s.originalId,sourceName:s.sourceName,
     playerCount:s.players.length,awardCount:s.awards.length,rollCount:s.rolls.length,reserveCount:s.reserves.length,gearCount:s.gearCount}))
      .sort((a,b)=>iso(b.start).localeCompare(iso(a.start)));

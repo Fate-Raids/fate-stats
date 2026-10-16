@@ -1,3 +1,5 @@
+> **v1.1 experimental 3D viewer:** See [START_V1.1.md](START_V1.1.md), [3D_VIEWER_README.md](3D_VIEWER_README.md) and [PLUSONE_3D_MODEL_EXPORT_HANDOFF.md](PLUSONE_3D_MODEL_EXPORT_HANDOFF.md). Default 2D remains fully functional.
+
 # FATE Guild Armory & Raid Chronicles — v1.0.0
 
 Standalone, read-only, GitHub Pages website for World of Warcraft: Forever guild session JSON exports from PlusOne Master. **Original session JSON remains the source of truth.** The GitHub Actions build generates one small character profile per raider, independent session records, a searchable item registry, and precomputed guild/roll summaries. No backend, login, paid DB, or npm dependencies.

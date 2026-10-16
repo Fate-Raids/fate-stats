@@ -61,7 +61,7 @@ export async function build(){
  const write=async(relative,object)=>{const dest=path.join(temp,relative);await fs.mkdir(path.dirname(dest),{recursive:true});await fs.writeFile(dest,JSON.stringify(object)+'\n');};
  await fs.mkdir(path.join(temp,'assets'),{recursive:true});
  await fs.copyFile(path.join(repo,'index.html'),path.join(temp,'index.html'));
- for(const asset of ['site.js','site.css','catalog.js','parser.js','fate-crest.svg','character-silhouette.svg'])await fs.copyFile(path.join(repo,'assets',asset),path.join(temp,'assets',asset));
+ for(const asset of ['site.js','site.css','catalog.js','parser.js','model-viewer.js','fate-crest.svg','character-silhouette.svg'])await fs.copyFile(path.join(repo,'assets',asset),path.join(temp,'assets',asset));
  await fs.writeFile(path.join(temp,'.nojekyll'),'');
  // Raw exports remain in raid-exports within Git. Do not duplicate them into the public site.
  // Legacy PlusOne web-archive-v1 inputs are still recognized by unwrapImports.

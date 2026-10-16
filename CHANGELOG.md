@@ -1,3 +1,9 @@
+# v1.0.1 — 2026-10-13
+
+- Fix GitHub upgrade packaging: include the new publisher tests and all fixture data, overwriting v0.5.2 tests that still referenced retired `dist/data/archive.json`.
+- Update GitHub Actions to supported Node 24-based action runtimes while keeping the application on Node.js 22; pin Ubuntu 24.04.
+- Leave the site builder, raw raid exports and archive schema unchanged.
+
 # Change Log
 
 ## v1.0.0 — FATE Guild Armory redesign (2026-10-13)

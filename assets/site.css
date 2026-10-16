@@ -16,3 +16,21 @@
 @media(max-width:1000px){.shell{grid-template-columns:1fr}.sidebar{position:fixed;left:0;transform:translateX(-105%);transition:transform .22s;width:275px;box-shadow:0 12px 45px #0008}.sidebar.open{transform:translateX(0)}.mobile-backdrop.open{display:block;position:fixed;inset:0;background:#0009;z-index:19}.menu-toggle{display:block}.topbar{padding:0 24px}.main{padding:25px 24px 55px}.hero-sigil{right:2%;opacity:.3}.top-status{display:none}}
 @media(max-width:700px){.topbar{height:66px;padding:0 14px}.top-actions{gap:6px}.upload-btn{padding:8px 9px;font-size:9px}.breadcrumb{font-size:9px;gap:7px}.metric-grid,.roll-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.two-column,.detail-grid{grid-template-columns:1fr}.main{padding:17px 13px 45px}.hero{padding:33px 22px;min-height:300px}.hero-sigil{width:130px;right:12px;opacity:.17}.hero h1{font-size:35px}.hero-buttons{flex-wrap:wrap}.metric{padding:14px}.page-head h1{font-size:27px}.character-grid{grid-template-columns:1fr}.profile-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.profile-header{padding:17px;gap:11px}.profile-header h1{font-size:24px}.profile-header .avatar{width:54px;height:54px;font-size:25px}.equip-ui{grid-template-columns:minmax(0,1fr) 85px minmax(0,1fr);gap:5px;min-height:auto}.armory-box{padding:12px}.equip-slot{min-height:45px;padding:3px;gap:4px}.equip-slot .item-art{width:37px;height:37px}.slot-name{display:none}.slot-label{font-size:8px}.character-figure{width:88px}.equip-caption{font-size:8px}.equip-weapons .equip-slot{min-height:40px}.item-head h1{font-size:21px}.site-footer{flex-wrap:wrap;font-size:8px;padding:15px}.searchbar{padding:10px}.filter{flex:1;max-width:none}.distribution{gap:4px;padding:9px}.dist-bar{font-size:8px}.row-link{padding:12px 10px}.row-meta{font-size:10px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition:none!important;scroll-behavior:auto!important}}
+
+/* v1.1 experimental, opt-in Classic 3D character model */
+.armory-title-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:15px;flex-wrap:wrap}
+.armory-title-row .section-title{margin:0}
+.model-toggle{display:flex;align-items:center;border:1px solid #765f39;border-radius:4px;background:#121510;padding:3px;gap:3px}
+.model-toggle button{border:0;background:transparent;color:#bba880;padding:8px 12px;border-radius:3px;font-size:10px;font-weight:800;letter-spacing:.4px;cursor:pointer}
+.model-toggle button.selected{background:linear-gradient(155deg,#947044,#5b4227);color:#fff0d5}
+.model-toggle button:focus-visible{outline:2px solid #d7b47c;outline-offset:2px}
+.model-toggle button:disabled{opacity:.4;cursor:not-allowed}
+.equip-ui.model-active{grid-template-columns:minmax(0,1fr) minmax(220px,1.65fr) minmax(0,1fr)}
+.model-stage{position:relative;width:100%;height:500px;display:flex;flex-direction:column;justify-content:center;align-items:center;min-width:0;z-index:1}
+.model-canvas{width:100%;flex:1;min-height:390px;position:relative;overflow:hidden}
+.model-canvas canvas{max-width:100%;display:block;touch-action:pan-y}
+.model-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.model-fallback img{width:min(180px,80%);opacity:.6}
+.model-status{z-index:2;min-height:44px;max-width:95%;font-size:10px;line-height:1.5;text-align:center;color:#dec496;padding:8px 10px;background:#171712df;border:1px solid #58482e;border-radius:4px;overflow-wrap:anywhere}
+@media(max-width:850px){.equip-ui.model-active{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.equip-ui.model-active .equip-mid{grid-column:1/-1;grid-row:1}.equip-ui.model-active .equip-column{grid-row:2}.model-stage{height:370px}.model-canvas{min-height:285px}.equip-ui.model-active .slot-name{display:block;max-width:120px}}
+@media(max-width:430px){.equip-ui.model-active .slot-name{display:none}.model-stage{height:330px}.model-canvas{min-height:250px}.model-toggle button{padding:6px 10px}}

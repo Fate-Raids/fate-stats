@@ -1,6 +1,6 @@
 {
   "name": "fate-guild-armory",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "type": "module",
   "scripts": {"build":"node scripts/build-archive.mjs", "test":"node --test tests/*.test.js", "preview":"python -m http.server 8090 --directory dist"}
